@@ -1,0 +1,8 @@
+/dist
+/dist-server
+/tmp
+/node_modules
+/.idea
+.project
+npm-debug.log
+/e2e
