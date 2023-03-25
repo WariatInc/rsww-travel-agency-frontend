@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
     end: new FormControl<Date | null>(null),
   });
 
-  submitForm = this.formBuilder.group({
+  public submitForm = this.formBuilder.group({
     country: '',
     startDate: '',
     endDate: '',

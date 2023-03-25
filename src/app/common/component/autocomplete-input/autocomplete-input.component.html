@@ -1,14 +1,13 @@
 <div>
-  <form class="example-form">
+  <form class="example-form" [formGroup]="parentForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>{{ label }}</mat-label>
       <input
         type="search"
         placeholder=""
-        formControlName="{{ formName }}"
+        [formControlName]="formName"
         aria-label="Panstwo"
         matInput
-        [formControl]="myControl"
         [matAutocomplete]="auto"
       />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">

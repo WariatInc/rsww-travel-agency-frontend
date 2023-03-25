@@ -12,31 +12,30 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() options: string[] | undefined;
   @Input() label: string | undefined;
 
-  @Input() formName: string | undefined;
+  @Input() formName: string = '';
 
-  @Input() formGroupName: FormGroup | undefined;
-  definedOptions = [''];
-  myControl = new FormControl('');
+  @Input() parentForm!: FormGroup;
+  definedOptions!: string[];
 
   filteredOptions: Observable<string[]> | undefined;
 
   ngOnInit() {
+    console.log(this.parentForm, this.formName);
     this.definedOptions = this.options ?? [''];
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.parentForm.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || ''))
     );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: FormGroup): string[] {
+    let filterValue = '';
+    if (value) {
+      filterValue = value[this.formName as keyof typeof value].toLowerCase();
+    }
 
     return this.definedOptions.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
-  }
-
-  public doNothing(): void {
-    console.log('do nothing for now');
   }
 }

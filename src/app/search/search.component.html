@@ -4,40 +4,45 @@
       [options]="countryOptions"
       [label]="'Dokąd się wybierasz?'"
       [formName]="'country'"
+      [parentForm]="submitForm"
     ></app-autocomplete-input>
-  </form>
-  <mat-form-field appearance="fill">
-    <mat-label>Od kiedy do kiedy</mat-label>
-    <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
-      <input
-        matStartDate
-        formControlName="startDate"
-        placeholder="Start date"
-      />
-      <input matEndDate formControlName="endDate" placeholder="End date" />
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
 
-    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
-      >Invalid start date</mat-error
-    >
-    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
-      >Invalid end date</mat-error
-    >
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Od kiedy do kiedy</mat-label>
+      <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="startDate"
+          placeholder="Start date"
+        />
+        <input matEndDate formControlName="endDate" placeholder="End date" />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
 
-  <form [formGroup]="submitForm">
+      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+        >Invalid start date</mat-error
+      >
+      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+        >Invalid end date</mat-error
+      >
+    </mat-form-field>
+
     <app-autocomplete-input
       [options]="numberOptions"
       [label]="'Ilość dorosłych:'"
       [formName]="'adultNumber'"
+      [parentForm]="submitForm"
     ></app-autocomplete-input>
     <app-autocomplete-input
       [options]="numberOptions"
       [label]="'Ilość dzieci:'"
       [formName]="'childrenNumber'"
+      [parentForm]="submitForm"
     ></app-autocomplete-input>
 
     <button
