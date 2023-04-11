@@ -10,7 +10,5 @@ export class AppComponent implements OnInit {
   title = 'RSWW Travel Agency App';
 
   constructor(private router: Router) {}
-  ngOnInit() {
-    this.router.navigate(['./search']);
-  }
+  ngOnInit() {}
 }
