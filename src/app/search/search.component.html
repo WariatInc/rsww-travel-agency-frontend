@@ -1,51 +1,59 @@
-<div class="formDiv">
-  <form [formGroup]="submitForm">
-    <app-autocomplete-input
-      [options]="countryOptions"
-      [label]="'Dokąd się wybierasz?'"
-      [formName]="'country'"
-      [parentForm]="submitForm"
-    ></app-autocomplete-input>
+<!--<h1>Wariat.Company</h1>-->
+<h1>Wyszukiwarka ofert</h1>
+<form [formGroup]="submitForm">
+  <div class="formDiv">
+    <div class="input">
+      <app-autocomplete-input
+        [options]="countryOptions"
+        [label]="'Dokąd się wybierasz?'"
+        [formName]="'country'"
+        [parentForm]="submitForm"
+      ></app-autocomplete-input>
+    </div>
+    <div class="input-calendar">
+      <mat-form-field appearance="fill" style="max-width: 100%">
+        <mat-label>Od kiedy do kiedy</mat-label>
+        <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="startDate"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="endDate" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Od kiedy do kiedy</mat-label>
-      <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
-        <input
-          matStartDate
-          formControlName="startDate"
-          placeholder="Start date"
-        />
-        <input matEndDate formControlName="endDate" placeholder="End date" />
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-
-      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
-        >Invalid start date</mat-error
-      >
-      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
-        >Invalid end date</mat-error
-      >
-    </mat-form-field>
-
-    <app-autocomplete-input
-      [options]="numberOptions"
-      [label]="'Ilość dorosłych:'"
-      [formName]="'adultNumber'"
-      [parentForm]="submitForm"
-    ></app-autocomplete-input>
-    <app-autocomplete-input
-      [options]="numberOptions"
-      [label]="'Ilość dzieci:'"
-      [formName]="'childrenNumber'"
-      [parentForm]="submitForm"
-    ></app-autocomplete-input>
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+          >Invalid start date</mat-error
+        >
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+          >Invalid end date</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="input">
+      <app-autocomplete-input
+        [options]="numberOptions"
+        [label]="'Ilość dorosłych:'"
+        [formName]="'adultNumber'"
+        [parentForm]="submitForm"
+      ></app-autocomplete-input>
+    </div>
+    <div class="input">
+      <app-autocomplete-input
+        [options]="numberOptions"
+        [label]="'Ilość dzieci:'"
+        [formName]="'childrenNumber'"
+        [parentForm]="submitForm"
+      ></app-autocomplete-input>
+    </div>
 
     <button
+      class="bf-button"
       (click)="submitSearch()"
       type="submit"
       color="primary"
@@ -53,8 +61,8 @@
     >
       Szukaj
     </button>
-  </form>
-</div>
+  </div>
+</form>
 
 <div class="image">
   <img src="/assets/img/dominikana.jpg" />
