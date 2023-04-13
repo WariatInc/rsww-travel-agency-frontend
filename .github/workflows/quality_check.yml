@@ -1,0 +1,26 @@
+name: Check Code Quality
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  check-code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check code formatting with Prettier
+        run: npx prettier --check "**/*.{js,jsx,ts,tsx,css,html}"
+
+      - name: Check for ESLint errors
+        run: npx eslint .
+
+      - name: Check for TypeScript type errors
+        run: npx tsc --noEmi
