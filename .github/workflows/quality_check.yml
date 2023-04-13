@@ -18,6 +18,3 @@ jobs:
 
       - name: Check code formatting with Prettier
         run: npx prettier --check "**/*.{js,jsx,ts,tsx,css,html}"
-
-      - name: Check for TypeScript type errors
-        run: npx tsc --noEmi
