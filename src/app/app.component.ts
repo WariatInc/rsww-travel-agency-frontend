@@ -11,4 +11,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router) {}
   ngOnInit() {}
+  public goHome(): void {
+    this.router.navigate(['./']);
+  }
 }

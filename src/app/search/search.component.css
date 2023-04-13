@@ -5,3 +5,15 @@ h3 {
 button {
   position: relative;
 }
+
+.formDiv{
+  display: flex;
+  position: center;
+  padding: 1rem;
+}
+
+img{
+    max-width: 50%;
+  height: auto;
+}
+

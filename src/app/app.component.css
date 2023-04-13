@@ -1,6 +1,7 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
 .material-icons {
   font-family: "Material Icons";
 }
@@ -8,3 +9,36 @@
 button {
   margin: 5px;
 }
+
+span:hover{color:red;}
+span:active {color:green}
+
+
+body{
+  background: #333;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+main{
+  height: 100vh;
+  width: 100%;
+  max-width: 1000px;
+  background: #222;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar{
+  margin: 0;
+padding: 0;
+}
+
+*{margin: 0;
+padding: 0;}
+
