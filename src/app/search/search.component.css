@@ -2,24 +2,24 @@ h3 {
   padding: 10px;
 }
 
-.bf-button{
-  /*min-width: 100%;*/
-  /*min-height: 70%;*/
-    margin-left: auto;
-  margin-right: auto;
-    display: flex;
+.bf-button {
+  min-width: 4%;
+  min-height: 10%;
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  display: flex;
 }
 
-.formDiv{
-  vertical-align:top;
+.formDiv {
+  vertical-align: top;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: row;
-  transform: translateX(4.5%);
+  transform: translateX(2.5%);
 }
 
-img{
+img {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -27,20 +27,19 @@ img{
   transform: translateY(40%);
 }
 
-h1, h2{
+h1,
+h2 {
   padding-top: 1rem;
   padding-left: 1rem;
 }
 
-.input{
-    border: solid #febb02 2px;
+.input {
+  /*border: solid #febb02 2px;*/
   box-shadow: black;
-
 }
 
-.input-calendar{
-
-  max-width: 22%;
-border: solid #febb02 2px;
-
+.input-calendar {
+  max-width: 25%;
+  /*border: solid #febb02 2px;*/
+  color: black;
 }
