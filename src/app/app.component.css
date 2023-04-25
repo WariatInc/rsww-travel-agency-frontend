@@ -10,21 +10,25 @@ button {
   margin: 5px;
 }
 
-span:hover{color:red;}
-span:active {color:green}
-
-
-body{
-  background: #333;
-  height: 100vh;
-  width: 98.97vw;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
+span:hover {
+  color: red;
+}
+span:active {
+  color: green;
 }
 
-main{
-  height: 100vh;
+body {
+  background: #333;
+  min-height: 100%;
+  width: 98.97vw;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  /*position: absolute;*/
+}
+
+main {
+  min-height: 100%;
   width: 99%;
   max-width: 1000px;
   background: #222;
@@ -34,13 +38,15 @@ main{
   justify-content: center;
 }
 
-.toolbar{
+.toolbar {
   margin: 0;
-padding: 0;
+  padding: 0;
 }
 
-*{margin: 0;
-padding: 0;}
+* {
+  margin: 0;
+  padding: 0;
+}
 
 /*.footer {*/
 /*    !*position: absolute;*!*/
@@ -55,23 +61,26 @@ padding: 0;}
 /*  align-self: center;*/
 /*}*/
 
-  footer {
-display:flex;
-background: #673ab7;
-/*position: fixed;*/
-bottom: 0;
-left: 0;
-right: 0;
-height: 50px;
-width: 100%;
-/*border-top: 1px solid white;*/
-justify-content:center;
-   align-items:center;
-    color: white;
-
-
+footer {
+  display: flex;
+  background: #673ab7;
+  /*position: sticky;*/
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  width: 100%;
+  /*border-top: 1px solid white;*/
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.container{
+.container {
   justify-content: center;
+}
+
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
