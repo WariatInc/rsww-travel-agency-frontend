@@ -24,7 +24,6 @@ body {
   overflow: auto;
   display: flex;
   justify-content: center;
-  /*position: absolute;*/
 }
 
 main {
@@ -33,8 +32,6 @@ main {
   max-width: 1000px;
   background: #222;
   color: white;
-  display: flex;
-  /*align-items: center;*/
   justify-content: center;
 }
 
@@ -48,29 +45,14 @@ main {
   padding: 0;
 }
 
-/*.footer {*/
-/*    !*position: absolute;*!*/
-/*    bottom: 0;*/
-/*    width: 100%;*/
-/*    height: 45px;*/
-/*    line-height: 45px;*/
-/*    background-color: #233;*/
-/*    color: white;*/
-/*    align-items: center;*/
-/*  align-content: center;*/
-/*  align-self: center;*/
-/*}*/
-
 footer {
   display: flex;
   background: #673ab7;
-  /*position: sticky;*/
   bottom: 0;
   left: 0;
   right: 0;
   height: 50px;
   width: 100%;
-  /*border-top: 1px solid white;*/
   justify-content: center;
   align-items: center;
   color: white;
@@ -83,4 +65,8 @@ footer {
 html {
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+app-offer-list {
+  min-width: 100%;
 }
