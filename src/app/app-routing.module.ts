@@ -25,6 +25,13 @@ const routes: Routes = [
         (m) => m.ReservationListModule
       ),
   },
+  {
+    path: 'offer',
+    loadChildren: () =>
+      import('./single-offer/single-offer.module').then(
+        (m) => m.SingleOfferModule
+      ),
+  },
 ];
 
 @NgModule({
