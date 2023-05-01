@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Reservation } from '../../common/model/reservation';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const reservationUrl = 'localhost:5000/reservation/list';
+const reservationUrl = 'http://localhost:5000/api/reservation/list';
 @Injectable({
   providedIn: 'root',
 })

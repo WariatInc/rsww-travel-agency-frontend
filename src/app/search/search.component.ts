@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,7 +8,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
   countryOptions: string[] = ['Polska', 'Niemcy', 'Włochy', 'Anglia', 'Grecja'];
 
   numberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -32,5 +33,6 @@ export class SearchComponent implements OnInit {
   public submitSearch(): void {
     console.log('submit search');
     console.log(this.submitForm.value);
+    this.router.navigate(['./offer-list']);
   }
 }

@@ -9,11 +9,13 @@ import { ReservationService } from './service/reservation.service';
 })
 export class ReservationListComponent implements OnInit {
   reservations: Reservation[] | undefined;
+  loaded: boolean = false;
 
   constructor(private reservationService: ReservationService) {}
   ngOnInit(): void {
     this.reservationService.getUserReservations().subscribe((reservations) => {
       this.reservations = reservations;
+      this.loaded = true;
     });
   }
 }
