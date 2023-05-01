@@ -2,6 +2,43 @@ h3 {
   padding: 10px;
 }
 
-button {
-  position: relative;
+.bf-button {
+  /*min-width: 100%;*/
+  /*min-height: 70%;*/
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+.formDiv {
+  vertical-align: top;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  transform: translateX(4.5%);
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+  transform: translateY(40%);
+}
+
+h1,
+h2 {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+.input {
+  border: solid #febb02 2px;
+  box-shadow: black;
+}
+
+.input-calendar {
+  max-width: 22%;
+  border: solid #febb02 2px;
 }

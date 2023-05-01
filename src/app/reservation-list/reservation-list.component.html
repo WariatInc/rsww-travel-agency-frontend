@@ -1,0 +1,15 @@
+<h3>Twoje rezerwacje:</h3>
+
+<div *ngIf="loaded; else loading">
+  <ul>
+    <li *ngFor="let reservation of reservations">
+      <span>{{ reservation.id }}</span>
+      <button mat-raised-button>Zobacz</button>
+      <button mat-raised-button>Odwołaj</button>
+    </li>
+  </ul>
+</div>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
