@@ -1,6 +1,6 @@
-<!--<h1>Wariat.Company</h1>-->
+<h1>Wariat.Company</h1>
 <h1>Wyszukiwarka ofert</h1>
-<form [formGroup]="submitForm">
+<form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
   <div class="formDiv">
     <div class="input">
       <app-autocomplete-input
@@ -52,13 +52,7 @@
       ></app-autocomplete-input>
     </div>
 
-    <button
-      class="bf-button"
-      (click)="submitSearch()"
-      type="submit"
-      color="primary"
-      mat-raised-button
-    >
+    <button class="bf-button" type="submit" color="primary" mat-raised-button>
       Szukaj
     </button>
   </div>
