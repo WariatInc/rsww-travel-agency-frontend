@@ -14,4 +14,8 @@ export class AppComponent implements OnInit {
   public goHome(): void {
     this.router.navigate(['./']);
   }
+
+  public goLogin(): void {
+    this.router.navigate(['./login']);
+  }
 }
