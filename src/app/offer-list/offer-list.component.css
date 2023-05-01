@@ -1,6 +1,5 @@
 .demo-table {
   width: 100%;
-
 }
 
 .mat-mdc-row .mat-mdc-cell {
@@ -17,6 +16,6 @@
   font-weight: bold;
 }
 
-.mat-elevation-z8{
+.mat-elevation-z8 {
   padding-top: 1rem;
 }
