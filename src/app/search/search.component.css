@@ -34,12 +34,10 @@ h2 {
 }
 
 .input {
-  /*border: solid #febb02 2px;*/
   box-shadow: black;
 }
 
 .input-calendar {
   max-width: 25%;
-  /*border: solid #febb02 2px;*/
   color: black;
 }

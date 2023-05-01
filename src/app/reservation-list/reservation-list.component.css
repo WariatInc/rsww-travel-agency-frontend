@@ -1,0 +1,23 @@
+button {
+  max-height: 5%;
+  max-width: 10%;
+  margin: 2px;
+}
+
+.content {
+  position: relative;
+  text-align: center;
+}
+
+ul {
+  display: inline-block;
+  text-align: left;
+}
+
+mat-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  transform: translateY(75%);
+}

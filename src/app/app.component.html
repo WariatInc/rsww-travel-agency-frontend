@@ -10,6 +10,9 @@
     <mat-toolbar color="primary">
       <span (click)="goHome()">{{ title }}</span>
       <span class="example-spacer"></span>
+      <button mat-raised-button (click)="goReservationList()">
+        Moje rezerwacje
+      </button>
       <button mat-raised-button (click)="goLogin()">Zaloguj się</button>
       <button *ngIf="false" mat-raised-button>Wyloguj się</button>
     </mat-toolbar>
