@@ -10,7 +10,7 @@ const offerUrl = 'http://localhost:5000/api/offer/';
 export class OfferService {
   constructor(private http: HttpClient) {}
 
-  getOfferInfo(offerId: number): Observable<Offer> {
+  getOfferInfo(offerId: string | null): Observable<Offer> {
     return this.http.get<Offer>(offerUrl + offerId);
   }
 }
