@@ -5,7 +5,12 @@
     <ul>
       <li *ngFor="let reservation of reservations">
         <span>{{ reservation.id }}</span>
-        <button mat-raised-button>Zobacz</button>
+        <button
+          mat-raised-button
+          (click)="navigateToReservation(reservation.id)"
+        >
+          Zobacz
+        </button>
         <button mat-raised-button>Odwołaj</button>
       </li>
     </ul>

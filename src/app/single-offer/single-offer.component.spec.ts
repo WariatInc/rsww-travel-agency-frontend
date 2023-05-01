@@ -8,9 +8,8 @@ describe('SingleOfferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SingleOfferComponent ]
-    })
-    .compileComponents();
+      declarations: [SingleOfferComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SingleOfferComponent);
     component = fixture.componentInstance;

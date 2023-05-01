@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SingleOfferRoutingModule } from './single-offer-routing.module';
 import { SingleOfferComponent } from './single-offer.component';
 
-
 @NgModule({
-  declarations: [
-    SingleOfferComponent
-  ],
-  imports: [
-    CommonModule,
-    SingleOfferRoutingModule
-  ]
+  declarations: [SingleOfferComponent],
+  imports: [CommonModule, SingleOfferRoutingModule],
 })
-export class SingleOfferModule { }
+export class SingleOfferModule {}
