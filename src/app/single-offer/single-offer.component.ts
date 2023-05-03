@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from './service/offer-service';
 import { Offer } from '../common/model/offer';
 
@@ -12,12 +12,18 @@ export class SingleOfferComponent implements OnInit {
   private offerId: string | null | undefined;
   public offer!: Offer;
   public loadingOfferInfo: boolean = true;
+  public isOffer: boolean = true;
 
   constructor(
     private offerService: OfferService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   ngOnInit(): void {
+    if (this.router.url.includes('reservation')) {
+      this.isOffer = false;
+    }
+
     this.offerId = this.route.snapshot.paramMap.get('id');
     this.offerService.getOfferInfo(this.offerId).subscribe((offer) => {
       this.offer = offer;

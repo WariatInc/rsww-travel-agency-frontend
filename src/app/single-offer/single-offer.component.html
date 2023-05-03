@@ -15,9 +15,15 @@
 
   <p>{{ offer.description }}</p>
 
-  <button mat-raised-button>Rezerwuj</button>
+  <button *ngIf="isOffer; else cancelReservation" mat-raised-button>
+    Rezerwuj
+  </button>
 </div>
 
 <ng-template #loading>
   <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #cancelReservation>
+  <button mat-raised-button>Odwołaj rezerwację</button>
 </ng-template>
