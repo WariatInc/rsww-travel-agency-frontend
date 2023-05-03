@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Rezerwowanie oferty</h2>
+<mat-dialog-content>
+  <h3>Aby zarezerwować ofertę, trzeba najpierw dokonać płatności</h3>
+
+  <button mat-raised-button color="primary" (click)="makePayment()">
+    Płatność BLIK
+  </button>
+
+  <div *ngIf="paymentLoading">
+    <mat-spinner class="small-spinner"></mat-spinner>
+  </div>
+  <p>Status płatności: {{paymentState}}</p>
+</mat-dialog-content>
+
+<div class="spacer"></div>
+<mat-dialog-actions align="end">
+  <button
+    [disabled]="paymentLoading"
+    mat-button
+    color="primary"
+    (click)="closeDialog()"
+    mat-dialog-close=""
+  >
+    Wyjdź
+  </button>
+</mat-dialog-actions>
