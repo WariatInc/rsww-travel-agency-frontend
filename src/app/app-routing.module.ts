@@ -30,6 +30,21 @@ const routes: Routes = [
         (m) => m.ReservationListModule
       ),
   },
+  {
+    path: 'offer/:id',
+    loadChildren: () =>
+      import('./single-offer/single-offer.module').then(
+        (m) => m.SingleOfferModule
+      ),
+  },
+
+  {
+    path: 'reservation/:id',
+    loadChildren: () =>
+      import('./single-offer/single-offer.module').then(
+        (m) => m.SingleOfferModule
+      ),
+  },
 ];
 
 @NgModule({

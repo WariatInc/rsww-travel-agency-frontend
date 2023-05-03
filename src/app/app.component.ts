@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './common/service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,19 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'RSWW Travel Agency App';
+  userLoggedIn = false;
+  username: string | null | undefined;
+  constructor(private router: Router, private authService: AuthService) {}
+  ngOnInit() {
+    this.authUser();
+  }
 
-  constructor(private router: Router) {}
-  ngOnInit() {}
+  private authUser(): void {
+    this.userLoggedIn = this.authService.userIsAuth();
+    this.username = localStorage.getItem('token');
+    console.log(this.username);
+  }
+
   public goHome(): void {
     this.router.navigate(['./']);
   }
@@ -21,5 +32,15 @@ export class AppComponent implements OnInit {
 
   public goReservationList(): void {
     this.router.navigate(['./reservation-list']);
+  }
+
+  public logoutUser(): void {
+    this.authService.logout();
+    this.userLoggedIn = this.authService.userIsAuth();
+    this.goHome();
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 }

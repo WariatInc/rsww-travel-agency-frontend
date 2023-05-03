@@ -1,0 +1,29 @@
+<div class="content" *ngIf="!loadingOfferInfo; else loading">
+  <h1>{{ offer.country }} : {{ offer.city }}</h1>
+
+  <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
+
+  <p>ID oferty: {{ offer.offer_id }}, ID wycieczki: {{ offer.tour_id }}</p>
+  <p>Transport: {{ offer.transport }}</p>
+  <p>
+    Wyjazd dnia: {{ offer.departure_date }}, przyjazd dnia:
+    {{ offer.arrival_date }}
+  </p>
+  <p>
+    Dorosłych: {{ offer.number_of_adults }}, dzieci: {{ offer.number_of_kids }}
+  </p>
+
+  <p>{{ offer.description }}</p>
+
+  <button *ngIf="isOffer; else cancelReservation" mat-raised-button>
+    Rezerwuj
+  </button>
+</div>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #cancelReservation>
+  <button mat-raised-button>Odwołaj rezerwację</button>
+</ng-template>
