@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const reservationUrl = 'http://localhost:5000/api/reservation/list';
+const reservationCancelUrl = 'http://localhost:5000/api/reservation/cancel/';
+const reservationPaymentUrl = 'http://localhost:5000/api/payment/reservation';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,5 +15,29 @@ export class ReservationService {
 
   getUserReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(reservationUrl);
+  }
+
+  cancelReservation(id: string | null | undefined): Observable<Reservation> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'username..',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<Reservation>(
+      reservationCancelUrl + id,
+      null,
+      options
+    );
+  }
+
+  payForReservation(id: string | null | undefined): Observable<string> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'username..',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<string>(reservationPaymentUrl, id, options);
   }
 }

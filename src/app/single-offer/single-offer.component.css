@@ -7,3 +7,17 @@ mat-spinner {
   margin: -50px 0 0 -50px;
   transform: translateY(75%);
 }
+
+.small-spinner {
+  left: 70%;
+  transform: scale(80%);
+}
+
+.spacer {
+  min-height: 30%;
+  min-width: 30%;
+}
+
+p {
+  margin-top: 2%;
+}
