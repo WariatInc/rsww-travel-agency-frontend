@@ -9,8 +9,9 @@ import { Offer } from '../common/model/offer';
   styleUrls: ['./single-offer.component.css'],
 })
 export class SingleOfferComponent implements OnInit {
-  offerId: string | null | undefined;
-  offer: Offer | undefined;
+  private offerId: string | null | undefined;
+  public offer!: Offer;
+  public loadingOfferInfo: boolean = true;
 
   constructor(
     private offerService: OfferService,
@@ -20,6 +21,7 @@ export class SingleOfferComponent implements OnInit {
     this.offerId = this.route.snapshot.paramMap.get('id');
     this.offerService.getOfferInfo(this.offerId).subscribe((offer) => {
       this.offer = offer;
+      this.loadingOfferInfo = false;
     });
   }
 }
