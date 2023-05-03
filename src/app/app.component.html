@@ -10,11 +10,21 @@
     <mat-toolbar color="primary">
       <span (click)="goHome()">{{ title }}</span>
       <span class="example-spacer"></span>
-      <button mat-raised-button (click)="goReservationList()">
+      <div *ngIf="userLoggedIn">{{ this.username }}</div>
+      <button
+        *ngIf="this.userLoggedIn"
+        mat-raised-button
+        (click)="goReservationList()"
+      >
         Moje rezerwacje
       </button>
-      <button mat-raised-button (click)="goLogin()">Zaloguj się</button>
-      <button *ngIf="false" mat-raised-button>Wyloguj się</button>
+      <button
+        mat-raised-button
+        *ngIf="!this.userLoggedIn; else logout"
+        (click)="goLogin()"
+      >
+        Zaloguj się
+      </button>
     </mat-toolbar>
   </p>
   <body>
@@ -29,3 +39,7 @@
     </div>
   </footer>
 </html>
+
+<ng-template #logout>
+  <button mat-raised-button (click)="logoutUser()">Wyloguj się</button>
+</ng-template>
