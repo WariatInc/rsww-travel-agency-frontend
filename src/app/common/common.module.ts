@@ -7,10 +7,12 @@ import { AsyncPipe, NgForOf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { CancelDialogComponent } from './component/cancel-dialog/cancel-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [AutocompleteInputComponent],
+  declarations: [AutocompleteInputComponent, CancelDialogComponent],
   imports: [
     ReactiveFormsModule,
     MatAutocompleteModule,
@@ -21,6 +23,7 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   exports: [AutocompleteInputComponent],
 })

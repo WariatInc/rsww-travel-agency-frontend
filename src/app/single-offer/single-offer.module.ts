@@ -5,6 +5,7 @@ import { SingleOfferRoutingModule } from './single-offer-routing.module';
 import { SingleOfferComponent } from './single-offer.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [SingleOfferComponent],
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
     SingleOfferRoutingModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
 })
 export class SingleOfferModule {}

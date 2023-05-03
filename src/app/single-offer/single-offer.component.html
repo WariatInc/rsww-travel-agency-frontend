@@ -25,5 +25,7 @@
 </ng-template>
 
 <ng-template #cancelReservation>
-  <button mat-raised-button>Odwołaj rezerwację</button>
+  <button mat-raised-button (click)="doCancelReservation()">
+    Odwołaj rezerwację
+  </button>
 </ng-template>
