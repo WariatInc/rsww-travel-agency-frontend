@@ -26,13 +26,18 @@ export class SearchComponent implements OnInit {
     childrenNumber: '',
   });
 
-  ngOnInit() {
-    this.countryOptions.unshift('Gdziekolwiek');
-  }
+  ngOnInit() {}
 
   public submitSearch(): void {
-    console.log('submit search');
-    console.log(this.submitForm.value);
-    this.router.navigate(['./offer-list']);
+    this.router.navigate(['./offer-list'], {
+      queryParams: {
+        page: 1,
+        country: this.submitForm.value.country,
+        date_start: this.submitForm.value.startDate,
+        date_end: this.submitForm.value.endDate,
+        adults: this.submitForm.value.adultNumber,
+        kids: this.submitForm.value.childrenNumber,
+      },
+    });
   }
 }
