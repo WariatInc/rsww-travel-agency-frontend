@@ -15,3 +15,19 @@
 table {
   width: 100%;
 }
+
+mat-paginator {
+  /*background-color: black;*/
+  /*color: white;*/
+}
+
+.offer {
+  border: 2px solid purple;
+  margin-top: 2%;
+  padding: 2%;
+}
+
+img {
+  max-width: 35%;
+  max-height: 35%;
+}

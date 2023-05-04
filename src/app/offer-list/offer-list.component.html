@@ -1,35 +1,27 @@
-<table mat-table [dataSource]="dataSource">
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let element">{{ element.position }}</td>
-  </ng-container>
+<div class="content">
+  <div *ngIf="loaded; else loading">
+    <ul>
+      <li *ngFor="let offer of data.result">
+        <div class="offer">
+          <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
+          <p>
+            <strong>ID oferty:</strong> {{ offer.offer_id }},
+            <strong>ID wycieczki:</strong> {{ offer.tour_id }}
+          </p>
+          <p><strong>Wyjazd dnia: </strong>{{ offer.departure_date }}</p>
+          <p><strong>Przyjazd dnia: </strong>{{ offer.arrival_date }}</p>
+          <p><strong>Operator: </strong>{{ offer.operator }}</p>
+          <button mat-raised-button (click)="navigateToOffer(offer.offer_id)">
+            Zobacz
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Nazwa</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-  </ng-container>
+<mat-paginator [pageSizeOptions]="[25]" showFirstLastButtons> </mat-paginator>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef>Opis</th>
-    <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef>Symbol</th>
-    <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
-
-<mat-paginator
-  [pageSizeOptions]="[15]"
-  showFirstLastButtons
-  aria-label="Select page of periodic elements"
->
-</mat-paginator>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

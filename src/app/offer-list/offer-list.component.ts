@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../search/service/search.service';
 import { SearchResult } from '../common/model/search-result';
 
@@ -31,10 +31,13 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   private adults!: string;
   private kids!: string;
 
-  private data!: SearchResult;
+  public data!: SearchResult;
+
+  public loaded: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,11 +61,16 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       })
       .subscribe((result) => {
         this.data = result;
+        this.loaded = true;
       });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  navigateToOffer(id: string) {
+    this.router.navigate(['offer/' + id]);
   }
 }
 
