@@ -4,7 +4,8 @@
   <div *ngIf="loaded; else loading">
     <ul>
       <li *ngFor="let reservation of reservations">
-        <span>{{ reservation.id }}</span>
+        <p>{{ reservation.id }}</p>
+        <p>{{ reservation.state }}</p>
         <button
           mat-raised-button
           (click)="navigateToReservation(reservation.id)"

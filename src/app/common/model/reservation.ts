@@ -1,4 +1,4 @@
 export interface Reservation {
-  id: number;
+  id: string;
   state: string;
 }

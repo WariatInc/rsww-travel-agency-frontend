@@ -21,3 +21,12 @@ mat-spinner {
 p {
   margin-top: 2%;
 }
+
+img {
+  max-height: 90%;
+  max-width: 90%;
+}
+
+button {
+  margin: 0.5%;
+}

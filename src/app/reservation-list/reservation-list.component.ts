@@ -18,12 +18,13 @@ export class ReservationListComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.reservationService.getUserReservations().subscribe((reservations) => {
-      this.reservations = reservations;
+      this.reservations = reservations.reservations;
+      console.log(this.reservations);
       this.loaded = true;
     });
   }
 
-  navigateToReservation(id: number) {
+  navigateToReservation(id: string) {
     this.router.navigate(['reservation/' + id]);
   }
 }

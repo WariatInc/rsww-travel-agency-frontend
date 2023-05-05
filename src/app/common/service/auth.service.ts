@@ -16,4 +16,14 @@ export class AuthService {
   userIsAuth(): boolean {
     return localStorage.getItem('isLoggedIn') === 'true';
   }
+
+  getUserInfo(): string | string[] {
+    let userInfo = localStorage.getItem('token');
+
+    if (userInfo === null) {
+      userInfo = '';
+    }
+
+    return userInfo;
+  }
 }

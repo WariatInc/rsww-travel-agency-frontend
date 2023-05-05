@@ -58,9 +58,9 @@ export class SingleOfferComponent implements OnInit {
   }
 
   makeNewReservation(): void {
-    const dialogRef = this.dialog.open(NewReservationDialog, {
+    this.dialog.open(NewReservationDialog, {
       disableClose: true,
-      height: '40%',
+      height: '42%',
       data: { id: this.offerId },
     });
   }
@@ -74,6 +74,9 @@ export class SingleOfferComponent implements OnInit {
 export class NewReservationDialog {
   paymentLoading: boolean = false;
   public paymentState: string = 'BRAK';
+
+  public reservationMade: boolean = false;
+  private reservationId!: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
     private reservationService: ReservationService,
@@ -84,14 +87,23 @@ export class NewReservationDialog {
     this.paymentLoading = true;
     this.paymentState = 'CZEKANIE';
     this.reservationService
-      .payForReservation(this.data.id)
+      .payForReservation(this.reservationId)
       .subscribe((response) => {
         this.paymentLoading = false;
-        if (response == 'finalized') {
+        if (response.result == 'finalized') {
           this.paymentState = 'ZAAKCEPTOWANA';
         } else {
           this.paymentState = 'ODRZUCONA';
         }
+      });
+  }
+
+  makeReservation(): void {
+    this.reservationService
+      .makeReservation(this.data.id)
+      .subscribe((response) => {
+        this.reservationMade = true;
+        this.reservationId = response.reservation_id;
       });
   }
 
