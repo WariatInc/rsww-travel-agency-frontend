@@ -26,18 +26,14 @@ export class ReservationService {
     return this.http.get<ReservationListResponse>(reservationUrl, options);
   }
 
-  cancelReservation(id: string | null | undefined): Observable<Reservation> {
+  cancelReservation(id: string | null | undefined): Observable<void> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.authService.getUserInfo(),
     });
     let options = { headers: headers };
 
-    return this.http.post<Reservation>(
-      reservationCancelUrl + id,
-      null,
-      options
-    );
+    return this.http.post<void>(reservationCancelUrl + id, null, options);
   }
 
   payForReservation(

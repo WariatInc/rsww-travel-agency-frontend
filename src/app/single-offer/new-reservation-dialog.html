@@ -14,7 +14,7 @@
   <button
     mat-raised-button
     color="primary"
-    [disabled]="!reservationMade"
+    [disabled]="!reservationMade || paymentMade"
     (click)="makePayment()"
   >
     Płatność BLIK

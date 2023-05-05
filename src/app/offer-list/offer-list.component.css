@@ -24,6 +24,7 @@ mat-paginator {
 .offer {
   border: 2px solid purple;
   margin-top: 2%;
+  margin-right: 2%;
   padding: 2%;
 }
 

@@ -17,6 +17,10 @@ export class ReservationListComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.initReservations();
+  }
+
+  initReservations(): void {
     this.reservationService.getUserReservations().subscribe((reservations) => {
       this.reservations = reservations.reservations;
       console.log(this.reservations);
@@ -26,5 +30,12 @@ export class ReservationListComponent implements OnInit {
 
   navigateToReservation(id: string) {
     this.router.navigate(['reservation/' + id]);
+  }
+
+  deleteReservation(id: string) {
+    this.reservationService.cancelReservation(id).subscribe(() => {
+      this.loaded = false;
+      this.initReservations();
+    });
   }
 }

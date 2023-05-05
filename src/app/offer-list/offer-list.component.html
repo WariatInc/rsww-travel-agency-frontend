@@ -4,6 +4,7 @@
       <li *ngFor="let offer of data.result">
         <div class="offer">
           <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
+          <p><strong>Gdzie: </strong> {{ offer.country }}, {{ offer.city }}</p>
           <p>
             <strong>ID oferty:</strong> {{ offer.offer_id }},
             <strong>ID wycieczki:</strong> {{ offer.tour_id }}

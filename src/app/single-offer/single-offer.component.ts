@@ -45,13 +45,9 @@ export class SingleOfferComponent implements OnInit {
       if (result) {
         this.reservationService
           .cancelReservation(this.offerId)
-          .subscribe((reservation: Reservation) => {
-            if (reservation.state === 'canceled') {
-              this._snackBar.open('Odwołano rezerwację', 'OK');
-              this.router.navigate(['offer/' + this.offerId]);
-            } else {
-              this._snackBar.open('Błąd przy odwoływaniu rezerwacji', 'OK');
-            }
+          .subscribe(() => {
+            this._snackBar.open('Odwołano rezerwację', 'OK');
+            this.router.navigate(['offer/' + this.offerId]);
           });
       }
     });
@@ -77,6 +73,7 @@ export class NewReservationDialog {
 
   public reservationMade: boolean = false;
   private reservationId!: string;
+  public paymentMade: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
     private reservationService: ReservationService,
@@ -90,6 +87,7 @@ export class NewReservationDialog {
       .payForReservation(this.reservationId)
       .subscribe((response) => {
         this.paymentLoading = false;
+        this.paymentMade = true;
         if (response.result == 'finalized') {
           this.paymentState = 'ZAAKCEPTOWANA';
         } else {
