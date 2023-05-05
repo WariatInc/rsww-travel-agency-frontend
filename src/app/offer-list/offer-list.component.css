@@ -16,9 +16,8 @@ table {
   width: 100%;
 }
 
-mat-paginator {
-  /*background-color: black;*/
-  /*color: white;*/
+.mat-paginator-range-label {
+  display: none;
 }
 
 .offer {
