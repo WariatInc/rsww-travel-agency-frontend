@@ -5,9 +5,9 @@ import { Offer } from '../common/model/offer';
 import { CancelDialogComponent } from '../common/component/cancel-dialog/cancel-dialog.component';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ReservationService } from '../reservation-list/service/reservation.service';
-import { Reservation } from '../common/model/reservation';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../common/service/auth.service';
+import { ErrorService } from '../common/service/error.service';
 
 @Component({
   selector: 'app-single-offer',
@@ -26,8 +26,7 @@ export class SingleOfferComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private reservationService: ReservationService,
-    private _snackBar: MatSnackBar,
-    private authUser: AuthService
+    private _snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     if (this.router.url.includes('reservation')) {
@@ -80,7 +79,8 @@ export class NewReservationDialog {
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
     private reservationService: ReservationService,
     private router: Router,
-    private authUser: AuthService
+    private authUser: AuthService,
+    private errorService: ErrorService
   ) {}
 
   makePayment(): void {

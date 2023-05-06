@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { SearchOffer } from '../../common/model/search-offer';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SearchParams } from '../../common/model/search-params';
 import { SearchResult } from '../../common/model/search-result';
+import { ErrorService } from '../../common/service/error.service';
+import { error } from '@angular/compiler-cli/src/transformers/util';
 
 const offerSearchUrl = 'http://localhost:8010/api/offer/search/';
 
@@ -11,7 +13,7 @@ const offerSearchUrl = 'http://localhost:8010/api/offer/search/';
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private errorService: ErrorService) {}
 
   getSearchOffers(searchParams: SearchParams): Observable<SearchResult> {
     console.log(searchParams);
@@ -44,6 +46,10 @@ export class SearchService {
       params.kids = searchParams.kids;
     }
 
-    return this.http.get<SearchResult>(offerSearchUrl, { params });
+    return this.http.get<SearchResult>(offerSearchUrl, { params }).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
   }
 }
