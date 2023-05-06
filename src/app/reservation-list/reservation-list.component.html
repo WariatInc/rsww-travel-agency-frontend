@@ -8,6 +8,9 @@
           <p>Id rezerwacji: {{ reservation.id }}</p>
           <p>Id oferty: {{ reservation.offer_id }}</p>
           <p>Stan rezerwacji: {{ reservation.state }}</p>
+          <p *ngIf="reservation.state === 'rejected'">
+            Powód odrzucenia: {{ reservation.rejection_reason }}
+          </p>
 
           <button
             mat-raised-button

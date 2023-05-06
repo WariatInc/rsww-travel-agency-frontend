@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CancelDialogComponent } from './component/cancel-dialog/cancel-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AutocompleteInputComponent, CancelDialogComponent],
@@ -24,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [AutocompleteInputComponent],
 })

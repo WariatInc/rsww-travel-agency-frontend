@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ReservationService } from '../reservation-list/service/reservation.service';
 import { Reservation } from '../common/model/reservation';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-single-offer',
@@ -25,7 +26,8 @@ export class SingleOfferComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private reservationService: ReservationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private authUser: AuthService
   ) {}
   ngOnInit(): void {
     if (this.router.url.includes('reservation')) {
@@ -77,7 +79,8 @@ export class NewReservationDialog {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
     private reservationService: ReservationService,
-    private router: Router
+    private router: Router,
+    private authUser: AuthService
   ) {}
 
   makePayment(): void {
@@ -97,12 +100,15 @@ export class NewReservationDialog {
   }
 
   makeReservation(): void {
-    this.reservationService
-      .makeReservation(this.data.id)
-      .subscribe((response) => {
-        this.reservationMade = true;
-        this.reservationId = response.reservation_id;
-      });
+    const func = (): void => {
+      this.reservationService
+        .makeReservation(this.data.id)
+        .subscribe((response) => {
+          this.reservationMade = true;
+          this.reservationId = response.reservation_id;
+        });
+    };
+    this.authUser.doIfUserLoggedIn(func);
   }
 
   closeDialog(): void {
