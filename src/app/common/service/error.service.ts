@@ -16,7 +16,7 @@ export class ErrorService {
       this.errorMsg = `Error: ${error.message}`;
     }
     this._snackbar
-      .open(this.errorMsg, 'OK')
+      .open(this.errorMsg, 'Strona główna', { duration: 5000 })
       .onAction()
       .subscribe(() => {
         this.router.navigate(['./']).then(this.refresh);

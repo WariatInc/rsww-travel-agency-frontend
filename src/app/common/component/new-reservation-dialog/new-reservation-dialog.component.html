@@ -1,8 +1,9 @@
-<h2 mat-dialog-title>Rezerwowanie oferty</h2>
+<h2 mat-dialog-title>Płatność za rezerwację</h2>
 <mat-dialog-content>
   <h3>Aby zarezerwować ofertę, trzeba najpierw dokonać płatności</h3>
 
   <button
+    *ngIf="!data.isReserved"
     mat-raised-button
     color="primary"
     (click)="makeReservation()"
@@ -14,7 +15,11 @@
   <button
     mat-raised-button
     color="primary"
-    [disabled]="!reservationMade || paymentMade"
+    [disabled]="
+      !reservationMade ||
+      (!reservationMade && paymentMade) ||
+      (data.isReserved && paymentMade)
+    "
     (click)="makePayment()"
   >
     Płatność BLIK
@@ -23,13 +28,12 @@
   <div *ngIf="paymentLoading">
     <mat-spinner class="small-spinner"></mat-spinner>
   </div>
-  <p>Status płatności: {{paymentState}}</p>
+  <p>Status płatności: {{ paymentState }}</p>
 </mat-dialog-content>
 
 <div class="spacer"></div>
 <mat-dialog-actions align="end">
   <button
-    [disabled]="paymentLoading"
     mat-button
     color="primary"
     (click)="closeDialog()"
