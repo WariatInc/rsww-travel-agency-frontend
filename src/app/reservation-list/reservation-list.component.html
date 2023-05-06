@@ -4,14 +4,21 @@
   <div *ngIf="loaded; else loading">
     <ul>
       <li *ngFor="let reservation of reservations">
-        <span>{{ reservation.id }}</span>
-        <button
-          mat-raised-button
-          (click)="navigateToReservation(reservation.id)"
-        >
-          Zobacz
-        </button>
-        <button mat-raised-button>Odwołaj</button>
+        <div class="reservation">
+          <p>Id rezerwacji: {{ reservation.id }}</p>
+          <p>Id oferty: {{ reservation.offer_id }}</p>
+          <p>Stan rezerwacji: {{ reservation.state }}</p>
+
+          <button
+            mat-raised-button
+            (click)="navigateToReservation(reservation.offer_id)"
+          >
+            Zobacz
+          </button>
+          <button mat-raised-button (click)="deleteReservation(reservation.id)">
+            Usuń
+          </button>
+        </div>
       </li>
     </ul>
   </div>

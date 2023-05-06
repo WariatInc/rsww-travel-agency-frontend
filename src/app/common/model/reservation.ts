@@ -1,4 +1,5 @@
 export interface Reservation {
-  id: number;
+  id: string;
   state: string;
+  offer_id: string;
 }
