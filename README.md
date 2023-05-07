@@ -20,7 +20,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng e2e` to execute the end-to-end tests with selenium. This command will automatically start a docker container with selenium set up. You can view tests with VNC on http://localhost:7900/?autoconnect=1&resize=scale&password=secret.
 
 ## Further help
 
