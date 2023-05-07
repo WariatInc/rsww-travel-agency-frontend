@@ -55,7 +55,7 @@ describe("Search results", async function() {
       const inspect_button = await offer.findElement(By.xpath("button"));
       // TODO: If there will bo more buttons, take that into account
       await inspect_button.click();
-      await driver.sleep(1_000);
+      await driver.sleep(500);
       const inspected_offer = await driver.findElement(By.xpath("//app-single-offer"));
       assert(inspected_offer !== null, "Offer inspection doesn't seem to work");
     });

@@ -8,7 +8,7 @@ const URL = "http://localhost:4200/";
 
 describe("Example", function () {
     it("Should be ...", async function() {
-        selenium_run(async (driver) => {
+        await selenium_run(async (driver) => {
             driver.get(URL);
             assert(true, "Sample test works.")
         });
