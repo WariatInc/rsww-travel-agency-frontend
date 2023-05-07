@@ -14,30 +14,30 @@ async function selenium_run(testcase) {
     const driver = driver_builder.setChromeOptions(options).build();
 
     try {
-      await testcase(driver);
+        await testcase(driver);
     }
     finally {
-      await driver.quit();
+        await driver.quit();
     }
 }
 
 async function find_button_with_text(driver, text) {
-  const all_buttons = await driver.findElements(By.xpath("//button"));
-  for (const button of all_buttons) {
-    const button_text = await button.getText();
-    if (button_text.trim().toLowerCase() === text.trim().toLowerCase()) {
-      return button;
+    const all_buttons = await driver.findElements(By.xpath("//button"));
+    for (const button of all_buttons) {
+        const button_text = await button.getText();
+        if (button_text.trim().toLowerCase() === text.trim().toLowerCase()) {
+            return button;
+        }
     }
-  }
-  return null;
+    return null;
 }
 
 async function get_search_button(driver) {
-  return await find_button_with_text(driver, "Szukaj");
+    return await find_button_with_text(driver, "Szukaj");
 }
 
 async function get_login_button(driver) {
-  return await find_button_with_text(driver, "Zaloguj się");
+    return await find_button_with_text(driver, "Zaloguj się");
 }
 
 module.exports = {

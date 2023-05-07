@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const assert = require("assert");
-const {describe, it} = require("mocha");
+const { describe, it } = require("mocha");
 
 const { selenium_run, get_search_button } = require("./util");
 
@@ -32,7 +32,7 @@ describe("Search button", function () {
   });
 });
 
-describe("Search results", async function() {
+describe("Search results", async function () {
   let search_result_url = null;
   it("When no fields are set, there should be at least one offer", async function () {
     await selenium_run(async (driver) => {
@@ -46,7 +46,7 @@ describe("Search results", async function() {
     });
   });
 
-  it("It should be possible to inspect offer", async function() {
+  it("It should be possible to inspect offer", async function () {
     assert(search_result_url !== null, "There are no offers");
     await selenium_run(async (driver) => {
       await driver.get(search_result_url);
