@@ -8,7 +8,7 @@ const URL = "http://localhost:4200/";
 
 describe("Search fields", function () {
   // TODO
-})
+});
 
 describe("Search button", function () {
   it("Should have proper text inside", async function () {
@@ -25,9 +25,12 @@ describe("Search button", function () {
       const search_button = await get_search_button(driver);
       const current_url = await driver.getCurrentUrl();
       await search_button.click();
-      await driver.sleep(100);
+      await driver.wait(until.urlContains("offer-list"), 500);
       const next_url = await driver.getCurrentUrl();
-      assert(current_url != next_url, "URL should have changed after the button was clicked");
+      assert(
+        current_url != next_url,
+        "URL should have changed after the button was clicked"
+      );
     });
   });
 });
@@ -39,8 +42,10 @@ describe("Search results", async function () {
       await driver.get(URL);
       const search_button = await get_search_button(driver);
       await search_button.click();
-      await driver.sleep(500);
-      const offers = await driver.findElements(By.className("offer"));
+      const offers = await driver.wait(
+        until.elementsLocated(By.className("offer")),
+        500
+      );
       assert(offers.length > 0, "There should be > 0 offers");
       search_result_url = await driver.getCurrentUrl();
     });
@@ -50,14 +55,18 @@ describe("Search results", async function () {
     assert(search_result_url !== null, "There are no offers");
     await selenium_run(async (driver) => {
       await driver.get(search_result_url);
-      await driver.sleep(500);
-      const offer = await driver.findElement(By.className("offer"));
+      const offer = await driver.wait(
+        until.elementLocated(By.className("offer")),
+        500
+      );
       const inspect_button = await offer.findElement(By.xpath("button"));
       // TODO: If there will bo more buttons, take that into account
       await inspect_button.click();
-      await driver.sleep(500);
-      const inspected_offer = await driver.findElement(By.xpath("//app-single-offer"));
+      const inspected_offer = await driver.wait(
+        until.elementLocated(By.xpath("//app-single-offer")),
+        500
+      );
       assert(inspected_offer !== null, "Offer inspection doesn't seem to work");
     });
-  })
-})
+  });
+});

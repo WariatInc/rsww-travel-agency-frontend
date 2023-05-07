@@ -7,10 +7,10 @@ const { selenium_run } = require("./util");
 const URL = "http://localhost:4200/";
 
 describe("Example", function () {
-    it("Should be ...", async function () {
-        await selenium_run(async (driver) => {
-            driver.get(URL);
-            assert(true, "Sample test works.")
-        });
-    })
-})
+  it("Should be ...", async function () {
+    await selenium_run(async (driver) => {
+      driver.get(URL);
+      assert(true, "Sample test works.");
+    });
+  });
+});
