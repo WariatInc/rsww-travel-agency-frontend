@@ -13,6 +13,7 @@
           </p>
 
           <button
+            *ngIf="reservation.state !== 'rejected'"
             mat-raised-button
             (click)="
               navigateToReservation(reservation.id, reservation.offer_id)
@@ -29,7 +30,11 @@
             Zapłać
           </button>
 
-          <button mat-raised-button (click)="deleteReservation(reservation.id)">
+          <button
+            *ngIf="reservation.state === 'rejected'"
+            mat-raised-button
+            (click)="deleteReservation(reservation.id)"
+          >
             Usuń
           </button>
         </div>

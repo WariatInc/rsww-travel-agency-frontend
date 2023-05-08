@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReservationService } from '../reservation-list/service/reservation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
+import { ConfirmReservationDialogComponent } from '../common/component/confirm-reservation-dialog/confirm-reservation-dialog.component';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-single-offer',
@@ -26,7 +28,8 @@ export class SingleOfferComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private reservationService: ReservationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private authUser: AuthService
   ) {}
   ngOnInit(): void {
     if (this.router.url.includes('reservation')) {
@@ -56,10 +59,23 @@ export class SingleOfferComponent implements OnInit {
   }
 
   makeNewReservation(): void {
-    this.dialog.open(NewReservationDialog, {
-      disableClose: true,
-      height: '42%',
-      data: { id: this.offerId, isReserved: false },
-    });
+    const func = (): void => {
+      const dialogRef = this.dialog.open(ConfirmReservationDialogComponent);
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.reservationService
+            .makeReservation(<string>this.offerId)
+            .subscribe((reservation) => {
+              this.router.navigate([
+                'offer/' +
+                  this.offerId +
+                  '/reservation/' +
+                  reservation.reservation_id,
+              ]);
+            });
+        }
+      });
+    };
+    this.authUser.doIfUserLoggedIn(func);
   }
 }

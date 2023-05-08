@@ -4,7 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { Offer } from '../../common/model/offer';
 import { ErrorService } from '../../common/service/error.service';
 
-const offerUrl = 'http://localhost:8010/api/offer/get/';
+const offerUrl = 'http://localhost:8040/api/offers/';
 @Injectable({
   providedIn: 'root',
 })

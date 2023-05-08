@@ -13,12 +13,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NewReservationDialog } from './component/new-reservation-dialog/new-reservation-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ConfirmReservationDialogComponent } from './component/confirm-reservation-dialog/confirm-reservation-dialog.component';
 
 @NgModule({
   declarations: [
     AutocompleteInputComponent,
     CancelDialogComponent,
     NewReservationDialog,
+    ConfirmReservationDialogComponent,
   ],
   imports: [
     ReactiveFormsModule,

@@ -25,9 +25,9 @@ export class ReservationListComponent implements OnInit {
   }
 
   initReservations(): void {
+    this.loaded = false;
     this.reservationService.getUserReservations().subscribe((reservations) => {
       this.reservations = reservations.reservations;
-      console.log(this.reservations);
       this.loaded = true;
     });
   }
@@ -37,7 +37,7 @@ export class ReservationListComponent implements OnInit {
   }
 
   deleteReservation(id: string) {
-    this.reservationService.cancelReservation(id).subscribe(() => {
+    this.reservationService.deleteReservation(id).subscribe(() => {
       this.loaded = false;
       this.initReservations();
     });
@@ -46,6 +46,9 @@ export class ReservationListComponent implements OnInit {
   payForReservation(id: string) {
     this.dialog.open(NewReservationDialog, {
       data: { id: id, isReserved: true },
+    });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.initReservations();
     });
   }
 }

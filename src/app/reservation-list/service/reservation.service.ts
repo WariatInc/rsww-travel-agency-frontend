@@ -7,9 +7,9 @@ import { PaymentResponse } from '../../common/model/payment-response';
 import { ReservationListResponse } from '../../common/model/reservation-list-response';
 import { ErrorService } from '../../common/service/error.service';
 
-const reservationUrl = 'http://localhost:8000/api/reservations/';
-const reservationCancelUrl = 'http://localhost:8000/api/reservations/cancel/';
-const reservationPaymentUrl = 'http://localhost:8030/api/payment/reservation';
+const reservationUrl = 'http://localhost:8040/api/reservations/';
+const reservationCancelUrl = 'http://localhost:8040/api/reservations/cancel/';
+const reservationPaymentUrl = 'http://localhost:8040/api/payment/reservation';
 
 @Injectable({
   providedIn: 'root',
@@ -80,5 +80,19 @@ export class ReservationService {
           return this.errorService.errorCatcher(error);
         })
       );
+  }
+
+  deleteReservation(id: string | null | undefined): Observable<void> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.authService.getUserInfo(),
+    });
+    let options = { headers: headers };
+
+    return this.http.delete<void>(reservationUrl + id, options).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
   }
 }
