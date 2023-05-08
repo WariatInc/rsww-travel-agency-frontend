@@ -1,12 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from './service/offer-service';
 import { Offer } from '../common/model/offer';
 import { CancelDialogComponent } from '../common/component/cancel-dialog/cancel-dialog.component';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ReservationService } from '../reservation-list/service/reservation.service';
-import { Reservation } from '../common/model/reservation';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
+import { ConfirmReservationDialogComponent } from '../common/component/confirm-reservation-dialog/confirm-reservation-dialog.component';
+import { AuthService } from '../common/service/auth.service';
+import { forkJoin } from 'rxjs';
+import { Reservation } from '../common/model/reservation';
 
 @Component({
   selector: 'app-single-offer',
@@ -15,9 +19,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SingleOfferComponent implements OnInit {
   private offerId: string | null | undefined;
+  private reservationId: string | null | undefined;
   public offer!: Offer;
   public loadingOfferInfo: boolean = true;
   public isOffer: boolean = true;
+  public reservation!: Reservation;
 
   constructor(
     private offerService: OfferService,
@@ -25,18 +31,32 @@ export class SingleOfferComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private reservationService: ReservationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private authUser: AuthService
   ) {}
   ngOnInit(): void {
     if (this.router.url.includes('reservation')) {
       this.isOffer = false;
     }
 
-    this.offerId = this.route.snapshot.paramMap.get('id');
+    this.offerId = this.route.snapshot.paramMap.get('offerId');
+    this.reservationId = this.route.snapshot.paramMap.get('reservationId');
     this.offerService.getOfferInfo(this.offerId).subscribe((offer) => {
       this.offer = offer;
       this.loadingOfferInfo = false;
     });
+
+    if (this.reservationId) {
+      this.initReservation();
+    }
+  }
+
+  initReservation(): void {
+    this.reservationService
+      .getReservation(this.reservationId)
+      .subscribe((reservation) => {
+        this.reservation = reservation;
+      });
   }
 
   doCancelReservation(): void {
@@ -44,7 +64,7 @@ export class SingleOfferComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.reservationService
-          .cancelReservation(this.offerId)
+          .cancelReservation(this.reservationId)
           .subscribe(() => {
             this._snackBar.open('Odwołano rezerwację', 'OK');
             this.router.navigate(['offer/' + this.offerId]);
@@ -54,60 +74,29 @@ export class SingleOfferComponent implements OnInit {
   }
 
   makeNewReservation(): void {
-    this.dialog.open(NewReservationDialog, {
-      disableClose: true,
-      height: '42%',
-      data: { id: this.offerId },
-    });
-  }
-}
-
-@Component({
-  selector: 'new-reservation-dialog',
-  templateUrl: 'new-reservation-dialog.html',
-  styleUrls: ['single-offer.component.css'],
-})
-export class NewReservationDialog {
-  paymentLoading: boolean = false;
-  public paymentState: string = 'BRAK';
-
-  public reservationMade: boolean = false;
-  private reservationId!: string;
-  public paymentMade: boolean = false;
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id: string },
-    private reservationService: ReservationService,
-    private router: Router
-  ) {}
-
-  makePayment(): void {
-    this.paymentLoading = true;
-    this.paymentState = 'CZEKANIE';
-    this.reservationService
-      .payForReservation(this.reservationId)
-      .subscribe((response) => {
-        this.paymentLoading = false;
-        this.paymentMade = true;
-        if (response.result == 'finalized') {
-          this.paymentState = 'ZAAKCEPTOWANA';
-        } else {
-          this.paymentState = 'ODRZUCONA';
+    const func = (): void => {
+      const dialogRef = this.dialog.open(ConfirmReservationDialogComponent);
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.reservationService
+            .makeReservation(<string>this.offerId)
+            .subscribe((reservation) => {
+              this.router.navigate(['reservation-list']);
+            });
         }
       });
+    };
+    this.authUser.doIfUserLoggedIn(func);
   }
 
-  makeReservation(): void {
-    this.reservationService
-      .makeReservation(this.data.id)
-      .subscribe((response) => {
-        this.reservationMade = true;
-        this.reservationId = response.reservation_id;
+  payForReservation(): void {
+    const func = (): void => {
+      const dialogRef = this.dialog.open(NewReservationDialog, {
+        data: { id: this.reservationId, isReserved: true },
       });
-  }
+      dialogRef.afterClosed().subscribe(() => this.initReservation());
+    };
 
-  closeDialog(): void {
-    if (this.paymentState == 'ZAAKCEPTOWANA') {
-      this.router.navigate(['reservation/' + this.data.id]);
-    }
+    this.authUser.doIfUserLoggedIn(func);
   }
 }

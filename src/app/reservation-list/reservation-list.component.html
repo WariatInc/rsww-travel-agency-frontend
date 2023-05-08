@@ -8,14 +8,33 @@
           <p>Id rezerwacji: {{ reservation.id }}</p>
           <p>Id oferty: {{ reservation.offer_id }}</p>
           <p>Stan rezerwacji: {{ reservation.state }}</p>
+          <p *ngIf="reservation.state === 'rejected'">
+            Powód odrzucenia: {{ reservation.rejection_reason }}
+          </p>
 
           <button
+            *ngIf="reservation.state !== 'rejected'"
             mat-raised-button
-            (click)="navigateToReservation(reservation.offer_id)"
+            (click)="
+              navigateToReservation(reservation.id, reservation.offer_id)
+            "
           >
             Zobacz
           </button>
-          <button mat-raised-button (click)="deleteReservation(reservation.id)">
+
+          <button
+            *ngIf="reservation.state === 'accepted'"
+            mat-raised-button
+            (click)="payForReservation(reservation.id)"
+          >
+            Zapłać
+          </button>
+
+          <button
+            *ngIf="reservation.state === 'rejected'"
+            mat-raised-button
+            (click)="deleteReservation(reservation.id)"
+          >
             Usuń
           </button>
         </div>

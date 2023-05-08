@@ -31,3 +31,15 @@ img {
   max-width: 35%;
   max-height: 35%;
 }
+
+mat-spinner {
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  transform: translateY(75%);
+}
+
+h2 {
+  text-align: center;
+  margin-top: 2%;
+}

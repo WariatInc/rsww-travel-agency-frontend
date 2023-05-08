@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  constructor(private router: Router, private _snackbar: MatSnackBar) {}
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
     localStorage.removeItem('token');
@@ -25,5 +27,22 @@ export class AuthService {
     }
 
     return userInfo;
+  }
+
+  doIfUserLoggedIn(callback: () => void): void {
+    if (this.userIsAuth()) {
+      callback();
+    } else {
+      this._snackbar
+        .open('Żeby to zrobić musisz się zalogować', 'OK')
+        .onAction()
+        .subscribe(() => {
+          this.router.navigate(['login']).then(this.refresh);
+        });
+    }
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 }

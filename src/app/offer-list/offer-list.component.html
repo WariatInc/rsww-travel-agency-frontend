@@ -1,43 +1,51 @@
-<mat-paginator
-  [pageSizeOptions]="[25]"
-  (page)="pageEvent = $event; onPaginateChange($event)"
-  [length]="this.data.max_page * 25"
-  showFirstLastButtons
->
-</mat-paginator>
+<div *ngIf="loaded; else loading">
+  <div *ngIf="data.result.length > 0; else noContent">
+    <mat-paginator
+      [pageSizeOptions]="[25]"
+      (page)="pageEvent = $event; onPaginateChange($event)"
+      [length]="this.data ? this.data.max_page * 25 : 0"
+      showFirstLastButtons
+    >
+    </mat-paginator>
 
-<div class="content">
-  <div *ngIf="loaded; else loading">
-    <ul>
-      <li *ngFor="let offer of data.result">
-        <div class="offer">
-          <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
-          <p><strong>Gdzie: </strong> {{ offer.country }}, {{ offer.city }}</p>
-          <p>
-            <strong>ID oferty:</strong> {{ offer.offer_id }},
-            <strong>ID wycieczki:</strong> {{ offer.tour_id }}
-          </p>
-          <p><strong>Wyjazd dnia: </strong>{{ offer.departure_date }}</p>
-          <p><strong>Przyjazd dnia: </strong>{{ offer.arrival_date }}</p>
-          <p><strong>Operator: </strong>{{ offer.operator }}</p>
-          <button mat-raised-button (click)="navigateToOffer(offer.offer_id)">
-            Zobacz
-          </button>
-        </div>
-      </li>
-    </ul>
+    <div class="content">
+      <ul>
+        <li *ngFor="let offer of data.result">
+          <div class="offer">
+            <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
+            <p>
+              <strong>Gdzie: </strong> {{ offer.country }}, {{ offer.city }}
+            </p>
+            <p>
+              <strong>ID oferty:</strong> {{ offer.offer_id }},
+              <strong>ID wycieczki:</strong> {{ offer.tour_id }}
+            </p>
+            <p><strong>Wyjazd dnia: </strong>{{ offer.departure_date }}</p>
+            <p><strong>Przyjazd dnia: </strong>{{ offer.arrival_date }}</p>
+            <p><strong>Operator: </strong>{{ offer.operator }}</p>
+            <button mat-raised-button (click)="navigateToOffer(offer.offer_id)">
+              Zobacz
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <mat-paginator
+      *ngIf="loaded"
+      [pageSizeOptions]="[25]"
+      (page)="pageEvent = $event; onPaginateChange($event)"
+      [length]="this.data ? this.data.max_page * 25 : 0"
+      showFirstLastButtons
+    >
+    </mat-paginator>
   </div>
 </div>
 
-<mat-paginator
-  *ngIf="loaded"
-  [pageSizeOptions]="[25]"
-  (page)="pageEvent = $event; onPaginateChange($event)"
-  [length]="this.data.max_page * 25"
-  showFirstLastButtons
->
-</mat-paginator>
-
 <ng-template #loading>
   <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #noContent>
+  <h2>Nie znaleziono ofert dla wybranych filtrów.</h2>
 </ng-template>

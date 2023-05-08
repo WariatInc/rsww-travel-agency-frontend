@@ -31,7 +31,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'offer/:id',
+    path: 'offer/:offerId',
     loadChildren: () =>
       import('./single-offer/single-offer.module').then(
         (m) => m.SingleOfferModule
@@ -39,7 +39,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'reservation/:id',
+    path: 'offer/:offerId/reservation/:reservationId',
     loadChildren: () =>
       import('./single-offer/single-offer.module').then(
         (m) => m.SingleOfferModule

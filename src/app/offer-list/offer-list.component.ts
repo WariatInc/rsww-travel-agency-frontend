@@ -14,6 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../search/service/search.service';
 import { SearchResult } from '../common/model/search-result';
 import { Location } from '@angular/common';
+import { error } from '@angular/compiler-cli/src/transformers/util';
+import { ErrorService } from '../common/service/error.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-offer-list',
@@ -41,7 +44,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     private route: ActivatedRoute,
     private searchService: SearchService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit() {

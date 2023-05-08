@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { OfferListRoutingModule } from './offer-list-routing.module';
 import { OfferListComponent } from './offer-list.component';

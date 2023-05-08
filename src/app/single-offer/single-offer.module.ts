@@ -2,17 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SingleOfferRoutingModule } from './single-offer-routing.module';
-import {
-  NewReservationDialog,
-  SingleOfferComponent,
-} from './single-offer.component';
+import { SingleOfferComponent } from './single-offer.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [SingleOfferComponent, NewReservationDialog],
+  declarations: [SingleOfferComponent],
   imports: [
     CommonModule,
     SingleOfferRoutingModule,

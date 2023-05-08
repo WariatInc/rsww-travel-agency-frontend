@@ -29,7 +29,24 @@
 </ng-template>
 
 <ng-template #cancelReservation>
-  <button mat-raised-button (click)="doCancelReservation()">
-    Odwołaj rezerwację
-  </button>
+  <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
+  <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
+  <p *ngIf="reservation.state === 'rejected'">
+    <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
+  </p>
+
+  <div
+    *ngIf="reservation.state === 'accepted' || reservation.state === 'pending'"
+  >
+    <button
+      mat-raised-button
+      *ngIf="reservation.state === 'accepted'"
+      (click)="payForReservation()"
+    >
+      Zapłać
+    </button>
+    <button mat-raised-button (click)="doCancelReservation()">
+      Odwołaj rezerwację
+    </button>
+  </div>
 </ng-template>
