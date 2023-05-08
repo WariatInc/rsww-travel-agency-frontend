@@ -6,6 +6,7 @@ import { MakeReservationResponse } from '../../common/model/make-reservation-res
 import { PaymentResponse } from '../../common/model/payment-response';
 import { ReservationListResponse } from '../../common/model/reservation-list-response';
 import { ErrorService } from '../../common/service/error.service';
+import { Reservation } from '../../common/model/reservation';
 
 const reservationUrl = 'http://localhost:8040/api/reservations/';
 const reservationCancelUrl = 'http://localhost:8040/api/reservations/cancel/';
@@ -90,6 +91,20 @@ export class ReservationService {
     let options = { headers: headers };
 
     return this.http.delete<void>(reservationUrl + id, options).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
+  }
+
+  getReservation(id: string | null | undefined): Observable<Reservation> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.authService.getUserInfo(),
+    });
+    let options = { headers: headers };
+
+    return this.http.get<Reservation>(reservationUrl + id, options).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })

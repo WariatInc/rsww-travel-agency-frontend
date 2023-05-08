@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
 import { ConfirmReservationDialogComponent } from '../common/component/confirm-reservation-dialog/confirm-reservation-dialog.component';
 import { AuthService } from '../common/service/auth.service';
+import { forkJoin } from 'rxjs';
+import { Reservation } from '../common/model/reservation';
 
 @Component({
   selector: 'app-single-offer',
@@ -21,6 +23,7 @@ export class SingleOfferComponent implements OnInit {
   public offer!: Offer;
   public loadingOfferInfo: boolean = true;
   public isOffer: boolean = true;
+  public reservation!: Reservation;
 
   constructor(
     private offerService: OfferService,
@@ -42,6 +45,18 @@ export class SingleOfferComponent implements OnInit {
       this.offer = offer;
       this.loadingOfferInfo = false;
     });
+
+    if (this.reservationId) {
+      this.initReservation();
+    }
+  }
+
+  initReservation(): void {
+    this.reservationService
+      .getReservation(this.reservationId)
+      .subscribe((reservation) => {
+        this.reservation = reservation;
+      });
   }
 
   doCancelReservation(): void {
@@ -66,16 +81,22 @@ export class SingleOfferComponent implements OnInit {
           this.reservationService
             .makeReservation(<string>this.offerId)
             .subscribe((reservation) => {
-              this.router.navigate([
-                'offer/' +
-                  this.offerId +
-                  '/reservation/' +
-                  reservation.reservation_id,
-              ]);
+              this.router.navigate(['reservation-list']);
             });
         }
       });
     };
+    this.authUser.doIfUserLoggedIn(func);
+  }
+
+  payForReservation(): void {
+    const func = (): void => {
+      const dialogRef = this.dialog.open(NewReservationDialog, {
+        data: { id: this.reservationId, isReserved: true },
+      });
+      dialogRef.afterClosed().subscribe(() => this.initReservation());
+    };
+
     this.authUser.doIfUserLoggedIn(func);
   }
 }
