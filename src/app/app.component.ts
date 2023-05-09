@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './common/service/auth.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,8 @@ export class AppComponent implements OnInit {
   title = 'RSWW Travel Agency App';
   userLoggedIn = false;
   username: string | null | undefined;
+
+  public apiURL = environment.API_URL;
   constructor(private router: Router, private authService: AuthService) {}
   ngOnInit() {
     this.authUser();

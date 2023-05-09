@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
 import { ConfirmReservationDialogComponent } from '../common/component/confirm-reservation-dialog/confirm-reservation-dialog.component';
 import { AuthService } from '../common/service/auth.service';
-import { forkJoin } from 'rxjs';
 import { Reservation } from '../common/model/reservation';
 
 @Component({
