@@ -8,12 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   form!: FormGroup;
-  submitted: boolean = false;
 
-  countryOptions: string[] = [
+  loginOptions: string[] = [
     'jeremias.sofia@gmail.com',
     'klaus.randi@gmail.com',
     'isabela.julius@gmail.com',

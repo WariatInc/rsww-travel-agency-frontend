@@ -4,6 +4,7 @@
   <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
 
   <p>ID oferty: {{ offer.offer_id }}, ID wycieczki: {{ offer.tour_id }}</p>
+  <p>Operator: {{ offer.operator }}</p>
   <p>Transport: {{ offer.transport }}</p>
   <p>
     Przyjazd dnia:
@@ -15,13 +16,34 @@
   </p>
 
   <p>{{ offer.description }}</p>
+  <div *ngIf="offer.number_of_kids" class="flex">
+    <app-autocomplete-input
+      [parentForm]="kidsForm"
+      [options]="numberOptions"
+      [label]="'Dzieci do 3rż'"
+      [formName]="'kidsUpTo3'"
+      (valueChangedEvent)="handleUpTo3ValueChange($event)"
+    >
+    </app-autocomplete-input>
+    <app-autocomplete-input
+      [parentForm]="kidsForm"
+      [options]="numberOptions"
+      [label]="'Dzieci do 10rż'"
+      [formName]="'kidsUpTo10'"
+      (valueChangedEvent)="handleUpTo10ValueChange($event)"
+    >
+    </app-autocomplete-input>
+  </div>
+  <p *ngIf="tooMuchKids"><strong>Wybrałeś za dużo dzieci.</strong></p>
 
   <button
+    class="newReservationBtn"
     *ngIf="isOffer && offer.is_available; else reservationView"
     (click)="makeNewReservation()"
     mat-raised-button
+    [disabled]="tooMuchKids"
   >
-    Rezerwuj
+    Rezerwuję, cena: <strong>{{ offerPrice }}</strong>
   </button>
 </div>
 
