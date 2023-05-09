@@ -7,9 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [SearchComponent],
@@ -24,6 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatButtonModule,
+    NgIf,
+    MatProgressSpinnerModule,
   ],
 })
 export class SearchModule {}

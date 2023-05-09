@@ -6,9 +6,10 @@
   <p>ID oferty: {{ offer.offer_id }}, ID wycieczki: {{ offer.tour_id }}</p>
   <p>Transport: {{ offer.transport }}</p>
   <p>
-    Wyjazd dnia: {{ offer.departure_date }}, przyjazd dnia:
+    Przyjazd dnia:
     {{ offer.arrival_date }}
   </p>
+  <p>Wyjazd dnia: {{ offer.departure_date }}</p>
   <p>
     Dorosłych: {{ offer.number_of_adults }}, dzieci: {{ offer.number_of_kids }}
   </p>
@@ -16,7 +17,7 @@
   <p>{{ offer.description }}</p>
 
   <button
-    *ngIf="isOffer; else cancelReservation"
+    *ngIf="isOffer && offer.is_available; else reservationView"
     (click)="makeNewReservation()"
     mat-raised-button
   >
@@ -28,25 +29,33 @@
   <mat-spinner></mat-spinner>
 </ng-template>
 
-<ng-template #cancelReservation>
-  <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
-  <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
-  <p *ngIf="reservation.state === 'rejected'">
-    <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
-  </p>
+<ng-template #reservationView>
+  <div *ngIf="!isOffer; else offerNotAvailable">
+    <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
+    <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
+    <p *ngIf="reservation.state === 'rejected'">
+      <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
+    </p>
 
-  <div
-    *ngIf="reservation.state === 'accepted' || reservation.state === 'pending'"
-  >
-    <button
-      mat-raised-button
-      *ngIf="reservation.state === 'accepted'"
-      (click)="payForReservation()"
+    <div
+      *ngIf="
+        reservation.state === 'accepted' || reservation.state === 'pending'
+      "
     >
-      Zapłać
-    </button>
-    <button mat-raised-button (click)="doCancelReservation()">
-      Odwołaj rezerwację
-    </button>
+      <button
+        mat-raised-button
+        *ngIf="reservation.state === 'accepted'"
+        (click)="payForReservation()"
+      >
+        Zapłać
+      </button>
+      <button mat-raised-button (click)="doCancelReservation()">
+        Odwołaj rezerwację
+      </button>
+    </div>
   </div>
+</ng-template>
+
+<ng-template #offerNotAvailable>
+  <strong><h2>Oferta nie jest dostępna</h2></strong>
 </ng-template>
