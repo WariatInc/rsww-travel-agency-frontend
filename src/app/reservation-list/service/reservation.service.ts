@@ -81,6 +81,13 @@ export class ReservationService {
     });
     let options = { headers: headers };
 
+    if (kidsUpTo3 === null || kidsUpTo3 === undefined || isNaN(kidsUpTo3)) {
+      kidsUpTo3 = 0;
+    }
+    if (kidsUpTo10 === null || kidsUpTo10 === undefined || isNaN(kidsUpTo10)) {
+      kidsUpTo10 = 0;
+    }
+
     return this.http
       .post<MakeReservationResponse>(
         reservationUrl,

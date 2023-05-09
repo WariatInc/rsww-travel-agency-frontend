@@ -16,7 +16,9 @@
     mat-raised-button
     color="primary"
     [disabled]="
-      (!reservationMade && paymentMade) || (data.isReserved && paymentMade)
+      (!reservationMade && paymentMade) ||
+      (data.isReserved && paymentMade) ||
+      paymentLoading
     "
     (click)="makePayment()"
   >
