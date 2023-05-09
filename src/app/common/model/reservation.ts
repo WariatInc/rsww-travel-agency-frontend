@@ -3,4 +3,5 @@ export interface Reservation {
   state: string;
   offer_id: string;
   rejection_reason: string;
+  price: number;
 }

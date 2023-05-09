@@ -58,6 +58,7 @@
     <p *ngIf="reservation.state === 'rejected'">
       <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
     </p>
+    <p><strong>Cena rezerwacji: </strong>{{ reservation.price }}</p>
 
     <div
       *ngIf="
@@ -71,7 +72,11 @@
       >
         Zapłać
       </button>
-      <button mat-raised-button (click)="doCancelReservation()">
+      <button
+        class="newReservationBtn"
+        mat-raised-button
+        (click)="doCancelReservation()"
+      >
         Odwołaj rezerwację
       </button>
     </div>
