@@ -70,7 +70,11 @@ export class ReservationService {
       );
   }
 
-  makeReservation(id: string): Observable<MakeReservationResponse> {
+  makeReservation(
+    id: string,
+    kidsUpTo3: number,
+    kidsUpTo10: number
+  ): Observable<MakeReservationResponse> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.authService.getUserInfo(),
@@ -78,7 +82,11 @@ export class ReservationService {
     let options = { headers: headers };
 
     return this.http
-      .post<MakeReservationResponse>(reservationUrl, { offer_id: id }, options)
+      .post<MakeReservationResponse>(
+        reservationUrl,
+        { offer_id: id, kids_up_to_3: kidsUpTo3, kids_up_to_10: kidsUpTo10 },
+        options
+      )
       .pipe(
         catchError((error) => {
           return this.errorService.errorCatcher(error);

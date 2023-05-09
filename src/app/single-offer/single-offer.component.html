@@ -16,7 +16,7 @@
   </p>
 
   <p>{{ offer.description }}</p>
-  <div *ngIf="offer.number_of_kids" class="flex">
+  <div *ngIf="offer.number_of_kids && isOffer" class="flex">
     <app-autocomplete-input
       [parentForm]="kidsForm"
       [options]="numberOptions"

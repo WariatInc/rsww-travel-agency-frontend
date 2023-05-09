@@ -131,7 +131,11 @@ export class SingleOfferComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.reservationService
-            .makeReservation(<string>this.offerId)
+            .makeReservation(
+              <string>this.offerId,
+              +this.kidsUpTo3,
+              +this.kidsUpTo10
+            )
             .subscribe((reservation) => {
               this.router.navigate(['reservation-list']);
             });
