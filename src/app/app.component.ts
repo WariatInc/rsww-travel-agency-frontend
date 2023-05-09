@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
   userLoggedIn = false;
   username: string | null | undefined;
 
-  public apiURL = environment.API_URL;
   constructor(private router: Router, private authService: AuthService) {}
   ngOnInit() {
     this.authUser();

@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { Offer } from '../../common/model/offer';
 import { ErrorService } from '../../common/service/error.service';
+import { environment } from '../../../environments/environment';
 
-const offerUrl = 'http://localhost:8040/api/offers/';
+let apiUrl = environment.API_URL;
+const offerUrl = apiUrl + 'api/offers/';
 @Injectable({
   providedIn: 'root',
 })

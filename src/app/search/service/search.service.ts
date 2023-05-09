@@ -7,8 +7,10 @@ import { SearchResult } from '../../common/model/search-result';
 import { ErrorService } from '../../common/service/error.service';
 import { error } from '@angular/compiler-cli/src/transformers/util';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
-const offerSearchUrl = 'http://localhost:8040/api/offers/search';
+let apiUrl = environment.API_URL;
+const offerSearchUrl = apiUrl + 'api/offers/search';
 
 @Injectable({
   providedIn: 'root',

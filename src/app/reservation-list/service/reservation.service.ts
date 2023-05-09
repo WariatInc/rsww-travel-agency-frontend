@@ -7,10 +7,13 @@ import { PaymentResponse } from '../../common/model/payment-response';
 import { ReservationListResponse } from '../../common/model/reservation-list-response';
 import { ErrorService } from '../../common/service/error.service';
 import { Reservation } from '../../common/model/reservation';
+import { environment } from '../../../environments/environment';
 
-const reservationUrl = 'http://localhost:8040/api/reservations/';
-const reservationCancelUrl = 'http://localhost:8040/api/reservations/cancel/';
-const reservationPaymentUrl = 'http://localhost:8040/api/payment/reservation';
+let apiUrl = environment.API_URL;
+
+const reservationUrl = apiUrl + 'api/reservations/';
+const reservationCancelUrl = apiUrl + 'api/reservations/cancel/';
+const reservationPaymentUrl = apiUrl + 'api/payment/reservation';
 
 @Injectable({
   providedIn: 'root',
