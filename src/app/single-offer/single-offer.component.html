@@ -4,23 +4,46 @@
   <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
 
   <p>ID oferty: {{ offer.offer_id }}, ID wycieczki: {{ offer.tour_id }}</p>
+  <p>Operator: {{ offer.operator }}</p>
   <p>Transport: {{ offer.transport }}</p>
   <p>
-    Wyjazd dnia: {{ offer.departure_date }}, przyjazd dnia:
+    Przyjazd dnia:
     {{ offer.arrival_date }}
   </p>
+  <p>Wyjazd dnia: {{ offer.departure_date }}</p>
   <p>
     Dorosłych: {{ offer.number_of_adults }}, dzieci: {{ offer.number_of_kids }}
   </p>
 
   <p>{{ offer.description }}</p>
+  <div *ngIf="offer.number_of_kids && isOffer" class="flex">
+    <app-autocomplete-input
+      [parentForm]="kidsForm"
+      [options]="numberOptions"
+      [label]="'Dzieci do 3rż'"
+      [formName]="'kidsUpTo3'"
+      (valueChangedEvent)="handleUpTo3ValueChange($event)"
+    >
+    </app-autocomplete-input>
+    <app-autocomplete-input
+      [parentForm]="kidsForm"
+      [options]="numberOptions"
+      [label]="'Dzieci do 10rż'"
+      [formName]="'kidsUpTo10'"
+      (valueChangedEvent)="handleUpTo10ValueChange($event)"
+    >
+    </app-autocomplete-input>
+  </div>
+  <p *ngIf="tooMuchKids"><strong>Wybrałeś za dużo dzieci.</strong></p>
 
   <button
-    *ngIf="isOffer; else cancelReservation"
+    class="newReservationBtn"
+    *ngIf="isOffer && offer.is_available; else reservationView"
     (click)="makeNewReservation()"
     mat-raised-button
+    [disabled]="tooMuchKids"
   >
-    Rezerwuj
+    Rezerwuję, cena: <strong>{{ offerPrice }}</strong>
   </button>
 </div>
 
@@ -28,25 +51,38 @@
   <mat-spinner></mat-spinner>
 </ng-template>
 
-<ng-template #cancelReservation>
-  <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
-  <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
-  <p *ngIf="reservation.state === 'rejected'">
-    <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
-  </p>
+<ng-template #reservationView>
+  <div *ngIf="!isOffer; else offerNotAvailable">
+    <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
+    <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
+    <p *ngIf="reservation.state === 'rejected'">
+      <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
+    </p>
+    <p><strong>Cena rezerwacji: </strong>{{ reservation.price }}</p>
 
-  <div
-    *ngIf="reservation.state === 'accepted' || reservation.state === 'pending'"
-  >
-    <button
-      mat-raised-button
-      *ngIf="reservation.state === 'accepted'"
-      (click)="payForReservation()"
+    <div
+      *ngIf="
+        reservation.state === 'accepted' || reservation.state === 'pending'
+      "
     >
-      Zapłać
-    </button>
-    <button mat-raised-button (click)="doCancelReservation()">
-      Odwołaj rezerwację
-    </button>
+      <button
+        mat-raised-button
+        *ngIf="reservation.state === 'accepted'"
+        (click)="payForReservation()"
+      >
+        Zapłać
+      </button>
+      <button
+        class="newReservationBtn"
+        mat-raised-button
+        (click)="doCancelReservation()"
+      >
+        Odwołaj rezerwację
+      </button>
+    </div>
   </div>
+</ng-template>
+
+<ng-template #offerNotAvailable>
+  <strong><h2>Oferta nie jest dostępna</h2></strong>
 </ng-template>

@@ -7,10 +7,13 @@ import { PaymentResponse } from '../../common/model/payment-response';
 import { ReservationListResponse } from '../../common/model/reservation-list-response';
 import { ErrorService } from '../../common/service/error.service';
 import { Reservation } from '../../common/model/reservation';
+import { environment } from '../../../environments/environment';
 
-const reservationUrl = 'http://localhost:8040/api/reservations/';
-const reservationCancelUrl = 'http://localhost:8040/api/reservations/cancel/';
-const reservationPaymentUrl = 'http://localhost:8040/api/payment/reservation';
+let apiUrl = environment.API_URL;
+
+const reservationUrl = apiUrl + 'api/reservations/';
+const reservationCancelUrl = apiUrl + 'api/reservations/cancel/';
+const reservationPaymentUrl = apiUrl + 'api/payment/reservation';
 
 @Injectable({
   providedIn: 'root',
@@ -67,15 +70,30 @@ export class ReservationService {
       );
   }
 
-  makeReservation(id: string): Observable<MakeReservationResponse> {
+  makeReservation(
+    id: string,
+    kidsUpTo3: number,
+    kidsUpTo10: number
+  ): Observable<MakeReservationResponse> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.authService.getUserInfo(),
     });
     let options = { headers: headers };
 
+    if (kidsUpTo3 === null || kidsUpTo3 === undefined || isNaN(kidsUpTo3)) {
+      kidsUpTo3 = 0;
+    }
+    if (kidsUpTo10 === null || kidsUpTo10 === undefined || isNaN(kidsUpTo10)) {
+      kidsUpTo10 = 0;
+    }
+
     return this.http
-      .post<MakeReservationResponse>(reservationUrl, { offer_id: id }, options)
+      .post<MakeReservationResponse>(
+        reservationUrl,
+        { offer_id: id, kids_up_to_3: kidsUpTo3, kids_up_to_10: kidsUpTo10 },
+        options
+      )
       .pipe(
         catchError((error) => {
           return this.errorService.errorCatcher(error);

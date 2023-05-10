@@ -23,10 +23,18 @@ p {
 }
 
 img {
-  max-height: 90%;
-  max-width: 90%;
+  max-height: 65%;
+  max-width: 65%;
 }
 
-button {
-  margin: 0.5%;
+.newReservationBtn {
+  margin: 0.3%;
+}
+
+app-autocomplete-input {
+  margin: 0.2%;
+}
+
+.flex {
+  display: flex;
 }

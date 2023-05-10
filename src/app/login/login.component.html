@@ -4,7 +4,7 @@
   <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="login()">
       <app-autocomplete-input
-        [options]="countryOptions"
+        [options]="loginOptions"
         [label]="'Adres e-mail'"
         [formName]="'email'"
         [parentForm]="form"

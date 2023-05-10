@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Form, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -15,12 +15,15 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() formName: string = '';
 
   @Input() parentForm!: FormGroup;
+
+  @Output() valueChangedEvent = new EventEmitter<string>();
   definedOptions!: string[];
 
   filteredOptions: Observable<string[]> | undefined;
+  initialForm!: FormGroup;
 
   ngOnInit() {
-    console.log(this.parentForm, this.formName);
+    this.initialForm = this.parentForm;
     this.definedOptions = this.options ?? [''];
     this.filteredOptions = this.parentForm.valueChanges.pipe(
       startWith(''),
@@ -29,13 +32,26 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   private _filter(value: FormGroup): string[] {
+    if (
+      value !== undefined &&
+      value !== null &&
+      value &&
+      value[this.formName as keyof typeof value]
+    ) {
+      this.valueChangedEvent.emit(value[this.formName as keyof typeof value]);
+    }
+
     let filterValue = '';
-    if (value) {
+    if (value && value[this.formName as keyof typeof value]) {
       filterValue = value[this.formName as keyof typeof value].toLowerCase();
     }
 
     return this.definedOptions.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
+  }
+
+  public resetValues(): void {
+    this.parentForm = this.initialForm;
   }
 }

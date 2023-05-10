@@ -8,4 +8,5 @@ export interface SearchOffer {
   operator: string;
   thumbnail_url: string;
   tour_id: string;
+  price: number;
 }

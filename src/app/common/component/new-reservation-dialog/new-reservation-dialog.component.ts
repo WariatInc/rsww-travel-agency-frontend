@@ -47,17 +47,17 @@ export class NewReservationDialog implements OnInit {
       });
   }
 
-  makeReservation(): void {
-    const func = (): void => {
-      this.reservationService
-        .makeReservation(this.data.id)
-        .subscribe((response) => {
-          this.reservationMade = true;
-          this.reservationId = response.reservation_id;
-        });
-    };
-    this.authUser.doIfUserLoggedIn(func);
-  }
+  // makeReservation(): void {
+  //   const func = (): void => {
+  //     this.reservationService
+  //       .makeReservation(this.data.id)
+  //       .subscribe((response) => {
+  //         this.reservationMade = true;
+  //         this.reservationId = response.reservation_id;
+  //       });
+  //   };
+  //   this.authUser.doIfUserLoggedIn(func);
+  // }
 
   closeDialog(): void {
     if (this.paymentState == 'ZAAKCEPTOWANA') {
