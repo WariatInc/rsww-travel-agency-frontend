@@ -75,3 +75,10 @@ mat-spinner {
   max-height: 100%;
   transform: translate(-13%, -8%);
 }
+
+.upper-text {
+  font-family: "Lato", serif;
+  font-style: normal;
+  font-weight: 540;
+  font-size: 18px;
+}
