@@ -2,20 +2,30 @@
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+  border-radius: 25px;
 }
 
 .example-full-width {
-  width: 100%;
+  width: 90%;
+  border-radius: 25px;
+  height: 1%;
+  background-color: white;
+}
+
+mat-label {
+  font-size: 14px;
 }
 
 input[type="search"].dark {
-  background: #222;
+  background: #cbc4c4;
   color: #fff;
+  border-radius: 25px;
 }
 
 input[type="search"].light {
-  background: #fff;
+  background: #cbc4c4;
   color: #222;
+  border-radius: 25px;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -37,4 +47,13 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 input[type="search"].dark::-webkit-search-cancel-button {
   filter: invert(1);
+}
+
+input {
+  border-radius: 25px;
+}
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 100px !important;
+  min-width: 28px !important;
 }

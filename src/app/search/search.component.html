@@ -18,14 +18,16 @@
           <mat-label>Od kiedy do kiedy</mat-label>
           <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
             <input
+              style="color: black; font-size: 11px"
               matStartDate
               formControlName="startDate"
-              placeholder="Start date"
+              placeholder=""
             />
             <input
+              style="color: black; font-size: 11px"
               matEndDate
               formControlName="endDate"
-              placeholder="End date"
+              placeholder=""
             />
           </mat-date-range-input>
           <mat-datepicker-toggle
@@ -59,7 +61,6 @@
           [parentForm]="submitForm"
         ></app-autocomplete-input>
       </div>
-
       <button class="bf-button" type="submit" mat-raised-button>Szukaj</button>
     </div>
   </form>

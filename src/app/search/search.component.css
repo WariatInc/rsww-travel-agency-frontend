@@ -3,18 +3,17 @@ h3 {
 }
 
 .bf-button {
-  min-width: 4%;
-  min-height: 10%;
-  display: flex;
+  min-width: 12%;
+  min-height: 90%;
+  transform: translateY(25%);
+  color: white;
+  background-color: #2b3d41;
 }
 
 .formDiv {
-  vertical-align: top;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   flex-direction: row;
-  transform: translateX(2.5%);
+  transform: translateX(1%);
 }
 
 img {
@@ -32,12 +31,13 @@ h2 {
 }
 
 .input {
-  box-shadow: black;
+  /*box-shadow: black;*/
 }
 
 .input-calendar {
-  max-width: 25%;
-  color: black;
+  max-width: 20%;
+  margin-right: 2.5%;
+  font-size: 11px;
 }
 
 mat-spinner {
@@ -81,4 +81,16 @@ mat-spinner {
   font-style: normal;
   font-weight: 540;
   font-size: 18px;
+}
+
+app-autocomplete-input {
+  /*margin-right: 0.5%;*/
+}
+
+mat-label {
+  font-size: 14px;
+}
+
+.input-calendar > input {
+  font-size: 11px;
 }
