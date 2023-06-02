@@ -1,3 +1,21 @@
+.image {
+  display: flex;
+  width: 150vh;
+  height: 100%;
+  transform: translate(-24.5%);
+  margin: 0px;
+}
+
 app-autocomplete-input {
   max-width: 30%;
+  margin: 0;
+}
+
+.card {
+  transform: translate(25.5%, -550%);
+}
+
+button {
+  margin: 0;
+  transform: translate(200%, 5%);
 }

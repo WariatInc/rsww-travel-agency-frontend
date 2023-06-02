@@ -7,9 +7,7 @@
 
 .example-full-width {
   width: 90%;
-  border-radius: 25px;
   height: 1%;
-  background-color: white;
 }
 
 mat-label {
@@ -56,4 +54,5 @@ input {
 ::ng-deep .mat-form-field-outline-start {
   border-radius: 100px !important;
   min-width: 28px !important;
+  background: #cbc4c4;
 }
