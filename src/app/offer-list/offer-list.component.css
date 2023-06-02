@@ -1,35 +1,24 @@
-.mat-mdc-row .mat-mdc-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-mdc-row:hover .mat-mdc-cell {
-  border-color: currentColor;
-}
-
-.demo-row-is-clicked {
-  font-weight: bold;
-}
-
-table {
-  width: 100%;
-}
-
 .mat-paginator-range-label {
   display: none;
 }
 
 .offer {
-  border: 2px solid purple;
-  margin-top: 2%;
+  margin-top: 0.5%;
   margin-right: 2%;
-  padding: 2%;
+  padding: 1%;
+  border: 1px solid;
+  border-radius: 10px;
+  border-color: lightgrey;
 }
 
 img {
-  max-width: 35%;
-  max-height: 35%;
+  width: 50vh;
+  height: 25vh;
+  border-radius: 11px;
+}
+
+.image {
+  margin-right: 3%;
 }
 
 mat-spinner {
@@ -42,4 +31,30 @@ mat-spinner {
 h2 {
   text-align: center;
   margin-top: 2%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.offer {
+  display: flex;
+}
+
+.offer:hover {
+  cursor: pointer;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  justify-content: space-between;
+}
+
+.next-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  justify-content: space-between;
 }

@@ -15,7 +15,18 @@
         alt="logo"
       />
       <span class="example-spacer"></span>
-      <div *ngIf="userLoggedIn">{{ this.username }}</div>
+      <div *ngIf="userLoggedIn">
+        <p
+          style="
+            font-size: 13px;
+            position: relative;
+            transform: translateY(20%);
+            padding-right: 10px;
+          "
+        >
+          {{ this.username }}
+        </p>
+      </div>
       <button
         *ngIf="this.userLoggedIn"
         mat-raised-button
