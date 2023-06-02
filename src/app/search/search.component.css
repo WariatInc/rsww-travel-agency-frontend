@@ -49,19 +49,20 @@ mat-spinner {
 
 .image {
   display: flex;
-  height: 45%;
+  height: 40%;
   width: 165%;
   transform: translate(-18.5%, -40%);
 }
 
 .formParent {
-  margin-top: 3%;
+  margin-top: 4%;
 }
 
 .additional {
   display: flex;
   flex-direction: row;
   text-align: center;
+  margin-top: 3%;
 }
 
 .mini-additional {
