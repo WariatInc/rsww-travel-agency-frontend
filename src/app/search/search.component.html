@@ -1,7 +1,8 @@
-<h1>Wariat.Company</h1>
-<h1>Wyszukiwarka ofert</h1>
+<div class="image">
+  <img src="/assets/img/mountains.png" />
+</div>
 
-<div *ngIf="loaded; else loading">
+<div class="formParent" *ngIf="loaded; else loading">
   <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
     <div class="formDiv">
       <div class="input">
@@ -59,15 +60,37 @@
         ></app-autocomplete-input>
       </div>
 
-      <button class="bf-button" type="submit" color="primary" mat-raised-button>
-        Szukaj
-      </button>
+      <button class="bf-button" type="submit" mat-raised-button>Szukaj</button>
     </div>
   </form>
 </div>
 
-<div class="image">
-  <img src="/assets/img/dominikana.jpg" />
+<div class="additional">
+  <div class="mini-additional">
+    <p>Last minute</p>
+    <br /><img src="assets/img/add-1.png" />
+    <p>9 kierunków do wyboru!</p>
+  </div>
+  <div class="mini-additional">
+    <p>Wyjazd z rodziną</p>
+    <br /><img src="assets/img/add-2.png" />
+    <p>Zaplanujemy bezpieczny wyjazd za Ciebie!</p>
+  </div>
+  <div class="mini-additional">
+    <p>Wyjazd dla dwojga</p>
+    <br /><img src="assets/img/add-3.png" />
+    <p>Podróż w najbardziej urokliwe miejsca!</p>
+  </div>
+  <div class="mini-additional">
+    <p>Majówka</p>
+    <br /><img src="assets/img/add-4.png" />
+    <p>Podróż w najbardziej urokliwe miejsca!</p>
+  </div>
+  <div class="mini-additional">
+    <p>Długie wakacje</p>
+    <br /><img src="assets/img/add-5.png" />
+    <p>Podróż w najbardziej urokliwe miejsca!</p>
+  </div>
 </div>
 
 <ng-template #loading>

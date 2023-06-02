@@ -7,8 +7,13 @@
     <title>RSWW</title>
   </head>
   <p class="toolbar">
-    <mat-toolbar color="primary">
-      <span (click)="goHome()">{{ title }}</span>
+    <mat-toolbar color="white">
+      <img
+        class="logo"
+        src="assets/img/crazy-travel-logo.png"
+        (click)="goHome()"
+        alt="logo"
+      />
       <span class="example-spacer"></span>
       <div *ngIf="userLoggedIn">{{ this.username }}</div>
       <button
