@@ -1,5 +1,18 @@
 .content {
-  margin: 1.5%;
+  margin-top: 1%;
+  display: flex;
+  flex-direction: column;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
+}
+
+.data {
+  margin-left: 13%;
+  margin-right: 11%;
 }
 mat-spinner {
   position: absolute;
@@ -19,22 +32,46 @@ mat-spinner {
 }
 
 p {
-  margin-top: 2%;
+  margin-top: 1%;
 }
 
 img {
-  max-height: 65%;
-  max-width: 65%;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 1200px;
+  max-height: 500px;
+  border-radius: 11px;
 }
 
 .newReservationBtn {
-  margin: 0.3%;
+  color: white;
+  background: #2b3d41;
+  width: 180%;
+  margin-right: 3%;
+}
+
+.reservationViewButton {
+  color: white;
+  background: #2b3d41;
+  width: 180%;
+  margin-right: 3%;
+}
+
+.newReservationBtn:disabled {
+  color: gray;
+  cursor: not-allowed;
 }
 
 app-autocomplete-input {
-  margin: 0.2%;
+  margin-right: 0.2%;
 }
 
 .flex {
   display: flex;
+}
+
+.newReservation {
+  display: flex;
+  flex-direction: row;
 }

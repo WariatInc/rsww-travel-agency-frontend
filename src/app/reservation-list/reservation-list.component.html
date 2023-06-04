@@ -1,47 +1,52 @@
-<div class="content">
-  <h3>Twoje rezerwacje:</h3>
+<div *ngIf="loaded; else loading">
+  <ul>
+    <li *ngFor="let reservation of reservations">
+      <div class="reservation">
+        <div class="flex">
+          <div class="image">
+            <img src="assets/img/mock.jpg" alt="obrazek" />
+          </div>
+          <div class="details">
+            <p>Koszt rezerwacji:</p>
+            <p>Stan rezerwacji:</p>
+            <p *ngIf="reservation.state === 'rejected'">Powód odrzucenia:</p>
+            <button
+              *ngIf="reservation.state !== 'rejected'"
+              mat-raised-button
+              (click)="
+                navigateToReservation(reservation.id, reservation.offer_id)
+              "
+            >
+              Zobacz
+            </button>
 
-  <div *ngIf="loaded; else loading">
-    <ul>
-      <li *ngFor="let reservation of reservations">
-        <div class="reservation">
-          <p>Id rezerwacji: {{ reservation.id }}</p>
-          <p>Id oferty: {{ reservation.offer_id }}</p>
-          <p>Hajs za rezerwację: {{ reservation.price }}</p>
-          <p>Stan rezerwacji: {{ reservation.state }}</p>
-          <p *ngIf="reservation.state === 'rejected'">
-            Powód odrzucenia: {{ reservation.rejection_reason }}
-          </p>
+            <button
+              *ngIf="reservation.state === 'accepted'"
+              mat-raised-button
+              (click)="payForReservation(reservation.id)"
+            >
+              Zapłać
+            </button>
 
-          <button
-            *ngIf="reservation.state !== 'rejected'"
-            mat-raised-button
-            (click)="
-              navigateToReservation(reservation.id, reservation.offer_id)
-            "
-          >
-            Zobacz
-          </button>
-
-          <button
-            *ngIf="reservation.state === 'accepted'"
-            mat-raised-button
-            (click)="payForReservation(reservation.id)"
-          >
-            Zapłać
-          </button>
-
-          <button
-            *ngIf="reservation.state === 'rejected'"
-            mat-raised-button
-            (click)="deleteReservation(reservation.id)"
-          >
-            Usuń
-          </button>
+            <button
+              *ngIf="reservation.state === 'rejected'"
+              mat-raised-button
+              (click)="deleteReservation(reservation.id)"
+            >
+              Usuń
+            </button>
+          </div>
+          <div class="data">
+            <p>{{ reservation.price }} PLN</p>
+            <p>{{ reservation.state }}</p>
+            <p *ngIf="reservation.state === 'rejected'">
+              {{ reservation.rejection_reason }}
+            </p>
+          </div>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </li>
+  </ul>
 </div>
 <ng-template #loading>
   <mat-spinner></mat-spinner>

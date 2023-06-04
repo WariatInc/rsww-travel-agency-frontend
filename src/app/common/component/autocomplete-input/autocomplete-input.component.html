@@ -1,12 +1,13 @@
 <div>
   <form class="example-form" [formGroup]="parentForm">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>{{ label }}</mat-label>
+    <mat-form-field class="example-full-width">
+      <mat-label style="color: black">{{ label }}</mat-label>
       <input
+        style="color: black"
         type="search"
         placeholder=""
         [formControlName]="formName"
-        aria-label="Panstwo"
+        aria-label=""
         matInput
         [matAutocomplete]="auto"
       />

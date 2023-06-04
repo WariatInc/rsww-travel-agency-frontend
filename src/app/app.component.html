@@ -7,10 +7,26 @@
     <title>RSWW</title>
   </head>
   <p class="toolbar">
-    <mat-toolbar color="primary">
-      <span (click)="goHome()">{{ title }}</span>
+    <mat-toolbar color="white">
+      <img
+        class="logo"
+        src="assets/img/crazy-travel-logo.png"
+        (click)="goHome()"
+        alt="logo"
+      />
       <span class="example-spacer"></span>
-      <div *ngIf="userLoggedIn">{{ this.username }}</div>
+      <div *ngIf="userLoggedIn">
+        <p
+          style="
+            font-size: 13px;
+            position: relative;
+            transform: translateY(20%);
+            padding-right: 10px;
+          "
+        >
+          {{ this.username }}
+        </p>
+      </div>
       <button
         *ngIf="this.userLoggedIn"
         mat-raised-button

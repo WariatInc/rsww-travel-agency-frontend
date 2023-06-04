@@ -18,7 +18,7 @@ span:active {
 }
 
 body {
-  background: #333;
+  background: white;
   min-height: 100%;
   width: 98.97vw;
   overflow: auto;
@@ -29,9 +29,9 @@ body {
 main {
   min-height: 100%;
   width: 99%;
-  max-width: 1000px;
-  background: #222;
-  color: white;
+  max-width: 1200px;
+  background: white;
+  color: black;
   justify-content: center;
 }
 
@@ -69,4 +69,13 @@ html {
 
 app-offer-list {
   min-width: 100%;
+}
+
+.logo {
+  max-height: 125%;
+  max-width: 50%;
+}
+
+.logo:hover {
+  cursor: pointer;
 }

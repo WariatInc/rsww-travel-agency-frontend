@@ -1,50 +1,64 @@
 <div class="content" *ngIf="!loadingOfferInfo; else loading">
-  <h1>{{ offer.country }} : {{ offer.city }}</h1>
-
   <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
 
-  <p>ID oferty: {{ offer.offer_id }}, ID wycieczki: {{ offer.tour_id }}</p>
-  <p>Operator: {{ offer.operator }}</p>
-  <p>Transport: {{ offer.transport }}</p>
-  <p>
-    Przyjazd dnia:
-    {{ offer.arrival_date }}
-  </p>
-  <p>Wyjazd dnia: {{ offer.departure_date }}</p>
-  <p>
-    Dorosłych: {{ offer.number_of_adults }}, dzieci: {{ offer.number_of_kids }}
-  </p>
+  <div class="details">
+    <div style="font-weight: 595">
+      <p>Gdzie:</p>
+      <p>Operator:</p>
+      <p>Przyjazd dnia:</p>
+      <p>Wyjazd dnia:</p>
+      <p>Transport:</p>
+    </div>
+    <div class="data">
+      <p>{{ offer.country }}, {{ offer.city }}</p>
+      <p>{{ offer.operator }}</p>
+      <p>{{ offer.arrival_date }}</p>
+      <p>{{ offer.departure_date }}</p>
+      <p>{{ offer.transport }}</p>
+    </div>
 
-  <p>{{ offer.description }}</p>
-  <div *ngIf="offer.number_of_kids && isOffer" class="flex">
-    <app-autocomplete-input
-      [parentForm]="kidsForm"
-      [options]="numberOptions"
-      [label]="'Dzieci do 3rż'"
-      [formName]="'kidsUpTo3'"
-      (valueChangedEvent)="handleUpTo3ValueChange($event)"
-    >
-    </app-autocomplete-input>
-    <app-autocomplete-input
-      [parentForm]="kidsForm"
-      [options]="numberOptions"
-      [label]="'Dzieci do 10rż'"
-      [formName]="'kidsUpTo10'"
-      (valueChangedEvent)="handleUpTo10ValueChange($event)"
-    >
-    </app-autocomplete-input>
+    <div>
+      <div *ngIf="offer.number_of_kids && isOffer" class="flex">
+        <app-autocomplete-input
+          [parentForm]="kidsForm"
+          [options]="numberOptions"
+          [label]="'Dzieci do 3 lat'"
+          [formName]="'kidsUpTo3'"
+          (valueChangedEvent)="handleUpTo3ValueChange($event)"
+        >
+        </app-autocomplete-input>
+        <app-autocomplete-input
+          [parentForm]="kidsForm"
+          [options]="numberOptions"
+          [label]="'Dzieci do 10 lat'"
+          [formName]="'kidsUpTo10'"
+          (valueChangedEvent)="handleUpTo10ValueChange($event)"
+        >
+        </app-autocomplete-input>
+      </div>
+
+      <p *ngIf="tooMuchKids"><strong>Nieprawidłowa konfiguracja.</strong></p>
+    </div>
   </div>
-  <p *ngIf="tooMuchKids"><strong>Wybrałeś za dużo dzieci.</strong></p>
+  <p>{{ offer.description }}</p>
+  <div class="newReservation">
+    <p style="font-size: 22px">
+      <span style="font-weight: 595">Cena:</span>
+      {{ offerPrice }} PLN
+    </p>
 
-  <button
-    class="newReservationBtn"
-    *ngIf="isOffer && offer.is_available; else reservationView"
-    (click)="makeNewReservation()"
-    mat-raised-button
-    [disabled]="tooMuchKids"
-  >
-    Rezerwuję, cena: <strong>{{ offerPrice }}</strong>
-  </button>
+    <div style="float: right; margin-left: 3%">
+      <button
+        class="newReservationBtn"
+        *ngIf="isOffer && offer.is_available; else reservationView"
+        (click)="makeNewReservation()"
+        mat-raised-button
+        [disabled]="tooMuchKids"
+      >
+        Rezerwuję
+      </button>
+    </div>
+  </div>
 </div>
 
 <ng-template #loading>
@@ -53,31 +67,26 @@
 
 <ng-template #reservationView>
   <div *ngIf="!isOffer; else offerNotAvailable">
-    <p><strong>ID rezerwacji: </strong>{{ reservation.id }}</p>
-    <p><strong>Stan rezerwacji: </strong>{{ reservation.state }}</p>
-    <p *ngIf="reservation.state === 'rejected'">
-      <strong>Powód odrzucenia: </strong>{{ reservation.rejection_reason }}
-    </p>
-    <p><strong>Cena rezerwacji: </strong>{{ reservation.price }}</p>
-
     <div
+      style="display: flex"
       *ngIf="
         reservation.state === 'accepted' || reservation.state === 'pending'
       "
     >
       <button
         mat-raised-button
+        class="reservationViewButton"
         *ngIf="reservation.state === 'accepted'"
         (click)="payForReservation()"
       >
         Zapłać
       </button>
       <button
-        class="newReservationBtn"
+        class="reservationViewButton"
         mat-raised-button
         (click)="doCancelReservation()"
       >
-        Odwołaj rezerwację
+        Odwołaj
       </button>
     </div>
   </div>

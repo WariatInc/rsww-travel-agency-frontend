@@ -1,6 +1,8 @@
-﻿﻿
+﻿<div class="image">
+  <img src="/assets/img/background-img.png" />
+</div>
+
 <div class="card">
-  <h4 class="card-header">Login</h4>
   <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="login()">
       <app-autocomplete-input
@@ -10,7 +12,12 @@
         [parentForm]="form"
       ></app-autocomplete-input>
 
-      <button mat-raised-button>Login</button>
+      <button
+        mat-raised-button
+        style="background: #2b3d41; color: white; width: 15%"
+      >
+        Zaloguj się
+      </button>
     </form>
   </div>
 </div>
