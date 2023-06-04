@@ -48,6 +48,14 @@ img {
   color: white;
   background: #2b3d41;
   width: 180%;
+  margin-right: 3%;
+}
+
+.reservationViewButton {
+  color: white;
+  background: #2b3d41;
+  width: 180%;
+  margin-right: 3%;
 }
 
 .newReservationBtn:disabled {

@@ -27,6 +27,8 @@ img {
   max-width: 90%;
 }
 
-button {
+mat-dialog-content > button {
   margin: 0.5%;
+  color: white;
+  background: #2b3d41;
 }

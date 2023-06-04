@@ -2,19 +2,8 @@
 <mat-dialog-content>
   <h3>Aby zarezerwować ofertę, trzeba najpierw dokonać płatności</h3>
 
-  <!--  <button-->
-  <!--    *ngIf="!data.isReserved"-->
-  <!--    mat-raised-button-->
-  <!--    color="primary"-->
-  <!--    (click)="makeReservation()"-->
-  <!--    [disabled]="reservationMade"-->
-  <!--  >-->
-  <!--    Rezerwuj-->
-  <!--  </button>-->
-
   <button
     mat-raised-button
-    color="primary"
     [disabled]="
       (!reservationMade && paymentMade) ||
       (data.isReserved && paymentMade) ||
@@ -33,12 +22,5 @@
 
 <div class="spacer"></div>
 <mat-dialog-actions align="end">
-  <button
-    mat-button
-    color="primary"
-    (click)="closeDialog()"
-    mat-dialog-close=""
-  >
-    Wyjdź
-  </button>
+  <button mat-button (click)="closeDialog()" mat-dialog-close="">Wyjdź</button>
 </mat-dialog-actions>
