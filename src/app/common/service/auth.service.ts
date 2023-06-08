@@ -6,17 +6,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class AuthService {
+  public userIsAuthenticated: boolean = false;
+
   constructor(private router: Router, private _snackbar: MatSnackBar) {}
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
     localStorage.removeItem('token');
-
-    console.log(localStorage.getItem('token'));
-    console.log(localStorage.getItem('isLoggedIn'));
+    this.userIsAuth();
   }
 
-  userIsAuth(): boolean {
-    return localStorage.getItem('isLoggedIn') === 'true';
+  userIsAuth(): void {
+    this.userIsAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
   }
 
   getUserInfo(): string | string[] {
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   doIfUserLoggedIn(callback: () => void): void {
-    if (this.userIsAuth()) {
+    if (this.userIsAuthenticated) {
       callback();
     } else {
       this._snackbar

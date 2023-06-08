@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   form!: FormGroup;
 
@@ -49,10 +54,8 @@ export class LoginComponent implements OnInit {
     if (this.f['email'].value) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('token', this.f['email'].value);
-      this.refresh();
+      this.authService.userIsAuth();
+      this.router.navigate(['./']);
     }
-  }
-  refresh(): void {
-    window.location.reload();
   }
 }
