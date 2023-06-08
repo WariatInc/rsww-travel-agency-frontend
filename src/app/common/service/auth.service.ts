@@ -33,16 +33,20 @@ export class AuthService {
     if (this.userIsAuthenticated) {
       callback();
     } else {
-      this._snackbar
-        .open('Żeby to zrobić musisz się zalogować', 'OK')
-        .onAction()
-        .subscribe(() => {
-          this.router.navigate(['login']).then(this.refresh);
-        });
+      this.goToLoginSnackbar();
     }
   }
 
   refresh(): void {
     window.location.reload();
+  }
+
+  goToLoginSnackbar(): void {
+    this._snackbar
+      .open('Żeby to zrobić musisz się zalogować', 'OK')
+      .onAction()
+      .subscribe(() => {
+        this.router.navigate(['login']).then(this.refresh);
+      });
   }
 }

@@ -30,6 +30,14 @@
       <button
         *ngIf="authService.userIsAuthenticated"
         mat-raised-button
+        (click)="goEventDashboard()"
+      >
+        Panel Eventów
+      </button>
+
+      <button
+        *ngIf="authService.userIsAuthenticated"
+        mat-raised-button
         (click)="goReservationList()"
       >
         Moje rezerwacje

@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   private authUser(): void {
+    this.authService.userIsAuth();
     this.username = localStorage.getItem('token');
   }
 
@@ -27,6 +28,10 @@ export class AppComponent implements OnInit {
 
   public goReservationList(): void {
     this.router.navigate(['./reservation-list']);
+  }
+
+  public goEventDashboard(): void {
+    this.router.navigate(['./event-dashboard']);
   }
 
   public logoutUser(): void {
