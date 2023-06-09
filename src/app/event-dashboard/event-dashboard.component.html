@@ -1,0 +1,37 @@
+<table
+  mat-table
+  [dataSource]="reservationEvents"
+  class="mat-elevation-z8 demo-table"
+>
+  <!-- Position Column -->
+  <ng-container matColumnDef="Timestamp">
+    <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+    <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="ID">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="OfferID">
+    <th mat-header-cell *matHeaderCellDef>Offer ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.offer_id }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="ReservationID">
+    <th mat-header-cell *matHeaderCellDef>Reservation ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.reservation_id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="State">
+    <th mat-header-cell *matHeaderCellDef>State</th>
+    <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

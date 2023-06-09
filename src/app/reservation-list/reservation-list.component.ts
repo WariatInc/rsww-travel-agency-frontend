@@ -4,7 +4,7 @@ import { ReservationService } from './service/reservation.service';
 import { Router } from '@angular/router';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PARENT_OR_NEW_MENU_STACK_PROVIDER } from '@angular/cdk/menu';
+import { ReservationListResponse } from '../common/model/reservation-list-response';
 
 @Component({
   selector: 'app-reservation-list',
@@ -27,7 +27,7 @@ export class ReservationListComponent implements OnInit {
   initReservations(): void {
     this.loaded = false;
     this.reservationService.getUserReservations().subscribe((reservations) => {
-      this.reservations = reservations.reservations;
+      this.reservations = reservations;
       this.loaded = true;
     });
   }

@@ -25,13 +25,13 @@ export class ReservationService {
     private errorService: ErrorService
   ) {}
 
-  getUserReservations(): Observable<ReservationListResponse> {
+  getUserReservations(): Observable<Reservation[]> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.authService.getUserInfo(),
     });
     let options = { headers: headers };
-    return this.http.get<ReservationListResponse>(reservationUrl, options).pipe(
+    return this.http.get<Reservation[]>(reservationUrl, options).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })
