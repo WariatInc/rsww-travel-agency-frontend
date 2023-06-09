@@ -1,13 +1,13 @@
+<mat-paginator
+  [pageSizeOptions]="[25]"
+  (page)="pageEvent = $event; onPaginateChange($event)"
+  [length]="this.data ? this.data.max_page * 25 : 0"
+  showFirstLastButtons
+>
+</mat-paginator>
+
 <div *ngIf="loaded; else loading">
   <div *ngIf="data.result.length > 0; else noContent">
-    <mat-paginator
-      [pageSizeOptions]="[25]"
-      (page)="pageEvent = $event; onPaginateChange($event)"
-      [length]="this.data ? this.data.max_page * 25 : 0"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
     <div class="content">
       <ul>
         <li *ngFor="let offer of data.result">

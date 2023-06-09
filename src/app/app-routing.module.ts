@@ -45,6 +45,13 @@ const routes: Routes = [
         (m) => m.SingleOfferModule
       ),
   },
+  {
+    path: 'event-dashboard',
+    loadChildren: () =>
+      import('./event-dashboard/event-dashboard.module').then(
+        (m) => m.EventDashboardModule
+      ),
+  },
 ];
 
 @NgModule({

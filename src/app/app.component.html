@@ -15,7 +15,7 @@
         alt="logo"
       />
       <span class="example-spacer"></span>
-      <div *ngIf="userLoggedIn">
+      <div *ngIf="authService.userIsAuthenticated">
         <p
           style="
             font-size: 13px;
@@ -28,7 +28,15 @@
         </p>
       </div>
       <button
-        *ngIf="this.userLoggedIn"
+        *ngIf="authService.userIsAuthenticated"
+        mat-raised-button
+        (click)="goEventDashboard()"
+      >
+        Panel Eventów
+      </button>
+
+      <button
+        *ngIf="authService.userIsAuthenticated"
         mat-raised-button
         (click)="goReservationList()"
       >
@@ -36,7 +44,7 @@
       </button>
       <button
         mat-raised-button
-        *ngIf="!this.userLoggedIn; else logout"
+        *ngIf="!authService.userIsAuthenticated; else logout"
         (click)="goLogin()"
       >
         Zaloguj się

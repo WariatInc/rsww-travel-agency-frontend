@@ -9,8 +9,8 @@ import { environment } from '../../../environments/environment';
 import { SearchOptions } from '../../common/model/search-options';
 
 let apiUrl = environment.API_URL;
-const offerSearchUrl = apiUrl + 'api/offers/search';
-const SearchOptionsUrl = apiUrl + 'api/offers/search/options';
+const tourSearchUrl = apiUrl + 'api/tours/search';
+const tourSearchOptionsUrl = apiUrl + 'api/tours/search/options';
 
 @Injectable({
   providedIn: 'root',
@@ -47,15 +47,15 @@ export class SearchService {
       params.kids = searchParams.kids;
     }
 
-    return this.http.get<SearchResult>(offerSearchUrl, { params }).pipe(
+    return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })
     );
   }
 
-  getSearchOptions(): Observable<SearchOptions> {
-    return this.http.get<SearchResult>(SearchOptionsUrl).pipe(
+  getTourSearchOptions(): Observable<SearchOptions> {
+    return this.http.get<SearchResult>(tourSearchOptionsUrl).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })

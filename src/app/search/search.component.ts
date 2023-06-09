@@ -20,7 +20,8 @@ export class SearchComponent implements OnInit {
   loaded: boolean = false;
   countryOptions: string[] = [];
 
-  numberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
+  adultNumberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -36,7 +37,7 @@ export class SearchComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.searchService.getSearchOptions().subscribe((options) => {
+    this.searchService.getTourSearchOptions().subscribe((options) => {
       this.searchOptions = options;
       this.countryOptions = options.country;
       this.loaded = true;

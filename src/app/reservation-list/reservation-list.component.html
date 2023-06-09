@@ -4,9 +4,16 @@
       <div class="reservation">
         <div class="flex">
           <div class="image">
-            <img src="assets/img/mock.jpg" alt="obrazek" />
+            <img
+              src="{{ reservation.offer_details.thumbnail_url }}"
+              alt="obrazek"
+            />
           </div>
           <div class="details">
+            <p>Dokąd:</p>
+            <p>Przyjazd:</p>
+            <p>Wyjazd:</p>
+            <p>Hotel:</p>
             <p>Koszt rezerwacji:</p>
             <p>Stan rezerwacji:</p>
             <p *ngIf="reservation.state === 'rejected'">Powód odrzucenia:</p>
@@ -37,6 +44,13 @@
             </button>
           </div>
           <div class="data">
+            <p>
+              {{ reservation.offer_details.country }},
+              {{ reservation.offer_details.city }}
+            </p>
+            <p>{{ reservation.offer_details.arrival_date }}</p>
+            <p>{{ reservation.offer_details.departure_date }}</p>
+            <p>{{ reservation.offer_details.hotel }}</p>
             <p>{{ reservation.price }} PLN</p>
             <p>{{ reservation.state }}</p>
             <p *ngIf="reservation.state === 'rejected'">

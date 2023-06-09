@@ -2,19 +2,30 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, ObservableInput } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
-  constructor(private router: Router, private _snackbar: MatSnackBar) {}
+  constructor(
+    private router: Router,
+    private _snackbar: MatSnackBar,
+    private authService: AuthService
+  ) {}
   errorMsg!: string;
   errorCatcher(error: ErrorEvent): ObservableInput<any> {
     if (error.error instanceof ErrorEvent) {
       this.errorMsg = `Error: ${error.error.message}`;
     } else {
+      if (error.error.status === 401) {
+        this.authService.goToLoginSnackbar();
+        return new Observable();
+      }
+
       this.errorMsg = `Error: ${error.message}`;
     }
+
     this._snackbar
       .open(this.errorMsg, 'Strona główna', { duration: 5000 })
       .onAction()

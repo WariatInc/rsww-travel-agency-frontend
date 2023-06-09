@@ -10,22 +10,16 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
   title = 'RSWW Travel Agency App';
-  userLoggedIn = false;
   username: string | null | undefined;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, public authService: AuthService) {}
   ngOnInit() {
     this.authUser();
   }
 
   private authUser(): void {
-    this.userLoggedIn = this.authService.userIsAuth();
+    this.authService.userIsAuth();
     this.username = localStorage.getItem('token');
-    console.log(this.username);
-  }
-
-  public goHome(): void {
-    this.router.navigate(['./']);
   }
 
   public goLogin(): void {
@@ -36,13 +30,16 @@ export class AppComponent implements OnInit {
     this.router.navigate(['./reservation-list']);
   }
 
-  public logoutUser(): void {
-    this.authService.logout();
-    this.userLoggedIn = this.authService.userIsAuth();
-    this.goHome();
+  public goEventDashboard(): void {
+    this.router.navigate(['./event-dashboard']);
   }
 
-  refresh(): void {
-    window.location.reload();
+  public logoutUser(): void {
+    this.authService.logout();
+    this.router.navigate(['./']);
+  }
+
+  public goHome(): void {
+    this.router.navigate(['./']);
   }
 }
