@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Event } from './model/event';
 import { EventsService } from './service/events.service';
-import { catchError, filter, Subscription, switchMap, timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-event-dashboard',
