@@ -41,6 +41,10 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   public data!: SearchResult;
   searchOptions!: SearchOptions;
 
+  sortowanie = this.formBuilder.group({
+    sortowanko: 'Data',
+  });
+
   public optionsLoaded: boolean = false;
   public loaded: boolean = false;
   pageEvent!: PageEvent;
@@ -69,12 +73,24 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     });
 
     this.submitForm.controls.country.setValue(this.country);
-    this.submitForm.controls.startDate.setValue(
-      formatDate(this.dateStart, 'mm/dd/yyyy', 'en')
-    );
-    this.submitForm.controls.endDate.setValue(
-      formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
-    );
+    if (
+      this.submitForm.controls.startDate.getRawValue() &&
+      this.submitForm.controls.endDate.getRawValue()
+    ) {
+      this.submitForm.controls.startDate.setValue(
+        formatDate(this.dateStart, 'mm/dd/yyyy', 'en')
+      );
+      this.submitForm.controls.endDate.setValue(
+        formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
+      );
+    }
+
+    this.sortowanie.valueChanges.subscribe((selectedValue) => {
+      console.log(selectedValue);
+      if (selectedValue['sortowanko'] === undefined) {
+        this.sortowanie.controls.sortowanko.setValue('Data');
+      }
+    });
   }
 
   ngAfterViewInit() {}
@@ -155,6 +171,7 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     endDate: '',
     adultNumber: '',
     childrenNumber: '',
+    sortowanie: '',
   });
 
   range = new FormGroup({

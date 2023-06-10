@@ -12,6 +12,8 @@ import { CommonModule } from '../common/common.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [OfferListComponent],
@@ -28,6 +30,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NgIf,
     NgForOf,
     MatNativeDateModule,
+    MatButtonToggleModule,
+    MatChipsModule,
   ],
 })
 export class OfferListModule {}

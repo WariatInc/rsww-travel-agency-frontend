@@ -1,5 +1,6 @@
 <div class="formParent" *ngIf="optionsLoaded; else loading">
-  <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
+  <!--  <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">-->
+  <form>
     <div class="formDiv">
       <div class="input">
         <app-autocomplete-input
@@ -44,6 +45,19 @@
       <button class="bf-button" type="submit" mat-raised-button>
         Szukaj <span class="material-icons" iconPositionEnd> search </span>
       </button>
+      <div
+        style="display: flex; flex-direction: column"
+        [formGroup]="sortowanie"
+      >
+        <span style="text-align: center; font-weight: 595">Sortowanie:</span>
+        <mat-chip-listbox
+          aria-label="sortowanie"
+          [formControlName]="'sortowanko'"
+        >
+          <mat-chip-option selected>Data</mat-chip-option>
+          <mat-chip-option color="accent">Cena</mat-chip-option>
+        </mat-chip-listbox>
+      </div>
     </div>
   </form>
 </div>
