@@ -3,9 +3,8 @@ h3 {
 }
 
 .bf-button {
-  min-width: 12%;
-  min-height: 90%;
-  transform: translateY(25%);
+  width: 15%;
+  height: 3.4rem;
   color: white;
   background-color: #2b3d41;
 }
