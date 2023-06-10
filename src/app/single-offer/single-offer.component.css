@@ -79,3 +79,12 @@ app-autocomplete-input {
 mat-paginator {
   margin-top: 0.1%;
 }
+
+.filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.filters > p {
+  margin-right: 2%;
+}

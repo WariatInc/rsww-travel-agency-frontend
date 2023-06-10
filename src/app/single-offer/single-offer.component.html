@@ -4,17 +4,20 @@
   <div class="details">
     <div style="font-weight: 595">
       <p>Gdzie:</p>
-      <p>Operator:</p>
+      <p>Hotel:</p>
       <p>Przyjazd dnia:</p>
       <p>Wyjazd dnia:</p>
-      <p>Transport:</p>
+      <p *ngIf="offer.transport">Transport:</p>
     </div>
     <div class="data">
       <p>{{ offer.country }}, {{ offer.city }}</p>
-      <p>{{ offer.operator }}</p>
+      <p>{{ offer.hotel }}</p>
       <p>{{ offer.arrival_date }}</p>
       <p>{{ offer.departure_date }}</p>
-      <p>{{ offer.transport }}</p>
+      <p *ngIf="offer.transport === 'plane'">
+        Samolotem, wylot z {{ offer.departure_city }}
+      </p>
+      <p *ngIf="offer.transport === 'self'">Na własną rękę</p>
     </div>
 
     <div>
@@ -55,7 +58,39 @@
     </div>
   </div>
 
-  <div class="offer-list">
+  <div *ngIf="isTour" class="offer-list">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Filtry ofert </mat-panel-title>
+        <mat-panel-description>
+          Wybierz ofertę dopasowaną do Twoich potrzeb!
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Wybór pokoju</p>
+      <div [formGroup]="filters">
+        <mat-chip-listbox aria-label="Wybór pokoju" [formControlName]="'room'">
+          <mat-chip-option selected>Wszystkie</mat-chip-option>
+          <mat-chip-option color="accent">Standard</mat-chip-option>
+          <mat-chip-option color="accent">Studio</mat-chip-option>
+          <mat-chip-option color="accent">Apartament</mat-chip-option>
+          <mat-chip-option color="accent">Family</mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+
+      <p>Opcje dodatkowe</p>
+      <section class="filters" [formGroup]="filters">
+        <p>
+          <mat-checkbox formControlName="all_inclusive"
+            >All inclusive</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox formControlName="breakfast">Śniadanie</mat-checkbox>
+        </p>
+      </section>
+    </mat-expansion-panel>
+
     <mat-progress-bar
       *ngIf="loadingOffers; else placeholder"
       mode="indeterminate"

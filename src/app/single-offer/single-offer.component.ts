@@ -60,6 +60,12 @@ export class SingleOfferComponent implements OnInit {
     'Rezerwuj',
   ];
 
+  filters = this.formBuilder.group({
+    room: 'Wszystkie',
+    all_inclusive: false,
+    breakfast: false,
+  });
+
   public maxPage!: number;
   pageEvent!: PageEvent;
   private page: string = '1';
@@ -111,6 +117,43 @@ export class SingleOfferComponent implements OnInit {
       this.initReservation();
     }
     this.initPrice(0, 0);
+
+    this.filters.valueChanges.subscribe((selectedValue) => {
+      if (selectedValue['room'] === undefined) {
+        this.filters.controls.room.setValue('Wszystkie');
+      }
+
+      const breakfast = this.filters.controls.breakfast.getRawValue();
+      const allInclusive = this.filters.controls.all_inclusive.getRawValue();
+      let room = this.filters.controls.room.getRawValue();
+
+      if (room === 'Wszystkie') {
+        room = '';
+      } else if (room === 'Apartament') {
+        room = 'apartment';
+      } else if (room === 'Studio') {
+        room = 'studio';
+      } else if (room === 'Standard') {
+        room = 'standard';
+      } else if (room === 'Family') {
+        room = 'family';
+      }
+      this.loadingOffers = true;
+      this.page = '1';
+      this.offerService
+        .getFilteredOfferList(
+          this.tourId,
+          this.page,
+          room,
+          breakfast,
+          allInclusive
+        )
+        .subscribe((response) => {
+          this.offerList = response.result;
+          this.maxPage = response.max_page;
+          this.loadingOffers = false;
+        });
+    });
   }
 
   public getOfferList(): void {

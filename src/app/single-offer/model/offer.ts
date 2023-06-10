@@ -7,6 +7,7 @@ export interface Offer {
   description: string;
   thumbnail_url: string;
   arrival_date: string;
+  hotel: string;
   departure_date: string;
   departure_city: string;
   transport: string;
