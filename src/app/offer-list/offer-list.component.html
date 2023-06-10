@@ -11,7 +11,7 @@
     <div class="content">
       <ul>
         <li *ngFor="let offer of data.result">
-          <div class="offer" (click)="navigateToOffer(offer.offer_id)">
+          <div class="offer" (click)="navigateToOffer(offer.id)">
             <div class="image">
               <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
             </div>
@@ -19,18 +19,31 @@
               <p>
                 <strong>Gdzie: </strong>
               </p>
+
+              <p><strong>Hotel: </strong></p>
               <p><strong>Przyjazd dnia: </strong></p>
               <p><strong>Wyjazd dnia: </strong></p>
-              <p><strong>Operator: </strong></p>
+              <p><strong>Transport: </strong></p>
+              <p *ngIf="offer.transport === 'plane'">
+                <strong>Wylot z: </strong>
+              </p>
+
               <p><strong>Cena: </strong></p>
             </div>
 
             <div class="next-details">
               <p>{{ offer.country }}, {{ offer.city }}</p>
+
+              <p>{{ offer.hotel }}</p>
               <p>{{ offer.arrival_date }}</p>
               <p>{{ offer.departure_date }}</p>
-              <p>{{ offer.operator }}</p>
-              <p>{{ offer.price }} PLN</p>
+              <p *ngIf="offer.transport === 'plane'; else transportSelf">
+                Samolot
+              </p>
+              <p *ngIf="offer.transport === 'plane'">
+                {{ offer.departure_city }}
+              </p>
+              <p style="font-weight: 696">od {{ offer.lowest_price }} PLN</p>
             </div>
           </div>
         </li>
@@ -54,4 +67,8 @@
 
 <ng-template #noContent>
   <h2>Nie znaleziono ofert dla wybranych filtrów.</h2>
+</ng-template>
+
+<ng-template #transportSelf>
+  <p>Na własną rękę</p>
 </ng-template>
