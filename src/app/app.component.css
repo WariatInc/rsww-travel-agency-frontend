@@ -4,6 +4,7 @@
 
 .material-icons {
   margin-left: 4px;
+  font-family: "Material Icons" !important;
 }
 
 button {

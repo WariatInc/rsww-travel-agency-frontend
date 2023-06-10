@@ -75,8 +75,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.submitForm.controls.endDate.setValue(
       formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
     );
-
-    console.log(this.submitForm.controls);
   }
 
   ngAfterViewInit() {}
@@ -106,7 +104,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   newSearch(): void {
     this.loaded = false;
     this.data = { result: [], max_page: 0 };
-    this.page = <string>this.route.snapshot.queryParamMap.get('page');
     this.country = <string>this.route.snapshot.queryParamMap.get('country');
     this.dateStart = <string>(
       this.route.snapshot.queryParamMap.get('date_start')

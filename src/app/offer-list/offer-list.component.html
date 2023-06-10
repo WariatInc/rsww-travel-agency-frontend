@@ -91,17 +91,15 @@
         </li>
       </ul>
     </div>
-
-    <mat-paginator
-      *ngIf="loaded"
-      [pageSizeOptions]="[25]"
-      (page)="pageEvent = $event; onPaginateChange($event)"
-      [length]="this.data ? this.data.max_page * 25 : 0"
-      showFirstLastButtons
-    >
-    </mat-paginator>
   </div>
 </div>
+<mat-paginator
+  [pageSizeOptions]="[25]"
+  (page)="pageEvent = $event; onPaginateChange($event)"
+  [length]="this.data ? this.data.max_page * 25 : 0"
+  showFirstLastButtons
+>
+</mat-paginator>
 
 <ng-template #loading>
   <mat-spinner></mat-spinner>
