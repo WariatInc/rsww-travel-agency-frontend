@@ -15,6 +15,9 @@ import { SearchService } from '../search/service/search.service';
 import { SearchResult } from '../common/model/search-result';
 import { Location } from '@angular/common';
 import { ErrorService } from '../common/service/error.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SearchOptions } from '../common/model/search-options';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-offer-list',
@@ -33,15 +36,19 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   private dateEnd!: string;
   private adults!: string;
   private kids!: string;
+  countryOptions: string[] = [];
 
   public data!: SearchResult;
+  searchOptions!: SearchOptions;
 
+  public optionsLoaded: boolean = false;
   public loaded: boolean = false;
   pageEvent!: PageEvent;
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -54,6 +61,16 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
 
     this.newSearch();
+
+    this.searchService.getTourSearchOptions().subscribe((options) => {
+      this.searchOptions = options;
+      this.countryOptions = options.country;
+      this.optionsLoaded = true;
+    });
+
+    this.submitForm.controls.country.setValue(this.country);
+    this.submitForm.controls.startDate.setValue(this.dateStart);
+    this.submitForm.controls.endDate.setValue(this.dateEnd);
   }
 
   ngAfterViewInit() {}
@@ -82,6 +99,14 @@ export class OfferListComponent implements AfterViewInit, OnInit {
 
   newSearch(): void {
     this.loaded = false;
+    this.data = { result: [], max_page: 0 };
+    this.page = <string>this.route.snapshot.queryParamMap.get('page');
+    this.country = <string>this.route.snapshot.queryParamMap.get('country');
+    this.dateStart = <string>(
+      this.route.snapshot.queryParamMap.get('date_start')
+    );
+    this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
+
     this.searchService
       .getSearchOffers({
         page: this.page,
@@ -93,5 +118,56 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         this.data = result;
         this.loaded = true;
       });
+  }
+
+  newSearchFromForm(): void {
+    this.loaded = false;
+    this.data = { result: [], max_page: 0 };
+    this.page = '1';
+    this.country = <string>this.submitForm.controls.country.value;
+    this.dateStart = <string>this.submitForm.controls.startDate.value;
+    this.dateEnd = <string>this.submitForm.controls.endDate.value;
+    this.searchService
+      .getSearchOffers({
+        page: this.page,
+        country: this.country,
+        date_start: this.dateStart,
+        date_end: this.dateEnd,
+      })
+      .subscribe((result) => {
+        this.data = result;
+        this.loaded = true;
+      });
+  }
+
+  public submitSearch(): void {
+    this.changeURL().subscribe(() => {
+      this.newSearchFromForm();
+    });
+  }
+
+  public submitForm = this.formBuilder.group({
+    country: '',
+    startDate: '',
+    endDate: '',
+    adultNumber: '',
+    childrenNumber: '',
+  });
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
+  changeURL(): Observable<void> {
+    this.router.navigate(['./offer-list'], {
+      queryParams: {
+        page: 1,
+        country: this.submitForm.value.country,
+        date_start: this.submitForm.value.startDate,
+        date_end: this.submitForm.value.endDate,
+      },
+    });
+    return of(undefined);
   }
 }

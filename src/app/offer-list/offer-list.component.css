@@ -79,3 +79,34 @@ ul {
   color: white;
   background: #2b3d41;
 }
+
+.bf-button {
+  width: 15%;
+  height: 3.4rem;
+  color: white;
+  background-color: #2b3d41;
+}
+
+.formDiv {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.input-calendar {
+  max-width: 20%;
+  font-size: 11px;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+.input-calendar > input {
+  font-size: 10px;
+}
+
+.formParent {
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+}

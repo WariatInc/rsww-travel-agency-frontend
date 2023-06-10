@@ -1,35 +1,50 @@
-<div class="filters">
-  <mat-form-field appearance="outline">
-    <mat-label>Ilość dorosłych</mat-label>
-    <mat-select> </mat-select>
-  </mat-form-field>
+<div class="formParent" *ngIf="optionsLoaded; else loading">
+  <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
+    <div class="formDiv">
+      <div class="input">
+        <app-autocomplete-input
+          [options]="countryOptions"
+          [label]="'Dokąd się wybierasz?'"
+          [formName]="'country'"
+          [parentForm]="submitForm"
+        ></app-autocomplete-input>
+      </div>
+      <div class="input-calendar">
+        <mat-form-field appearance="outline" style="max-width: 100%">
+          <mat-label style="color: black">Od kiedy do kiedy</mat-label>
+          <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
+            <input
+              style="color: black; font-size: 13px"
+              matStartDate
+              formControlName="startDate"
+              placeholder=""
+            />
+            <input
+              style="color: black; font-size: 13px"
+              matEndDate
+              formControlName="endDate"
+              placeholder=""
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Ilość dzieci</mat-label>
-    <mat-select> </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Wybór pokoju</mat-label>
-    <mat-select> </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Filter 4</mat-label>
-    <mat-select> </mat-select>
-  </mat-form-field>
-
-  <button mat-raised-button>Szukaj</button>
+          <mat-error
+            *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <button class="bf-button" type="submit" mat-raised-button>Szukaj</button>
+    </div>
+  </form>
 </div>
-
-<!--<mat-paginator-->
-<!--  style="border: 1px solid black"-->
-<!--  [pageSizeOptions]="[25]"-->
-<!--  (page)="pageEvent = $event; onPaginateChange($event)"-->
-<!--  [length]="this.data ? this.data.max_page * 25 : 0"-->
-<!--  showFirstLastButtons-->
-<!--&gt;-->
-<!--</mat-paginator>-->
 
 <div *ngIf="loaded; else loading">
   <div *ngIf="data.result.length > 0; else noContent">
