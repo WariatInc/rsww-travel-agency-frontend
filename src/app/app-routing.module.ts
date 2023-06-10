@@ -39,6 +39,14 @@ const routes: Routes = [
   },
 
   {
+    path: 'tour/:tourId',
+    loadChildren: () =>
+      import('./single-offer/single-offer.module').then(
+        (m) => m.SingleOfferModule
+      ),
+  },
+
+  {
     path: 'offer/:offerId/reservation/:reservationId',
     loadChildren: () =>
       import('./single-offer/single-offer.module').then(

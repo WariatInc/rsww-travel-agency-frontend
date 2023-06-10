@@ -79,8 +79,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {}
 
-  navigateToOffer(id: string) {
-    this.router.navigate(['offer/' + id]);
+  navigateToTour(id: string) {
+    this.router.navigate(['tour/' + id]);
   }
 
   onPaginateChange($event: PageEvent) {

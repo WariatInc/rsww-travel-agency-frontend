@@ -27,7 +27,9 @@ export class SingleOfferComponent implements OnInit {
   private reservationId: string | null | undefined;
   public offer!: Offer;
   public loadingOfferInfo: boolean = true;
-  public isOffer: boolean = true;
+  public isOffer: boolean = false;
+  public isReservation: boolean = false;
+  public isTour: boolean = false;
   public reservation!: Reservation;
   public offerPrice: string | undefined;
   numberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -41,6 +43,7 @@ export class SingleOfferComponent implements OnInit {
   });
 
   public tooMuchKids: boolean = false;
+  private tourId: string | null | undefined;
 
   constructor(
     private offerService: OfferService,
@@ -53,30 +56,44 @@ export class SingleOfferComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
+    if (this.router.url.includes('offer')) {
+      this.isOffer = true;
+    }
+
     if (this.router.url.includes('reservation')) {
+      this.isReservation = true;
       this.isOffer = false;
+    }
+
+    if (this.router.url.includes('tour')) {
+      this.isTour = true;
     }
 
     this.offerId = this.route.snapshot.paramMap.get('offerId');
     this.reservationId = this.route.snapshot.paramMap.get('reservationId');
-    this.offerService.getOfferInfo(this.offerId).subscribe((offer) => {
-      this.offer = offer;
-      this.loadingOfferInfo = false;
-    });
+    this.tourId = this.route.snapshot.paramMap.get('tourId');
 
-    if (this.reservationId) {
+    if (this.isOffer || this.isReservation) {
+      this.offerService.getOfferInfo(this.offerId).subscribe((offer) => {
+        this.offer = offer;
+        this.loadingOfferInfo = false;
+      });
+    }
+
+    if (this.isTour) {
+      this.offerService.getTourInfo(this.tourId).subscribe((tour) => {
+        this.offer = tour;
+        this.loadingOfferInfo = false;
+      });
+    }
+
+    if (this.isReservation) {
       this.initReservation();
     }
     this.initPrice(0, 0);
   }
 
-  initPrice(kidsUpTo3: number, kidsUpTo10: number): void {
-    this.offerService
-      .getOfferPrice(this.offerId, kidsUpTo3, kidsUpTo10)
-      .subscribe((price) => {
-        this.offerPrice = price.price;
-      });
-  }
+  initPrice(kidsUpTo3: number, kidsUpTo10: number): void {}
 
   handleUpTo3ValueChange(event: string): void {
     this.kidsUpTo3 = event;

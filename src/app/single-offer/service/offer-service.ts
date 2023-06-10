@@ -8,6 +8,7 @@ import { Price } from '../../common/model/price';
 
 let apiUrl = environment.API_URL;
 const offerUrl = apiUrl + 'api/offers/';
+const tourUrl = apiUrl + 'api/tours/';
 const getPriceUrl = apiUrl + 'api/offers/price/';
 
 @Injectable({
@@ -18,6 +19,14 @@ export class OfferService {
 
   getOfferInfo(offerId: string | null): Observable<Offer> {
     return this.http.get<Offer>(offerUrl + offerId).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
+  }
+
+  getTourInfo(id: string | null): Observable<Offer> {
+    return this.http.get<Offer>(tourUrl + id).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })

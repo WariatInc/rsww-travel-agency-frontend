@@ -53,7 +53,7 @@
     <div>
       <ul>
         <li *ngFor="let offer of data.result">
-          <div class="offer" (click)="navigateToOffer(offer.id)">
+          <div class="offer" (click)="navigateToTour(offer.id)">
             <div class="image">
               <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
             </div>

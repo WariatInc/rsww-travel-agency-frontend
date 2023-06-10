@@ -50,7 +50,7 @@
     <div style="float: right; margin-left: 3%">
       <button
         class="newReservationBtn"
-        *ngIf="isOffer && offer.is_available; else reservationView"
+        *ngIf="isOffer && offer.is_available && !isTour; else reservationView"
         (click)="makeNewReservation()"
         mat-raised-button
         [disabled]="tooMuchKids"

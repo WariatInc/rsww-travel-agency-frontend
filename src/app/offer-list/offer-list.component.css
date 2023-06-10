@@ -4,13 +4,14 @@
 
 .offer {
   margin-top: 0.5%;
-  margin-right: 2%;
   padding-left: 1%;
   padding-right: 1%;
   padding-top: 1%;
   border: 1px solid;
   border-radius: 10px;
   border-color: lightgrey;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img {
