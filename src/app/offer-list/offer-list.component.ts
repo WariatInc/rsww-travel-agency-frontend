@@ -94,8 +94,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         country: this.country,
         date_start: this.dateStart,
         date_end: this.dateEnd,
-        adults: this.adults,
-        kids: this.kids,
       })
       .subscribe((result) => {
         this.data = result;

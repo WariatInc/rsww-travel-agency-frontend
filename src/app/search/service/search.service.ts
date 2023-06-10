@@ -40,12 +40,6 @@ export class SearchService {
         'yyyy-MM-dd'
       );
     }
-    if (searchParams.adults !== '') {
-      params.adults = searchParams.adults;
-    }
-    if (searchParams.kids !== '') {
-      params.kids = searchParams.kids;
-    }
 
     return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
       catchError((error) => {

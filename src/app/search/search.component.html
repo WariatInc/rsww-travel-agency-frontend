@@ -45,22 +45,6 @@
           >
         </mat-form-field>
       </div>
-      <div class="input">
-        <app-autocomplete-input
-          [options]="adultNumberOptions"
-          [label]="'Ilość dorosłych:'"
-          [formName]="'adultNumber'"
-          [parentForm]="submitForm"
-        ></app-autocomplete-input>
-      </div>
-      <div class="input">
-        <app-autocomplete-input
-          [options]="childrenNumberOptions"
-          [label]="'Ilość dzieci:'"
-          [formName]="'childrenNumber'"
-          [parentForm]="submitForm"
-        ></app-autocomplete-input>
-      </div>
       <button class="bf-button" type="submit" mat-raised-button>Szukaj</button>
     </div>
   </form>

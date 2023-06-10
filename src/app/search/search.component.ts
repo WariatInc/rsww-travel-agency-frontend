@@ -51,8 +51,6 @@ export class SearchComponent implements OnInit {
         country: this.submitForm.value.country,
         date_start: this.submitForm.value.startDate,
         date_end: this.submitForm.value.endDate,
-        adults: this.submitForm.value.adultNumber,
-        kids: this.submitForm.value.childrenNumber,
       },
     });
   }

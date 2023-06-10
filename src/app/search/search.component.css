@@ -31,12 +31,13 @@ h2 {
 }
 
 .input {
-  /*box-shadow: black;*/
+  margin-left: 19.7%;
+  /*margin-right: 0.5%;*/
 }
 
 .input-calendar {
   max-width: 20%;
-  margin-right: 2.5%;
+  margin-right: 2%;
   font-size: 11px;
 }
 
