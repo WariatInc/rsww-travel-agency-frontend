@@ -12,6 +12,7 @@ import { CommonModule } from '../common/common.module';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [SingleOfferComponent],
@@ -29,6 +30,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgForOf,
     MatTableModule,
     MatPaginatorModule,
+    MatProgressBarModule,
   ],
 })
 export class SingleOfferModule {}

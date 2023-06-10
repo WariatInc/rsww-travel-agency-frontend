@@ -56,6 +56,10 @@
   </div>
 
   <div class="offer-list">
+    <mat-progress-bar
+      *ngIf="loadingOffers; else placeholder"
+      mode="indeterminate"
+    ></mat-progress-bar>
     <table
       mat-table
       [dataSource]="this.offerList"
@@ -90,7 +94,9 @@
 
       <ng-container matColumnDef="Cena">
         <th mat-header-cell *matHeaderCellDef>Cena</th>
-        <td mat-cell *matCellDef="let element">{{ element.price }} PLN</td>
+        <td mat-cell *matCellDef="let element">
+          <strong>{{ element.price }} PLN</strong>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Rezerwuj">
@@ -98,11 +104,6 @@
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button><mat-icon>event_available</mat-icon></button>
         </td>
-      </ng-container>
-
-      <ng-container matColumnDef="State">
-        <th mat-header-cell *matHeaderCellDef>State</th>
-        <td mat-cell *matCellDef="let element">{{ element.state }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -151,4 +152,8 @@
 
 <ng-template #offerNotAvailable>
   <strong><h2>Oferta nie jest dostępna</h2></strong>
+</ng-template>
+
+<ng-template #placeholder>
+  <div style="padding-top: 4px"></div>
 </ng-template>

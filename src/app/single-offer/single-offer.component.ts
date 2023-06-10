@@ -45,6 +45,7 @@ export class SingleOfferComponent implements OnInit {
   });
 
   public offerList: OfferForTour[] = [];
+  public loadingOffers: boolean = false;
 
   public tooMuchKids: boolean = false;
   private tourId: string | null | undefined;
@@ -113,11 +114,13 @@ export class SingleOfferComponent implements OnInit {
   }
 
   public getOfferList(): void {
+    this.loadingOffers = true;
     this.offerService
       .getOfferList(this.tourId, this.page)
       .subscribe((response) => {
         this.offerList = response.result;
         this.maxPage = response.max_page;
+        this.loadingOffers = false;
       });
   }
 
