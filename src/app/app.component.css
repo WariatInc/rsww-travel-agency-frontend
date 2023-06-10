@@ -27,6 +27,7 @@ body {
 }
 
 main {
+  border: 1px solid black;
   min-height: 100%;
   width: 99%;
   max-width: 1200px;

@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [OfferListComponent],
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatSelectModule,
   ],
 })
 export class OfferListModule {}

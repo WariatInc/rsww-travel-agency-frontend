@@ -1,14 +1,39 @@
-<mat-paginator
-  [pageSizeOptions]="[25]"
-  (page)="pageEvent = $event; onPaginateChange($event)"
-  [length]="this.data ? this.data.max_page * 25 : 0"
-  showFirstLastButtons
->
-</mat-paginator>
+<div class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Ilość dorosłych</mat-label>
+    <mat-select> </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Ilość dzieci</mat-label>
+    <mat-select> </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Wybór pokoju</mat-label>
+    <mat-select> </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Filter 4</mat-label>
+    <mat-select> </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button>Szukaj</button>
+</div>
+
+<!--<mat-paginator-->
+<!--  style="border: 1px solid black"-->
+<!--  [pageSizeOptions]="[25]"-->
+<!--  (page)="pageEvent = $event; onPaginateChange($event)"-->
+<!--  [length]="this.data ? this.data.max_page * 25 : 0"-->
+<!--  showFirstLastButtons-->
+<!--&gt;-->
+<!--</mat-paginator>-->
 
 <div *ngIf="loaded; else loading">
   <div *ngIf="data.result.length > 0; else noContent">
-    <div class="content">
+    <div>
       <ul>
         <li *ngFor="let offer of data.result">
           <div class="offer" (click)="navigateToOffer(offer.id)">
