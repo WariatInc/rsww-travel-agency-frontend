@@ -5,10 +5,12 @@ import { Offer } from '../model/offer';
 import { ErrorService } from '../../common/service/error.service';
 import { environment } from '../../../environments/environment';
 import { Price } from '../../common/model/price';
+import { OffersForTourSearch } from '../model/offers-for-tour-search';
 
 let apiUrl = environment.API_URL;
 const offerUrl = apiUrl + 'api/offers/';
 const tourUrl = apiUrl + 'api/tours/';
+const offersForTourSearchUrl = apiUrl + 'api/offers/search?tour_id=';
 const getPriceUrl = apiUrl + 'api/offers/price/';
 
 @Injectable({
@@ -31,6 +33,26 @@ export class OfferService {
         return this.errorService.errorCatcher(error);
       })
     );
+  }
+
+  getOfferList(
+    tourId: string | null | undefined,
+    page: string
+  ): Observable<OffersForTourSearch> {
+    return this.http
+      .get<OffersForTourSearch>(
+        offersForTourSearchUrl +
+          tourId +
+          '&page=' +
+          page +
+          '&page_size=5' +
+          '&sort_by=price'
+      )
+      .pipe(
+        catchError((error) => {
+          return this.errorService.errorCatcher(error);
+        })
+      );
   }
 
   getOfferPrice(

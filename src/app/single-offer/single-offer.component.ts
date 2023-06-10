@@ -12,6 +12,8 @@ import { AuthService } from '../common/service/auth.service';
 import { Reservation } from '../common/model/reservation';
 import { FormBuilder } from '@angular/forms';
 import { AutocompleteInputComponent } from '../common/component/autocomplete-input/autocomplete-input.component';
+import { OfferForTour } from './model/offer-for-tour';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-single-offer',
@@ -42,8 +44,24 @@ export class SingleOfferComponent implements OnInit {
     kidsUpTo10: '',
   });
 
+  public offerList: OfferForTour[] = [];
+
   public tooMuchKids: boolean = false;
   private tourId: string | null | undefined;
+
+  displayedColumns: string[] = [
+    'Ilość dorosłych',
+    'Ilość dzieci',
+    'All inclusive',
+    'Typ pokoju',
+    'Śniadanie',
+    'Cena',
+    'Rezerwuj',
+  ];
+
+  public maxPage!: number;
+  pageEvent!: PageEvent;
+  private page: string = '1';
 
   constructor(
     private offerService: OfferService,
@@ -84,6 +102,7 @@ export class SingleOfferComponent implements OnInit {
       this.offerService.getTourInfo(this.tourId).subscribe((tour) => {
         this.offer = tour;
         this.loadingOfferInfo = false;
+        this.getOfferList();
       });
     }
 
@@ -91,6 +110,25 @@ export class SingleOfferComponent implements OnInit {
       this.initReservation();
     }
     this.initPrice(0, 0);
+  }
+
+  public getOfferList(): void {
+    this.offerService
+      .getOfferList(this.tourId, this.page)
+      .subscribe((response) => {
+        this.offerList = response.result;
+        this.maxPage = response.max_page;
+      });
+  }
+
+  onPaginateChange($event: PageEvent) {
+    if ($event.pageIndex) {
+      this.page = <string>(<unknown>($event.pageIndex + 1));
+    } else {
+      this.page = '1';
+    }
+
+    this.getOfferList();
   }
 
   initPrice(kidsUpTo3: number, kidsUpTo10: number): void {}

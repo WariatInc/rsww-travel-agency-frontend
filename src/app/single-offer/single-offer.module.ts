@@ -9,7 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '../common/common.module';
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [SingleOfferComponent],
@@ -24,6 +26,9 @@ import { NgIf } from '@angular/common';
     MatInputModule,
     FormsModule,
     NgIf,
+    NgForOf,
+    MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class SingleOfferModule {}

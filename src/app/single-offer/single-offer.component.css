@@ -75,3 +75,7 @@ app-autocomplete-input {
   display: flex;
   flex-direction: row;
 }
+
+mat-paginator {
+  margin-top: 0.1%;
+}
