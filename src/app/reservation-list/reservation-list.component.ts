@@ -4,7 +4,6 @@ import { ReservationService } from './service/reservation.service';
 import { Router } from '@angular/router';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ReservationListResponse } from '../common/model/reservation-list-response';
 
 @Component({
   selector: 'app-reservation-list',
@@ -14,6 +13,7 @@ import { ReservationListResponse } from '../common/model/reservation-list-respon
 export class ReservationListComponent implements OnInit {
   reservations: Reservation[] | undefined;
   loaded: boolean = false;
+  length: number = 0;
 
   constructor(
     private reservationService: ReservationService,
@@ -29,6 +29,7 @@ export class ReservationListComponent implements OnInit {
     this.reservationService.getUserReservations().subscribe((reservations) => {
       this.reservations = reservations;
       this.loaded = true;
+      this.length = reservations.length;
     });
   }
 

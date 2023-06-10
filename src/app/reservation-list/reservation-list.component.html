@@ -1,5 +1,5 @@
 <div *ngIf="loaded; else loading">
-  <ul>
+  <ul *ngIf="loaded && length; else emptyList">
     <li *ngFor="let reservation of reservations">
       <div class="reservation">
         <div class="flex">
@@ -64,4 +64,8 @@
 </div>
 <ng-template #loading>
   <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #emptyList>
+  <h2 style="text-align: center">Brak rezerwacji</h2>
 </ng-template>
