@@ -13,7 +13,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../search/service/search.service';
 import { SearchResult } from '../common/model/search-result';
-import { Location } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { ErrorService } from '../common/service/error.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SearchOptions } from '../common/model/search-options';
@@ -69,8 +69,14 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     });
 
     this.submitForm.controls.country.setValue(this.country);
-    this.submitForm.controls.startDate.setValue(this.dateStart);
-    this.submitForm.controls.endDate.setValue(this.dateEnd);
+    this.submitForm.controls.startDate.setValue(
+      formatDate(this.dateStart, 'mm/dd/yyyy', 'en')
+    );
+    this.submitForm.controls.endDate.setValue(
+      formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
+    );
+
+    console.log(this.submitForm.controls);
   }
 
   ngAfterViewInit() {}

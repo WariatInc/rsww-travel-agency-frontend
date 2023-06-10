@@ -9,6 +9,10 @@ h3 {
   background-color: #2b3d41;
 }
 
+.material-icons {
+  padding-left: 4px;
+}
+
 .formDiv {
   display: flex;
   flex-direction: row;
