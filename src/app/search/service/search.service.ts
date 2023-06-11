@@ -37,13 +37,13 @@ export class SearchService {
     if (searchParams.country !== '') {
       params.country = searchParams.country;
     }
-    if (searchParams.date_start !== '') {
+    if (searchParams.date_start !== '' && searchParams.date_start) {
       params.date_start = this.datePipe.transform(
         searchParams.date_start,
         'yyyy-MM-dd'
       );
     }
-    if (searchParams.date_end !== '') {
+    if (searchParams.date_end !== '' && searchParams.date_end) {
       params.date_end = this.datePipe.transform(
         searchParams.date_end,
         'yyyy-MM-dd'
@@ -81,13 +81,13 @@ export class SearchService {
     if (searchParams.country !== '') {
       params.country = searchParams.country;
     }
-    if (searchParams.date_start !== '') {
+    if (searchParams.date_start !== '' && searchParams.date_start) {
       params.date_start = this.datePipe.transform(
         searchParams.date_start,
         'yyyy-MM-dd'
       );
     }
-    if (searchParams.date_end !== '') {
+    if (searchParams.date_end !== '' && searchParams.date_end) {
       params.date_end = this.datePipe.transform(
         searchParams.date_end,
         'yyyy-MM-dd'
