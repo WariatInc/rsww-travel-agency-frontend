@@ -3,4 +3,6 @@ export interface SearchParams {
   country: string;
   date_start: string;
   date_end: string;
+  adults: string;
+  kids: string;
 }

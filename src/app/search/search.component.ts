@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
   countryOptions: string[] = [];
 
   childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
-  adultNumberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
+  adultNumberOptions: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -51,6 +51,8 @@ export class SearchComponent implements OnInit {
         country: this.submitForm.value.country,
         date_start: this.submitForm.value.startDate,
         date_end: this.submitForm.value.endDate,
+        adults: this.submitForm.value.adultNumber,
+        kids: this.submitForm.value.childrenNumber,
       },
     });
   }

@@ -45,6 +45,31 @@
           >
         </mat-form-field>
       </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dorosłych</mat-label>
+
+        <mat-select formControlName="adultNumber"
+          ><mat-option
+            *ngFor="let number of adultNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dzieci</mat-label>
+        <mat-select formControlName="childrenNumber"
+          ><mat-option
+            *ngFor="let number of childrenNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <button class="bf-button" type="submit" mat-raised-button>
         Szukaj <span class="material-icons" iconPositionEnd> search </span>
       </button>

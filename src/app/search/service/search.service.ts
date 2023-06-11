@@ -25,6 +25,12 @@ export class SearchService {
   getSearchOffers(searchParams: SearchParams): Observable<SearchResult> {
     let params: any = {};
     params.page = searchParams.page;
+    if (searchParams.adults !== '') {
+      params.adults = searchParams.adults;
+    }
+    if (searchParams.kids !== '') {
+      params.kids = searchParams.kids;
+    }
     if (searchParams.country !== '') {
       params.country = searchParams.country;
     }
@@ -54,6 +60,12 @@ export class SearchService {
   ): Observable<SearchResult> {
     let params: any = {};
     params.page = searchParams.page;
+    if (searchParams.adults !== '') {
+      params.adults = searchParams.adults;
+    }
+    if (searchParams.kids !== '') {
+      params.kids = searchParams.kids;
+    }
     if (searchParams.country !== '') {
       params.country = searchParams.country;
     }

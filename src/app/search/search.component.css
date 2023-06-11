@@ -96,3 +96,7 @@ mat-label {
 .input-calendar > input {
   font-size: 11px;
 }
+
+mat-form-field {
+  margin-right: 1%;
+}

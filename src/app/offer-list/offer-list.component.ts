@@ -63,7 +63,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       this.route.snapshot.queryParamMap.get('date_start')
     );
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
-
+    this.adults = <string>this.route.snapshot.queryParamMap.get('adults');
+    this.kids = <string>this.route.snapshot.queryParamMap.get('kids');
     this.newSearch();
 
     this.searchService.getTourSearchOptions().subscribe((options) => {
@@ -107,6 +108,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
             country: this.country,
             date_start: this.dateStart,
             date_end: this.dateEnd,
+            adults: this.adults,
+            kids: this.kids,
           },
           sortowanko
         )
@@ -156,6 +159,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         country: this.country,
         date_start: this.dateStart,
         date_end: this.dateEnd,
+        adults: this.adults,
+        kids: this.kids,
       })
       .subscribe((result) => {
         this.data = result;
@@ -176,6 +181,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         country: this.country,
         date_start: this.dateStart,
         date_end: this.dateEnd,
+        adults: this.adults,
+        kids: this.kids,
       })
       .subscribe((result) => {
         this.data = result;
