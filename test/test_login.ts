@@ -24,11 +24,15 @@ describe('Login page', function () {
       await tb.driver.get(URL);
       await tb.login_with_email(EMAIL);
 
-      const email_div = await tb.driver.wait(
-        until.elementLocated(By.xpath(`//mat-toolbar/div[text()='${EMAIL}']`)),
+      const toolbar = await tb.driver.wait(
+        until.elementLocated(By.xpath("//mat-toolbar")),
         500
       );
-      assert(email_div !== null, 'Email should be displayed in the toolbar');
+
+      const found = await tb.find_recursive(toolbar, async (child) => {
+        return (await child.getText()).trim() === EMAIL;
+      });
+      assert(found, "Email should be visible in the taskbar");
     });
   });
 });
