@@ -49,13 +49,6 @@ mat-spinner {
   transform: translateY(75%);
 }
 
-.image {
-  display: flex;
-  height: 40vh;
-  width: 380vh;
-  transform: translate(-33.7%, -40%);
-}
-
 .formParent {
   margin-top: 4%;
   margin-left: auto;
@@ -99,4 +92,11 @@ mat-label {
 
 mat-form-field {
   margin-right: 1%;
+}
+
+.image {
+  background-size: cover;
+  background-position: bottom;
+  width: 100%;
+  height: 40%;
 }

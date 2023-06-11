@@ -1,6 +1,7 @@
-<div class="image">
-  <img src="/assets/img/mountains.png" />
-</div>
+<div
+  class="image"
+  style="background-image: url('/assets/img/background-img.png')"
+></div>
 
 <div class="formParent" *ngIf="loaded; else loading">
   <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
