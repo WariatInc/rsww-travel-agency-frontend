@@ -21,7 +21,7 @@ describe('Search button', function () {
     await selenium_run(async (tb) => {
       await tb.goto_homepage();
       const current_url = await tb.driver.getCurrentUrl();
-      await tb.perform_search({})
+      await tb.perform_search({});
       const next_url = await tb.driver.getCurrentUrl();
       assert(
         current_url != next_url,
@@ -45,7 +45,7 @@ describe('Tours search results', async function () {
       await tb.goto_homepage();
       const offers = await tb.perform_search({
         adults: 2,
-        kids: 0
+        kids: 0,
       });
       assert(offers.length > 0);
       const first_offer = offers[0];

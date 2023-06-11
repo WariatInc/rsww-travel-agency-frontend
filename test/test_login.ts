@@ -25,14 +25,14 @@ describe('Login page', function () {
       await tb.login_with_email(EMAIL);
 
       const toolbar = await tb.driver.wait(
-        until.elementLocated(By.xpath("//mat-toolbar")),
+        until.elementLocated(By.xpath('//mat-toolbar')),
         500
       );
 
       const found = await tb.find_recursive(toolbar, async (child) => {
         return (await child.getText()).trim() === EMAIL;
       });
-      assert(found, "Email should be visible in the taskbar");
+      assert(found, 'Email should be visible in the taskbar');
     });
   });
 });

@@ -24,10 +24,12 @@ describe('Reservation', function () {
       await tb.login_with_email(EMAIL);
 
       // Step 1. Run generic search
-      const offer = (await tb.perform_search({
-        adults: 2,
-        kids: 1
-      }))[reservation_num + 1]
+      const offer = (
+        await tb.perform_search({
+          adults: 2,
+          kids: 1,
+        })
+      )[reservation_num + 1];
       assert(offer !== null, 'There should be at least one offer');
 
       // Step 2. Open trip details
@@ -35,13 +37,13 @@ describe('Reservation', function () {
       await tb.driver.sleep(500);
 
       // Step 3. Make a reservation
-      tb.driver.executeScript("window.scrollTo(0, document.body.scrollHeight)")
+      tb.driver.executeScript('window.scrollTo(0, document.body.scrollHeight)');
       await tb.driver.sleep(500);
-      const reserve_button = await tb.find_button_with_text("event_available");
+      const reserve_button = await tb.find_button_with_text('event_available');
       assert(reserve_button !== null);
       await reserve_button?.click();
       await tb.driver.sleep(100);
-      const accept_button = await tb.find_button_with_text("Tak")
+      const accept_button = await tb.find_button_with_text('Tak');
       assert(accept_button !== null);
       await accept_button?.click();
       await tb.driver.sleep(100);
@@ -52,7 +54,8 @@ describe('Reservation', function () {
 
       assert(
         current_reservation_num == reservation_num + 1,
-        `There should be ${reservation_num + 1
+        `There should be ${
+          reservation_num + 1
         } reservations, but are ${current_reservation_num}`
       );
     });
