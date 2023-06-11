@@ -39,7 +39,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'tour/:tourId',
+    path: 'tour/:tourId/adults/:adults/kids/:kids',
     loadChildren: () =>
       import('./single-offer/single-offer.module').then(
         (m) => m.SingleOfferModule

@@ -116,3 +116,7 @@ ul {
 .material-icons {
   margin-left: 4px;
 }
+
+mat-form-field {
+  margin-right: 1%;
+}

@@ -45,9 +45,25 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     sortowanko: 'Data',
   });
 
+  childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
+  adultNumberOptions: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
   public optionsLoaded: boolean = false;
   public loaded: boolean = false;
   pageEvent!: PageEvent;
+  public submitForm = this.formBuilder.group({
+    country: '',
+    startDate: '',
+    endDate: '',
+    adultNumber: '',
+    childrenNumber: '',
+    sortowanie: '',
+  });
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
@@ -74,6 +90,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     });
 
     this.submitForm.controls.country.setValue(this.country);
+    this.submitForm.controls.adultNumber.setValue(this.adults);
+    this.submitForm.controls.childrenNumber.setValue(this.kids);
     if (
       this.submitForm.controls.startDate.getRawValue() &&
       this.submitForm.controls.endDate.getRawValue()
@@ -85,6 +103,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
       );
     }
+
+    console.log(this.submitForm, 'chujuihuhsduashdu');
 
     this.sortowanie.valueChanges.subscribe((selectedValue) => {
       if (selectedValue['sortowanko'] === undefined) {
@@ -123,7 +143,12 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {}
 
   navigateToTour(id: string) {
-    this.router.navigate(['tour/' + id]);
+    if (!this.kids) {
+      this.kids = '0';
+    }
+    this.router.navigate([
+      'tour/' + id + '/adults/' + this.adults + '/kids/' + this.kids,
+    ]);
   }
 
   onPaginateChange($event: PageEvent) {
@@ -175,6 +200,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.country = <string>this.submitForm.controls.country.value;
     this.dateStart = <string>this.submitForm.controls.startDate.value;
     this.dateEnd = <string>this.submitForm.controls.endDate.value;
+    this.kids = <string>this.submitForm.controls.childrenNumber.value;
+    this.adults = <string>this.submitForm.controls.adultNumber.value;
     this.searchService
       .getSearchOffers({
         page: this.page,
@@ -195,20 +222,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       this.newSearchFromForm();
     });
   }
-
-  public submitForm = this.formBuilder.group({
-    country: '',
-    startDate: '',
-    endDate: '',
-    adultNumber: '',
-    childrenNumber: '',
-    sortowanie: '',
-  });
-
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
 
   changeURL(): Observable<void> {
     this.router.navigate(['./offer-list'], {

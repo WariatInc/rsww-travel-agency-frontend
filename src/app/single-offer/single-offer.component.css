@@ -88,3 +88,17 @@ mat-paginator {
 .filters > p {
   margin-right: 2%;
 }
+
+.material-icons {
+  padding-top: 5px;
+  margin-left: 4px;
+  font-family: "Material Icons" !important;
+}
+
+.visibility {
+  vertical-align: center;
+}
+
+.visibility > span {
+  transform: translateY(20%);
+}

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { OfferService } from './service/offer-service';
 import { Offer } from './model/offer';
 import { CancelDialogComponent } from '../common/component/cancel-dialog/cancel-dialog.component';
@@ -14,17 +14,19 @@ import { FormBuilder } from '@angular/forms';
 import { AutocompleteInputComponent } from '../common/component/autocomplete-input/autocomplete-input.component';
 import { OfferForTour } from './model/offer-for-tour';
 import { PageEvent } from '@angular/material/paginator';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-single-offer',
   templateUrl: './single-offer.component.html',
   styleUrls: ['./single-offer.component.css'],
 })
-export class SingleOfferComponent implements OnInit {
+export class SingleOfferComponent implements OnInit, OnDestroy {
   @ViewChild(AutocompleteInputComponent) autocomplete:
     | AutocompleteInputComponent
     | undefined;
 
+  private pageUrl: string | undefined;
   private offerId: string | null | undefined;
   private reservationId: string | null | undefined;
   public offer!: Offer;
@@ -69,6 +71,10 @@ export class SingleOfferComponent implements OnInit {
   public maxPage!: number;
   pageEvent!: PageEvent;
   private page: string = '1';
+  private adults: string | undefined;
+  private kids: string | undefined;
+  private subscription!: Subscription;
+  public userCount!: number;
 
   constructor(
     private offerService: OfferService,
@@ -81,6 +87,9 @@ export class SingleOfferComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
+    this.pageUrl = this.router.url;
+    console.log(this.pageUrl);
+
     if (this.router.url.includes('offer')) {
       this.isOffer = true;
     }
@@ -92,6 +101,8 @@ export class SingleOfferComponent implements OnInit {
 
     if (this.router.url.includes('tour')) {
       this.isTour = true;
+      this.adults = <string>this.route.snapshot.paramMap.get('adults');
+      this.kids = <string>this.route.snapshot.paramMap.get('kids');
     }
 
     this.offerId = this.route.snapshot.paramMap.get('offerId');
@@ -110,6 +121,9 @@ export class SingleOfferComponent implements OnInit {
         this.offer = tour;
         this.loadingOfferInfo = false;
         this.getOfferList();
+      });
+      this.subscription = timer(0, 10000).subscribe(() => {
+        this.refreshVisibility();
       });
     }
 
@@ -146,7 +160,9 @@ export class SingleOfferComponent implements OnInit {
           this.page,
           room,
           breakfast,
-          allInclusive
+          allInclusive,
+          this.adults,
+          this.kids
         )
         .subscribe((response) => {
           this.offerList = response.result;
@@ -156,10 +172,20 @@ export class SingleOfferComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  private refreshVisibility() {
+    this.offerService.getVisibility(this.pageUrl).subscribe((response) => {
+      this.userCount = response.user_sessions_count;
+    });
+  }
+
   public getOfferList(): void {
     this.loadingOffers = true;
     this.offerService
-      .getOfferList(this.tourId, this.page)
+      .getOfferList(this.tourId, this.page, this.adults, this.kids)
       .subscribe((response) => {
         this.offerList = response.result;
         this.maxPage = response.max_page;

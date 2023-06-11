@@ -1,3 +1,9 @@
+<div *ngIf="isTour" class="visibility">
+  <span class="material-icons" iconPositionEnd> visibility </span>
+
+  : {{ userCount }}
+</div>
+
 <div class="content" *ngIf="!loadingOfferInfo; else loading">
   <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
 
