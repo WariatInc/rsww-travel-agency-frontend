@@ -28,7 +28,6 @@ export class NewReservationDialog implements OnInit {
     if (this.data.isReserved) {
       this.reservationId = this.data.id;
     }
-    console.log(this.data.isReserved);
   }
 
   makePayment(): void {

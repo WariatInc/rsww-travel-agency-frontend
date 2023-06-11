@@ -110,8 +110,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       );
     }
 
-    console.log(this.submitForm, 'chujuihuhsduashdu');
-
     this.sortowanie.valueChanges.subscribe((selectedValue) => {
       if (selectedValue['sortowanko'] === undefined) {
         this.sortowanie.controls.sortowanko.setValue('Data');

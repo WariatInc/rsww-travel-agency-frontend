@@ -90,7 +90,6 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pageUrl = this.router.url;
     this.authService.postSessionInfo(this.pageUrl).subscribe();
-    console.log(this.pageUrl);
 
     if (this.router.url.includes('offer')) {
       this.isOffer = true;
@@ -239,7 +238,6 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
       .getReservation(this.reservationId)
       .subscribe((reservation) => {
         this.reservation = reservation;
-        console.log(reservation, 'rezervsationasd');
       });
   }
 
@@ -270,7 +268,7 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
         }
       });
     };
-    this.authUser.doIfUserLoggedIn(func);
+    this.authUser.doIfUserLoggedIn(func, this.pageUrl);
   }
 
   payForReservation(): void {

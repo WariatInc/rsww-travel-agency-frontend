@@ -35,7 +35,6 @@ describe('Reservation', function () {
           cancelled_num += 1;
         }
       }
-      console.log(reservation_num + cancelled_num);
     });
   });
 

@@ -15,6 +15,7 @@ const sessionUrl = apiUrl + 'api/users/sessions';
 })
 export class AuthService {
   public userIsAuthenticated: boolean = false;
+  public redirectUrl: string | undefined;
 
   constructor(
     private router: Router,
@@ -27,6 +28,19 @@ export class AuthService {
     this.userIsAuth();
   }
 
+  login(value: any): void {
+    if (value) {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('token', value);
+      this.userIsAuth();
+
+      if (this.redirectUrl) {
+        this.router.navigateByUrl(this.redirectUrl);
+      } else {
+        this.router.navigateByUrl('./');
+      }
+    }
+  }
   userIsAuth(): void {
     this.userIsAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
   }
@@ -41,16 +55,13 @@ export class AuthService {
     return userInfo;
   }
 
-  doIfUserLoggedIn(callback: () => void): void {
+  doIfUserLoggedIn(callback: () => void, redirectUrl: string = ''): void {
     if (this.userIsAuthenticated) {
       callback();
     } else {
+      this.redirectUrl = redirectUrl;
       this.goToLoginSnackbar();
     }
-  }
-
-  refresh(): void {
-    window.location.reload();
   }
 
   goToLoginSnackbar(): void {
@@ -58,11 +69,12 @@ export class AuthService {
       .open('Żeby to zrobić musisz się zalogować', 'OK')
       .onAction()
       .subscribe(() => {
-        this.router.navigate(['login']).then(this.refresh);
+        this.router.navigate(['login']);
       });
   }
 
   postSessionInfo(page: string): Observable<void> {
+    this.redirectUrl = page;
     return this.http.post<void>(sessionUrl, { webapp_page: page });
   }
 }
