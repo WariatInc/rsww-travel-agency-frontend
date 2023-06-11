@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from './common/common.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { AuthGuard } from './common/guard/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,7 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     HttpClientModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
