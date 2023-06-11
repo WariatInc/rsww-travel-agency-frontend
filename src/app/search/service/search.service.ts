@@ -22,7 +22,10 @@ export class SearchService {
     private datePipe: DatePipe
   ) {}
 
-  getSearchOffers(searchParams: SearchParams): Observable<SearchResult> {
+  getSearchOffers(
+    searchParams: SearchParams,
+    sortBy: string | null
+  ): Observable<SearchResult> {
     let params: any = {};
     params.page = searchParams.page;
     if (searchParams.adults !== '') {
@@ -46,6 +49,8 @@ export class SearchService {
         'yyyy-MM-dd'
       );
     }
+
+    params.sort_by = sortBy;
 
     return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
       catchError((error) => {

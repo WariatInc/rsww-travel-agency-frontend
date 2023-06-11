@@ -73,6 +73,7 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     end: new FormControl<Date | null>(null),
   });
   private pageUrl!: string;
+  private sortowanko: string = 'arrival_date';
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
@@ -126,12 +127,10 @@ export class OfferListComponent implements AfterViewInit, OnInit {
           this.sortowanie.controls.sortowanko.setValue('Data');
         }
 
-        let sortowanko = '';
-
         if (selectedValue['sortowanko'] === 'Data') {
-          sortowanko = 'arrival_date';
+          this.sortowanko = 'arrival_date';
         } else {
-          sortowanko = 'price';
+          this.sortowanko = 'price';
         }
 
         this.loaded = false;
@@ -146,7 +145,7 @@ export class OfferListComponent implements AfterViewInit, OnInit {
               adults: this.adults,
               kids: this.kids,
             },
-            sortowanko
+            this.sortowanko
           )
           .subscribe((result) => {
             this.data = result;
@@ -196,14 +195,17 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
 
     this.searchService
-      .getSearchOffers({
-        page: this.page,
-        country: this.country,
-        date_start: this.dateStart,
-        date_end: this.dateEnd,
-        adults: this.adults,
-        kids: this.kids,
-      })
+      .getSearchOffers(
+        {
+          page: this.page,
+          country: this.country,
+          date_start: this.dateStart,
+          date_end: this.dateEnd,
+          adults: this.adults,
+          kids: this.kids,
+        },
+        this.sortowanko
+      )
       .subscribe((result) => {
         this.data = result;
         this.loaded = true;
@@ -220,14 +222,17 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.kids = <string>this.submitForm.controls.childrenNumber.value;
     this.adults = <string>this.submitForm.controls.adultNumber.value;
     this.searchService
-      .getSearchOffers({
-        page: this.page,
-        country: this.country,
-        date_start: this.dateStart,
-        date_end: this.dateEnd,
-        adults: this.adults,
-        kids: this.kids,
-      })
+      .getSearchOffers(
+        {
+          page: this.page,
+          country: this.country,
+          date_start: this.dateStart,
+          date_end: this.dateEnd,
+          adults: this.adults,
+          kids: this.kids,
+        },
+        this.sortowanko
+      )
       .subscribe((result) => {
         this.data = result;
         this.loaded = true;
