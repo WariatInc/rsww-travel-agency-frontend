@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { SearchOptions } from '../common/model/search-options';
 import { SearchService } from './service/search.service';
@@ -32,11 +37,11 @@ export class SearchComponent implements OnInit {
   });
 
   public submitForm = this.formBuilder.group({
-    country: '',
-    startDate: '',
-    endDate: '',
-    adultNumber: '',
-    childrenNumber: '',
+    country: [''],
+    startDate: [''],
+    endDate: [''],
+    adultNumber: ['', Validators.required],
+    childrenNumber: ['', Validators.required],
   });
 
   ngOnInit() {

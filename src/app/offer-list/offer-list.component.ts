@@ -15,7 +15,12 @@ import { SearchService } from '../search/service/search.service';
 import { SearchResult } from '../common/model/search-result';
 import { formatDate, Location } from '@angular/common';
 import { ErrorService } from '../common/service/error.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { SearchOptions } from '../common/model/search-options';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../common/service/auth.service';
@@ -53,12 +58,12 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   public loaded: boolean = false;
   pageEvent!: PageEvent;
   public submitForm = this.formBuilder.group({
-    country: '',
-    startDate: '',
-    endDate: '',
-    adultNumber: '',
-    childrenNumber: '',
-    sortowanie: '',
+    country: [''],
+    startDate: [''],
+    endDate: [''],
+    adultNumber: ['', Validators.required],
+    childrenNumber: ['', Validators.required],
+    sortowanie: [''],
   });
 
   range = new FormGroup({
@@ -87,7 +92,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
     this.adults = <string>this.route.snapshot.queryParamMap.get('adults');
     this.kids = <string>this.route.snapshot.queryParamMap.get('kids');
-    this.newSearch();
 
     this.searchService.getTourSearchOptions().subscribe((options) => {
       this.searchOptions = options;
@@ -108,6 +112,10 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       this.submitForm.controls.endDate.setValue(
         formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
       );
+    }
+
+    if (this.submitForm.valid) {
+      this.newSearch();
     }
 
     this.sortowanie.valueChanges.subscribe((selectedValue) => {
@@ -234,6 +242,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
         country: this.submitForm.value.country,
         date_start: this.submitForm.value.startDate,
         date_end: this.submitForm.value.endDate,
+        adults: this.submitForm.value.adultNumber,
+        kids: this.submitForm.value.childrenNumber,
       },
     });
     return of(undefined);
