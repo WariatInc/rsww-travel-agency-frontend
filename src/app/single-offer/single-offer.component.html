@@ -27,44 +27,34 @@
     </div>
 
     <div>
-      <div *ngIf="offer.number_of_kids && isOffer" class="flex">
-        <app-autocomplete-input
-          [parentForm]="kidsForm"
-          [options]="numberOptions"
-          [label]="'Dzieci do 3 lat'"
-          [formName]="'kidsUpTo3'"
-          (valueChangedEvent)="handleUpTo3ValueChange($event)"
-        >
-        </app-autocomplete-input>
-        <app-autocomplete-input
-          [parentForm]="kidsForm"
-          [options]="numberOptions"
-          [label]="'Dzieci do 10 lat'"
-          [formName]="'kidsUpTo10'"
-          (valueChangedEvent)="handleUpTo10ValueChange($event)"
-        >
-        </app-autocomplete-input>
-      </div>
+      <!--      <div *ngIf="offer.number_of_kids && isOffer" class="flex">-->
+      <!--        <app-autocomplete-input-->
+      <!--          [parentForm]="kidsForm"-->
+      <!--          [options]="numberOptions"-->
+      <!--          [label]="'Dzieci do 3 lat'"-->
+      <!--          [formName]="'kidsUpTo3'"-->
+      <!--          (valueChangedEvent)="handleUpTo3ValueChange($event)"-->
+      <!--        >-->
+      <!--        </app-autocomplete-input>-->
+      <!--        <app-autocomplete-input-->
+      <!--          [parentForm]="kidsForm"-->
+      <!--          [options]="numberOptions"-->
+      <!--          [label]="'Dzieci do 10 lat'"-->
+      <!--          [formName]="'kidsUpTo10'"-->
+      <!--          (valueChangedEvent)="handleUpTo10ValueChange($event)"-->
+      <!--        >-->
+      <!--        </app-autocomplete-input>-->
+      <!--      </div>-->
 
-      <p *ngIf="tooMuchKids"><strong>Nieprawidłowa konfiguracja.</strong></p>
+      <!--      <p *ngIf="tooMuchKids"><strong>Nieprawidłowa konfiguracja.</strong></p>-->
     </div>
   </div>
   <p>{{ offer.description }}</p>
   <div class="newReservation">
-    <div style="float: right; margin-left: 3%">
-      <button
-        class="newReservationBtn"
-        *ngIf="!isReservation && !isTour; else reservationView"
-        (click)="makeNewReservation()"
-        mat-raised-button
-        [disabled]="tooMuchKids"
-      >
-        Rezerwuję
-      </button>
-    </div>
+    <div style="float: right; margin-left: 3%"></div>
   </div>
 
-  <div *ngIf="isTour" class="offer-list">
+  <div *ngIf="isTour; else reservationView" class="offer-list">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> Filtry ofert </mat-panel-title>
@@ -143,7 +133,9 @@
       <ng-container matColumnDef="Rezerwuj">
         <th mat-header-cell *matHeaderCellDef>Rezerwuj</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button><mat-icon>event_available</mat-icon></button>
+          <button mat-icon-button (click)="makeNewReservation(element.id)">
+            <mat-icon>event_available</mat-icon>
+          </button>
         </td>
       </ng-container>
 

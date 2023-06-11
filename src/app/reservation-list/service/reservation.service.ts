@@ -70,30 +70,22 @@ export class ReservationService {
       );
   }
 
-  makeReservation(
-    id: string,
-    kidsUpTo3: number,
-    kidsUpTo10: number
-  ): Observable<MakeReservationResponse> {
+  makeReservation(id: string): Observable<MakeReservationResponse> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.authService.getUserInfo(),
     });
     let options = { headers: headers };
 
-    if (kidsUpTo3 === null || kidsUpTo3 === undefined || isNaN(kidsUpTo3)) {
-      kidsUpTo3 = 0;
-    }
-    if (kidsUpTo10 === null || kidsUpTo10 === undefined || isNaN(kidsUpTo10)) {
-      kidsUpTo10 = 0;
-    }
+    // if (kidsUpTo3 === null || kidsUpTo3 === undefined || isNaN(kidsUpTo3)) {
+    //   kidsUpTo3 = 0;
+    // }
+    // if (kidsUpTo10 === null || kidsUpTo10 === undefined || isNaN(kidsUpTo10)) {
+    //   kidsUpTo10 = 0;
+    // }
 
     return this.http
-      .post<MakeReservationResponse>(
-        reservationUrl,
-        { offer_id: id, kids_up_to_3: kidsUpTo3, kids_up_to_10: kidsUpTo10 },
-        options
-      )
+      .post<MakeReservationResponse>(reservationUrl, { offer_id: id }, options)
       .pipe(
         catchError((error) => {
           return this.errorService.errorCatcher(error);

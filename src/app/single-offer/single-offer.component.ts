@@ -84,10 +84,12 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
     private reservationService: ReservationService,
     private _snackBar: MatSnackBar,
     private authUser: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
     this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl).subscribe();
     console.log(this.pageUrl);
 
     if (this.router.url.includes('offer')) {
@@ -173,7 +175,9 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.isTour) {
+      this.subscription.unsubscribe();
+    }
   }
 
   private refreshVisibility() {
@@ -235,6 +239,7 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
       .getReservation(this.reservationId)
       .subscribe((reservation) => {
         this.reservation = reservation;
+        console.log(reservation, 'rezervsationasd');
       });
   }
 
@@ -252,17 +257,13 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-  makeNewReservation(): void {
+  makeNewReservation(id: string): void {
     const func = (): void => {
       const dialogRef = this.dialog.open(ConfirmReservationDialogComponent);
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.reservationService
-            .makeReservation(
-              <string>this.offerId,
-              +this.kidsUpTo3,
-              +this.kidsUpTo10
-            )
+            .makeReservation(<string>id)
             .subscribe((reservation) => {
               this.router.navigate(['reservation-list']);
             });

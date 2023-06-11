@@ -20,7 +20,7 @@ mat-spinner {
   border-radius: 10px;
   border-color: lightgrey;
   padding: 1%;
-  width: 83%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -53,4 +53,11 @@ img {
 
 .details > p {
   font-weight: 595;
+}
+
+.buttons > button {
+  margin-right: 3%;
+  width: 30%;
+  color: white;
+  background: #2b3d41;
 }

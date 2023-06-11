@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SearchOptions } from '../common/model/search-options';
 import { SearchService } from './service/search.service';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -10,10 +11,12 @@ import { SearchService } from './service/search.service';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
+  private pageUrl!: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private authService: AuthService
   ) {}
 
   searchOptions!: SearchOptions;
@@ -37,6 +40,9 @@ export class SearchComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl).subscribe();
+
     this.searchService.getTourSearchOptions().subscribe((options) => {
       this.searchOptions = options;
       this.countryOptions = options.country;

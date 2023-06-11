@@ -4,6 +4,7 @@ import { ReservationService } from './service/reservation.service';
 import { Router } from '@angular/router';
 import { NewReservationDialog } from '../common/component/new-reservation-dialog/new-reservation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-reservation-list',
@@ -14,13 +15,18 @@ export class ReservationListComponent implements OnInit {
   reservations: Reservation[] | undefined;
   loaded: boolean = false;
   length: number = 0;
+  private pageUrl!: string;
 
   constructor(
     private reservationService: ReservationService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
+    this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl).subscribe();
+
     this.initReservations();
   }
 

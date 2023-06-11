@@ -18,6 +18,7 @@ import { ErrorService } from '../common/service/error.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SearchOptions } from '../common/model/search-options';
 import { Observable, of } from 'rxjs';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-offer-list',
@@ -64,14 +65,19 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+  private pageUrl!: string;
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl).subscribe();
+
     this.data = { result: [], max_page: 0 };
     this.page = <string>this.route.snapshot.queryParamMap.get('page');
     this.country = <string>this.route.snapshot.queryParamMap.get('country');
