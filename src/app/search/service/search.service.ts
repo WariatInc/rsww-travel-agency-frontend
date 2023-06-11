@@ -60,7 +60,14 @@ export class SearchService {
   }
 
   getSortedSearchOffers(
-    searchParams: SearchParams,
+    searchParams: {
+      country: string;
+      date_start: string | undefined;
+      adults: string;
+      date_end: string | undefined;
+      page: string;
+      kids: string;
+    },
     sortBy: string | null
   ): Observable<SearchResult> {
     let params: any = {};

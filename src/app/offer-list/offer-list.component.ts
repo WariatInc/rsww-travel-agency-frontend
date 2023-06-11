@@ -38,8 +38,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     ChangeDetectorRef.prototype
   );
   private country!: string;
-  private dateStart!: string;
-  private dateEnd!: string;
+  private dateStart: string | undefined;
+  private dateEnd: string | undefined;
   private adults!: string;
   private kids!: string;
   countryOptions: string[] = [];
@@ -61,8 +61,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
   pageEvent!: PageEvent;
   public submitForm = this.formBuilder.group({
     country: [''],
-    startDate: [''],
-    endDate: [''],
+    startDate: [new Date()],
+    endDate: [new Date()],
     adultNumber: ['', Validators.required],
     childrenNumber: ['', Validators.required],
     sortowanie: [''],
@@ -93,6 +93,11 @@ export class OfferListComponent implements AfterViewInit, OnInit {
       this.route.snapshot.queryParamMap.get('date_start')
     );
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
+
+    console.log(this.dateStart, this.dateEnd);
+
+    console.log(new Date(this.dateStart));
+
     this.adults = <string>this.route.snapshot.queryParamMap.get('adults');
     this.kids = <string>this.route.snapshot.queryParamMap.get('kids');
 
@@ -105,16 +110,9 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.submitForm.controls.country.setValue(this.country);
     this.submitForm.controls.adultNumber.setValue(this.adults);
     this.submitForm.controls.childrenNumber.setValue(this.kids);
-    if (
-      this.submitForm.controls.startDate.getRawValue() &&
-      this.submitForm.controls.endDate.getRawValue()
-    ) {
-      this.submitForm.controls.startDate.setValue(
-        formatDate(this.dateStart, 'mm/dd/yyyy', 'en')
-      );
-      this.submitForm.controls.endDate.setValue(
-        formatDate(this.dateEnd, 'mm/dd/yyyy', 'en')
-      );
+    if (this.dateStart && this.dateEnd) {
+      this.submitForm.controls.startDate.setValue(new Date(this.dateStart));
+      this.submitForm.controls.endDate.setValue(new Date(this.dateEnd));
     }
 
     if (this.submitForm.valid) {
@@ -217,10 +215,11 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     this.data = { result: [], max_page: 0 };
     this.page = '1';
     this.country = <string>this.submitForm.controls.country.value;
-    this.dateStart = <string>this.submitForm.controls.startDate.value;
-    this.dateEnd = <string>this.submitForm.controls.endDate.value;
+    this.dateStart = this.submitForm.controls.startDate.value?.toDateString();
+    this.dateEnd = this.submitForm.controls.endDate.value?.toDateString();
     this.kids = <string>this.submitForm.controls.childrenNumber.value;
     this.adults = <string>this.submitForm.controls.adultNumber.value;
+
     this.searchService
       .getSearchOffers(
         {
