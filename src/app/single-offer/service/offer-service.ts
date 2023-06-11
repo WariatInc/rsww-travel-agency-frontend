@@ -62,26 +62,39 @@ export class OfferService {
     breakfast: null | boolean,
     allInclusive: null | boolean
   ): Observable<OffersForTourSearch> {
-    return this.http
-      .get<OffersForTourSearch>(
+    let url =
+      offersForTourSearchUrl +
+      tourId +
+      '&page=' +
+      page +
+      '&page_size=5' +
+      '&sort_by=price' +
+      '&breakfast=' +
+      breakfast +
+      '&all_inclusive=' +
+      allInclusive;
+
+    if (roomType) {
+      url =
         offersForTourSearchUrl +
-          tourId +
-          '&page=' +
-          page +
-          '&page_size=5' +
-          '&sort_by=price' +
-          '&room_type=' +
-          roomType +
-          '&breakfast=' +
-          breakfast +
-          '&all_inclusive=' +
-          allInclusive
-      )
-      .pipe(
-        catchError((error) => {
-          return this.errorService.errorCatcher(error);
-        })
-      );
+        tourId +
+        '&page=' +
+        page +
+        '&page_size=5' +
+        '&sort_by=price' +
+        '&room_type=' +
+        roomType +
+        '&breakfast=' +
+        breakfast +
+        '&all_inclusive=' +
+        allInclusive;
+    }
+
+    return this.http.get<OffersForTourSearch>(url).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
   }
 
   getOfferPrice(

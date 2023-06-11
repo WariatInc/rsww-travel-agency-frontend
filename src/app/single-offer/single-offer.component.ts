@@ -128,7 +128,7 @@ export class SingleOfferComponent implements OnInit {
       let room = this.filters.controls.room.getRawValue();
 
       if (room === 'Wszystkie') {
-        room = 'null';
+        room = null;
       } else if (room === 'Apartament') {
         room = 'apartment';
       } else if (room === 'Studio') {
