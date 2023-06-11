@@ -51,11 +51,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (this.f['email'].value) {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('token', this.f['email'].value);
-      this.authService.userIsAuth();
-      this.router.navigate(['./']);
-    }
+    this.authService.login(this.f['email'].value);
   }
 }

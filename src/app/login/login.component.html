@@ -1,23 +1,31 @@
-﻿<div class="image">
-  <img src="/assets/img/background-img.png" />
-</div>
+﻿<div
+  class="image"
+  style="background-image: url('/assets/img/background-img.png')"
+>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Logowanie</mat-label>
+          <mat-select formControlName="email">
+            <mat-option *ngFor="let option of loginOptions" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<div class="card">
-  <div class="card-body">
-    <form [formGroup]="form" (ngSubmit)="login()">
-      <app-autocomplete-input
-        [options]="loginOptions"
-        [label]="'Adres e-mail'"
-        [formName]="'email'"
-        [parentForm]="form"
-      ></app-autocomplete-input>
-
-      <button
-        mat-raised-button
-        style="background: #2b3d41; color: white; width: 15%"
-      >
-        Zaloguj się
-      </button>
-    </form>
+        <button
+          mat-raised-button
+          style="
+            background: #2b3d41;
+            color: white;
+            height: 3.4rem;
+            transform: translate(0, -18%);
+          "
+        >
+          Zaloguj się
+        </button>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,3 +1,143 @@
+<div class="formParent" *ngIf="optionsLoaded">
+  <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
+    <!--  <form>-->
+    <div class="formDiv">
+      <div class="input">
+        <app-autocomplete-input
+          [options]="countryOptions"
+          [label]="'Dokąd się wybierasz?'"
+          [formName]="'country'"
+          [parentForm]="submitForm"
+        ></app-autocomplete-input>
+      </div>
+      <div class="input-calendar">
+        <mat-form-field appearance="outline" style="max-width: 100%">
+          <mat-label style="color: black">Od kiedy do kiedy</mat-label>
+          <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
+            <input
+              style="color: black; font-size: 13px"
+              matStartDate
+              formControlName="startDate"
+              placeholder=""
+            />
+            <input
+              style="color: black; font-size: 13px"
+              matEndDate
+              formControlName="endDate"
+              placeholder=""
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error
+            *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dorosłych</mat-label>
+
+        <mat-select required formControlName="adultNumber"
+          ><mat-option
+            *ngFor="let number of adultNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!submitForm.controls.adultNumber.valid"
+          >Uzupełnij liczbę dorosłych</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dzieci</mat-label>
+        <mat-select required formControlName="childrenNumber"
+          ><mat-option
+            *ngFor="let number of childrenNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!submitForm.controls.childrenNumber.valid"
+          >Uzupełnij liczbę dzieci</mat-hint
+        >
+      </mat-form-field>
+
+      <button
+        [disabled]="!submitForm.valid"
+        class="bf-button"
+        type="submit"
+        mat-raised-button
+      >
+        Szukaj <span class="material-icons" iconPositionEnd> search </span>
+      </button>
+    </div>
+  </form>
+
+  <div style="display: flex; flex-direction: column" [formGroup]="sortowanie">
+    <span style="text-align: left; font-weight: 595">Sortowanie:</span>
+    <mat-chip-listbox aria-label="sortowanie" [formControlName]="'sortowanko'">
+      <mat-chip-option selected>Data</mat-chip-option>
+      <mat-chip-option color="accent">Cena</mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+</div>
+
+<div *ngIf="loaded; else loading">
+  <div *ngIf="data.result.length > 0; else noContent">
+    <div>
+      <ul>
+        <li *ngFor="let offer of data.result">
+          <div class="offer" (click)="navigateToTour(offer.id)">
+            <div class="image">
+              <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
+            </div>
+            <div class="details">
+              <p>
+                <strong>Gdzie: </strong>
+              </p>
+
+              <p><strong>Hotel: </strong></p>
+              <p><strong>Przyjazd dnia: </strong></p>
+              <p><strong>Wyjazd dnia: </strong></p>
+              <p><strong>Transport: </strong></p>
+              <p *ngIf="offer.transport === 'plane'">
+                <strong>Wylot z: </strong>
+              </p>
+
+              <p><strong>Cena: </strong></p>
+            </div>
+
+            <div class="next-details">
+              <p>{{ offer.country }}, {{ offer.city }}</p>
+
+              <p>{{ offer.hotel }}</p>
+              <p>{{ offer.arrival_date }}</p>
+              <p>{{ offer.departure_date }}</p>
+              <p *ngIf="offer.transport === 'plane'; else transportSelf">
+                Samolot
+              </p>
+              <p *ngIf="offer.transport === 'plane'">
+                {{ offer.departure_city }}
+              </p>
+              <p style="font-weight: 696">od {{ offer.lowest_price }} PLN</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 <mat-paginator
   [pageSizeOptions]="[25]"
   (page)="pageEvent = $event; onPaginateChange($event)"
@@ -6,52 +146,14 @@
 >
 </mat-paginator>
 
-<div *ngIf="loaded; else loading">
-  <div *ngIf="data.result.length > 0; else noContent">
-    <div class="content">
-      <ul>
-        <li *ngFor="let offer of data.result">
-          <div class="offer" (click)="navigateToOffer(offer.offer_id)">
-            <div class="image">
-              <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
-            </div>
-            <div class="details">
-              <p>
-                <strong>Gdzie: </strong>
-              </p>
-              <p><strong>Przyjazd dnia: </strong></p>
-              <p><strong>Wyjazd dnia: </strong></p>
-              <p><strong>Operator: </strong></p>
-              <p><strong>Cena: </strong></p>
-            </div>
-
-            <div class="next-details">
-              <p>{{ offer.country }}, {{ offer.city }}</p>
-              <p>{{ offer.arrival_date }}</p>
-              <p>{{ offer.departure_date }}</p>
-              <p>{{ offer.operator }}</p>
-              <p>{{ offer.price }} PLN</p>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <mat-paginator
-      *ngIf="loaded"
-      [pageSizeOptions]="[25]"
-      (page)="pageEvent = $event; onPaginateChange($event)"
-      [length]="this.data ? this.data.max_page * 25 : 0"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-  </div>
-</div>
-
 <ng-template #loading>
   <mat-spinner></mat-spinner>
 </ng-template>
 
 <ng-template #noContent>
   <h2>Nie znaleziono ofert dla wybranych filtrów.</h2>
+</ng-template>
+
+<ng-template #transportSelf>
+  <p>Na własną rękę</p>
 </ng-template>

@@ -22,9 +22,18 @@ export class SearchService {
     private datePipe: DatePipe
   ) {}
 
-  getSearchOffers(searchParams: SearchParams): Observable<SearchResult> {
+  getSearchOffers(
+    searchParams: SearchParams,
+    sortBy: string | null
+  ): Observable<SearchResult> {
     let params: any = {};
     params.page = searchParams.page;
+    if (searchParams.adults !== '') {
+      params.adults = searchParams.adults;
+    }
+    if (searchParams.kids !== '') {
+      params.kids = searchParams.kids;
+    }
     if (searchParams.country !== '') {
       params.country = searchParams.country;
     }
@@ -40,12 +49,51 @@ export class SearchService {
         'yyyy-MM-dd'
       );
     }
+
+    params.sort_by = sortBy;
+
+    return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
+  }
+
+  getSortedSearchOffers(
+    searchParams: {
+      country: string;
+      date_start: string | undefined;
+      adults: string;
+      date_end: string | undefined;
+      page: string;
+      kids: string;
+    },
+    sortBy: string | null
+  ): Observable<SearchResult> {
+    let params: any = {};
+    params.page = searchParams.page;
     if (searchParams.adults !== '') {
       params.adults = searchParams.adults;
     }
     if (searchParams.kids !== '') {
       params.kids = searchParams.kids;
     }
+    if (searchParams.country !== '') {
+      params.country = searchParams.country;
+    }
+    if (searchParams.date_start !== '') {
+      params.date_start = this.datePipe.transform(
+        searchParams.date_start,
+        'yyyy-MM-dd'
+      );
+    }
+    if (searchParams.date_end !== '') {
+      params.date_end = this.datePipe.transform(
+        searchParams.date_end,
+        'yyyy-MM-dd'
+      );
+    }
+    params.sort_by = sortBy;
 
     return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
       catchError((error) => {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './common/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'reservation-list',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./reservation-list/reservation-list.module').then(
         (m) => m.ReservationListModule
@@ -39,7 +41,16 @@ const routes: Routes = [
   },
 
   {
+    path: 'tour/:tourId/adults/:adults/kids/:kids',
+    loadChildren: () =>
+      import('./single-offer/single-offer.module').then(
+        (m) => m.SingleOfferModule
+      ),
+  },
+
+  {
     path: 'offer/:offerId/reservation/:reservationId',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./single-offer/single-offer.module').then(
         (m) => m.SingleOfferModule
@@ -47,6 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'event-dashboard',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./event-dashboard/event-dashboard.module').then(
         (m) => m.EventDashboardModule

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Event } from './model/event';
 import { EventsService } from './service/events.service';
 import { Subscription, timer } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-event-dashboard',
@@ -10,7 +12,12 @@ import { Subscription, timer } from 'rxjs';
 })
 export class EventDashboardComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
-  constructor(private eventService: EventsService) {}
+  private pageUrl!: string;
+  constructor(
+    private eventService: EventsService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   displayedColumns: string[] = [
     'Timestamp',
@@ -23,6 +30,8 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   public max_page: number | undefined;
 
   ngOnInit() {
+    this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl);
     this.subscription = timer(0, 2000).subscribe(() => {
       this.refreshEvents();
     });

@@ -1,6 +1,7 @@
-<div class="image">
-  <img src="/assets/img/mountains.png" />
-</div>
+<div
+  class="image"
+  style="background-image: url('/assets/img/background-img.png')"
+></div>
 
 <div class="formParent" *ngIf="loaded; else loading">
   <form [formGroup]="submitForm" (ngSubmit)="submitSearch()">
@@ -14,7 +15,7 @@
         ></app-autocomplete-input>
       </div>
       <div class="input-calendar">
-        <mat-form-field appearance="fill" style="max-width: 100%">
+        <mat-form-field appearance="outline" style="max-width: 100%">
           <mat-label style="color: black">Od kiedy do kiedy</mat-label>
           <mat-date-range-input [formGroup]="submitForm" [rangePicker]="picker">
             <input
@@ -35,33 +36,47 @@
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
-
-          <mat-error
-            *ngIf="range.controls.start.hasError('matStartDateInvalid')"
-            >Invalid start date</mat-error
-          >
-          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
-            >Invalid end date</mat-error
-          >
         </mat-form-field>
       </div>
-      <div class="input">
-        <app-autocomplete-input
-          [options]="adultNumberOptions"
-          [label]="'Ilość dorosłych:'"
-          [formName]="'adultNumber'"
-          [parentForm]="submitForm"
-        ></app-autocomplete-input>
-      </div>
-      <div class="input">
-        <app-autocomplete-input
-          [options]="childrenNumberOptions"
-          [label]="'Ilość dzieci:'"
-          [formName]="'childrenNumber'"
-          [parentForm]="submitForm"
-        ></app-autocomplete-input>
-      </div>
-      <button class="bf-button" type="submit" mat-raised-button>Szukaj</button>
+
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dorosłych</mat-label>
+
+        <mat-select required formControlName="adultNumber"
+          ><mat-option
+            *ngFor="let number of adultNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!submitForm.controls.adultNumber.valid"
+          >Uzupełnij liczbę dorosłych</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label style="color: black">Ilość dzieci</mat-label>
+        <mat-select required formControlName="childrenNumber"
+          ><mat-option
+            *ngFor="let number of childrenNumberOptions"
+            [value]="number"
+          >
+            {{ number }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!submitForm.controls.childrenNumber.valid"
+          >Uzupełnij liczbę dzieci</mat-hint
+        >
+      </mat-form-field>
+
+      <button
+        [disabled]="!submitForm.valid"
+        class="bf-button"
+        type="submit"
+        mat-raised-button
+      >
+        Szukaj <span class="material-icons" iconPositionEnd> search </span>
+      </button>
     </div>
   </form>
 </div>

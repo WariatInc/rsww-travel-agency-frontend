@@ -1,5 +1,5 @@
 <div *ngIf="loaded; else loading">
-  <ul>
+  <ul *ngIf="loaded && length; else emptyList">
     <li *ngFor="let reservation of reservations">
       <div class="reservation">
         <div class="flex">
@@ -11,12 +11,30 @@
           </div>
           <div class="details">
             <p>Dokąd:</p>
+            <p>Hotel:</p>
             <p>Przyjazd:</p>
             <p>Wyjazd:</p>
-            <p>Hotel:</p>
             <p>Koszt rezerwacji:</p>
             <p>Stan rezerwacji:</p>
             <p *ngIf="reservation.state === 'rejected'">Powód odrzucenia:</p>
+          </div>
+          <div class="data">
+            <p>
+              {{ reservation.offer_details.country }},
+              {{ reservation.offer_details.city }}
+            </p>
+
+            <p>{{ reservation.offer_details.hotel }}</p>
+            <p>{{ reservation.offer_details.arrival_date }}</p>
+            <p>{{ reservation.offer_details.departure_date }}</p>
+            <p>{{ reservation.price }} PLN</p>
+            <p>{{ reservation.state }}</p>
+            <p *ngIf="reservation.state === 'rejected'">
+              {{ reservation.rejection_reason }}
+            </p>
+          </div>
+
+          <div class="buttons">
             <button
               *ngIf="reservation.state !== 'rejected'"
               mat-raised-button
@@ -43,20 +61,6 @@
               Usuń
             </button>
           </div>
-          <div class="data">
-            <p>
-              {{ reservation.offer_details.country }},
-              {{ reservation.offer_details.city }}
-            </p>
-            <p>{{ reservation.offer_details.arrival_date }}</p>
-            <p>{{ reservation.offer_details.departure_date }}</p>
-            <p>{{ reservation.offer_details.hotel }}</p>
-            <p>{{ reservation.price }} PLN</p>
-            <p>{{ reservation.state }}</p>
-            <p *ngIf="reservation.state === 'rejected'">
-              {{ reservation.rejection_reason }}
-            </p>
-          </div>
         </div>
       </div>
     </li>
@@ -64,4 +68,8 @@
 </div>
 <ng-template #loading>
   <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #emptyList>
+  <h2 style="text-align: center">Brak rezerwacji</h2>
 </ng-template>

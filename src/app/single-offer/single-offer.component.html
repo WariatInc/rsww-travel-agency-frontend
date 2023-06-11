@@ -1,63 +1,160 @@
+<div *ngIf="isTour" class="visibility">
+  <span class="material-icons" iconPositionEnd> visibility </span>
+
+  : {{ userCount }}
+</div>
+
 <div class="content" *ngIf="!loadingOfferInfo; else loading">
   <img src="{{ offer.thumbnail_url }}" alt="obrazek" />
 
   <div class="details">
     <div style="font-weight: 595">
       <p>Gdzie:</p>
-      <p>Operator:</p>
+      <p>Hotel:</p>
       <p>Przyjazd dnia:</p>
       <p>Wyjazd dnia:</p>
-      <p>Transport:</p>
+      <p *ngIf="offer.transport">Transport:</p>
     </div>
     <div class="data">
       <p>{{ offer.country }}, {{ offer.city }}</p>
-      <p>{{ offer.operator }}</p>
+      <p>{{ offer.hotel }}</p>
       <p>{{ offer.arrival_date }}</p>
       <p>{{ offer.departure_date }}</p>
-      <p>{{ offer.transport }}</p>
+      <p *ngIf="offer.transport === 'plane'">
+        Samolotem, wylot z {{ offer.departure_city }}
+      </p>
+      <p *ngIf="offer.transport === 'self'">Na własną rękę</p>
     </div>
 
     <div>
-      <div *ngIf="offer.number_of_kids && isOffer" class="flex">
-        <app-autocomplete-input
-          [parentForm]="kidsForm"
-          [options]="numberOptions"
-          [label]="'Dzieci do 3 lat'"
-          [formName]="'kidsUpTo3'"
-          (valueChangedEvent)="handleUpTo3ValueChange($event)"
-        >
-        </app-autocomplete-input>
-        <app-autocomplete-input
-          [parentForm]="kidsForm"
-          [options]="numberOptions"
-          [label]="'Dzieci do 10 lat'"
-          [formName]="'kidsUpTo10'"
-          (valueChangedEvent)="handleUpTo10ValueChange($event)"
-        >
-        </app-autocomplete-input>
-      </div>
+      <!--      <div *ngIf="offer.number_of_kids && isOffer" class="flex">-->
+      <!--        <app-autocomplete-input-->
+      <!--          [parentForm]="kidsForm"-->
+      <!--          [options]="numberOptions"-->
+      <!--          [label]="'Dzieci do 3 lat'"-->
+      <!--          [formName]="'kidsUpTo3'"-->
+      <!--          (valueChangedEvent)="handleUpTo3ValueChange($event)"-->
+      <!--        >-->
+      <!--        </app-autocomplete-input>-->
+      <!--        <app-autocomplete-input-->
+      <!--          [parentForm]="kidsForm"-->
+      <!--          [options]="numberOptions"-->
+      <!--          [label]="'Dzieci do 10 lat'"-->
+      <!--          [formName]="'kidsUpTo10'"-->
+      <!--          (valueChangedEvent)="handleUpTo10ValueChange($event)"-->
+      <!--        >-->
+      <!--        </app-autocomplete-input>-->
+      <!--      </div>-->
 
-      <p *ngIf="tooMuchKids"><strong>Nieprawidłowa konfiguracja.</strong></p>
+      <!--      <p *ngIf="tooMuchKids"><strong>Nieprawidłowa konfiguracja.</strong></p>-->
     </div>
   </div>
   <p>{{ offer.description }}</p>
   <div class="newReservation">
-    <p style="font-size: 22px">
-      <span style="font-weight: 595">Cena:</span>
-      {{ offerPrice }} PLN
-    </p>
+    <div style="float: right; margin-left: 3%"></div>
+  </div>
 
-    <div style="float: right; margin-left: 3%">
-      <button
-        class="newReservationBtn"
-        *ngIf="isOffer && offer.is_available; else reservationView"
-        (click)="makeNewReservation()"
-        mat-raised-button
-        [disabled]="tooMuchKids"
+  <div *ngIf="isTour; else reservationView" class="offer-list">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Filtry ofert </mat-panel-title>
+        <mat-panel-description>
+          Wybierz ofertę dopasowaną do Twoich potrzeb!
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Wybór pokoju</p>
+      <div [formGroup]="filters">
+        <mat-chip-listbox aria-label="Wybór pokoju" [formControlName]="'room'">
+          <mat-chip-option selected>Wszystkie</mat-chip-option>
+          <mat-chip-option color="accent">Standard</mat-chip-option>
+          <mat-chip-option color="accent">Studio</mat-chip-option>
+          <mat-chip-option color="accent">Apartament</mat-chip-option>
+          <mat-chip-option color="accent">Family</mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+
+      <p>Opcje dodatkowe</p>
+      <section class="filters" [formGroup]="filters">
+        <p>
+          <mat-checkbox formControlName="all_inclusive"
+            >All inclusive</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox formControlName="breakfast">Śniadanie</mat-checkbox>
+        </p>
+      </section>
+    </mat-expansion-panel>
+
+    <mat-progress-bar
+      *ngIf="loadingOffers; else placeholder"
+      mode="indeterminate"
+    ></mat-progress-bar>
+    <table
+      mat-table
+      [dataSource]="this.offerList"
+      class="mat-elevation-z8 demo-table"
+    >
+      <ng-container matColumnDef="Ilość dorosłych">
+        <th mat-header-cell *matHeaderCellDef>Ilość dorosłych</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.number_of_adults }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Ilość dzieci">
+        <th mat-header-cell *matHeaderCellDef>Ilość dzieci</th>
+        <td mat-cell *matCellDef="let element">{{ element.number_of_kids }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="All inclusive">
+        <th mat-header-cell *matHeaderCellDef>All inclusive</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.all_inclusive">check</mat-icon>
+          <mat-icon *ngIf="!element.all_inclusive">close</mat-icon>
+        </td></ng-container
       >
-        Rezerwuję
-      </button>
-    </div>
+
+      <ng-container matColumnDef="Typ pokoju">
+        <th mat-header-cell *matHeaderCellDef>Typ pokoju</th>
+        <td mat-cell *matCellDef="let element">{{ element.room_type }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Śniadanie">
+        <th mat-header-cell *matHeaderCellDef>Śniadanie</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.breakfast">check</mat-icon>
+          <mat-icon *ngIf="!element.breakfast">close</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Cena">
+        <th mat-header-cell *matHeaderCellDef>Cena</th>
+        <td mat-cell *matCellDef="let element">
+          <strong>{{ element.price }} PLN</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Rezerwuj">
+        <th mat-header-cell *matHeaderCellDef>Rezerwuj</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="makeNewReservation(element.id)">
+            <mat-icon>event_available</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5]"
+      (page)="pageEvent = $event; onPaginateChange($event)"
+      [length]="this.offerList ? this.maxPage * 5 : 0"
+      showFirstLastButtons
+    >
+    </mat-paginator>
   </div>
 </div>
 
@@ -66,7 +163,7 @@
 </ng-template>
 
 <ng-template #reservationView>
-  <div *ngIf="!isOffer; else offerNotAvailable">
+  <div *ngIf="isReservation">
     <div
       style="display: flex"
       *ngIf="
@@ -94,4 +191,8 @@
 
 <ng-template #offerNotAvailable>
   <strong><h2>Oferta nie jest dostępna</h2></strong>
+</ng-template>
+
+<ng-template #placeholder>
+  <div style="padding-top: 4px"></div>
 </ng-template>

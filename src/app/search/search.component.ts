@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { SearchOptions } from '../common/model/search-options';
 import { SearchService } from './service/search.service';
+import { AuthService } from '../common/service/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -10,10 +16,12 @@ import { SearchService } from './service/search.service';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
+  private pageUrl!: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private authService: AuthService
   ) {}
 
   searchOptions!: SearchOptions;
@@ -21,7 +29,7 @@ export class SearchComponent implements OnInit {
   countryOptions: string[] = [];
 
   childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
-  adultNumberOptions: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
+  adultNumberOptions: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -29,14 +37,17 @@ export class SearchComponent implements OnInit {
   });
 
   public submitForm = this.formBuilder.group({
-    country: '',
-    startDate: '',
-    endDate: '',
-    adultNumber: '',
-    childrenNumber: '',
+    country: [''],
+    startDate: [''],
+    endDate: [''],
+    adultNumber: ['', Validators.required],
+    childrenNumber: ['', Validators.required],
   });
 
   ngOnInit() {
+    this.pageUrl = this.router.url;
+    this.authService.postSessionInfo(this.pageUrl);
+
     this.searchService.getTourSearchOptions().subscribe((options) => {
       this.searchOptions = options;
       this.countryOptions = options.country;

@@ -48,6 +48,7 @@
         (click)="goLogin()"
       >
         Zaloguj się
+        <span class="material-icons" iconPositionEnd> person </span>
       </button>
     </mat-toolbar>
   </p>
@@ -59,5 +60,8 @@
 </html>
 
 <ng-template #logout>
-  <button mat-raised-button (click)="logoutUser()">Wyloguj się</button>
+  <button mat-raised-button (click)="logoutUser()">
+    Wyloguj się
+    <span class="material-icons" iconPositionEnd> exit_to_app </span>
+  </button>
 </ng-template>

@@ -3,7 +3,8 @@
 }
 
 .material-icons {
-  font-family: "Material Icons";
+  margin-left: 4px;
+  font-family: "Material Icons" !important;
 }
 
 button {
@@ -19,9 +20,8 @@ span:active {
 
 body {
   background: white;
-  min-height: 100%;
+  max-height: 93%;
   width: 98.97vw;
-  overflow: auto;
   display: flex;
   justify-content: center;
 }

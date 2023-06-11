@@ -2,20 +2,25 @@
   display: flex;
   width: 150vh;
   height: 100%;
-  transform: translate(-24.5%);
+  transform: translate(-11.5%);
   margin: 0px;
 }
 
-app-autocomplete-input {
-  max-width: 30%;
-  margin: 0;
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body > button {
 }
 
 .card {
-  transform: translate(25.5%, -550%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 button {
-  margin: 0;
-  transform: translate(150%, 5%);
 }

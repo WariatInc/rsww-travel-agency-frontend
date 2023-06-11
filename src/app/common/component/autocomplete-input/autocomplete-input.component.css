@@ -1,13 +1,6 @@
 .example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+  width: 15%;
   border-radius: 25px;
-}
-
-.example-full-width {
-  width: 90%;
-  height: 1%;
 }
 
 mat-label {
@@ -49,10 +42,4 @@ input[type="search"].dark::-webkit-search-cancel-button {
 
 input {
   border-radius: 25px;
-}
-
-::ng-deep .mat-form-field-outline-start {
-  border-radius: 100px !important;
-  min-width: 28px !important;
-  background: #cbc4c4;
 }
