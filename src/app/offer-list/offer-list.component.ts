@@ -51,6 +51,8 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     sortowanko: 'Data',
   });
 
+  private prevSortowanie: string | null | undefined = 'Data';
+
   childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
   adultNumberOptions: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
@@ -119,36 +121,39 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     }
 
     this.sortowanie.valueChanges.subscribe((selectedValue) => {
-      if (selectedValue['sortowanko'] === undefined) {
-        this.sortowanie.controls.sortowanko.setValue('Data');
+      if (selectedValue['sortowanko'] !== this.prevSortowanie) {
+        if (selectedValue['sortowanko'] === undefined) {
+          this.sortowanie.controls.sortowanko.setValue('Data');
+        }
+
+        let sortowanko = '';
+
+        if (selectedValue['sortowanko'] === 'Data') {
+          sortowanko = 'arrival_date';
+        } else {
+          sortowanko = 'price';
+        }
+
+        this.loaded = false;
+        this.data = { result: [], max_page: 0 };
+        this.searchService
+          .getSortedSearchOffers(
+            {
+              page: this.page,
+              country: this.country,
+              date_start: this.dateStart,
+              date_end: this.dateEnd,
+              adults: this.adults,
+              kids: this.kids,
+            },
+            sortowanko
+          )
+          .subscribe((result) => {
+            this.data = result;
+            this.loaded = true;
+          });
+        this.prevSortowanie = selectedValue['sortowanko'];
       }
-
-      let sortowanko = '';
-
-      if (selectedValue['sortowanko'] === 'Data') {
-        sortowanko = 'arrival_date';
-      } else {
-        sortowanko = 'price';
-      }
-
-      this.loaded = false;
-      this.data = { result: [], max_page: 0 };
-      this.searchService
-        .getSortedSearchOffers(
-          {
-            page: this.page,
-            country: this.country,
-            date_start: this.dateStart,
-            date_end: this.dateEnd,
-            adults: this.adults,
-            kids: this.kids,
-          },
-          sortowanko
-        )
-        .subscribe((result) => {
-          this.data = result;
-          this.loaded = true;
-        });
     });
   }
 
