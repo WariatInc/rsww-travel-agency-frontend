@@ -110,8 +110,11 @@
 
       <ng-container matColumnDef="All inclusive">
         <th mat-header-cell *matHeaderCellDef>All inclusive</th>
-        <td mat-cell *matCellDef="let element">{{ element.all_inclusive }}</td>
-      </ng-container>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.all_inclusive">check</mat-icon>
+          <mat-icon *ngIf="!element.all_inclusive">close</mat-icon>
+        </td></ng-container
+      >
 
       <ng-container matColumnDef="Typ pokoju">
         <th mat-header-cell *matHeaderCellDef>Typ pokoju</th>
@@ -120,7 +123,10 @@
 
       <ng-container matColumnDef="Śniadanie">
         <th mat-header-cell *matHeaderCellDef>Śniadanie</th>
-        <td mat-cell *matCellDef="let element">{{ element.breakfast }}</td>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.breakfast">check</mat-icon>
+          <mat-icon *ngIf="!element.breakfast">close</mat-icon>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Cena">

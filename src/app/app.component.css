@@ -20,15 +20,13 @@ span:active {
 
 body {
   background: white;
-  min-height: 100%;
+  max-height: 93%;
   width: 98.97vw;
-  overflow: auto;
   display: flex;
   justify-content: center;
 }
 
 main {
-  /*border: 1px solid black;*/
   min-height: 100%;
   width: 99%;
   max-width: 1200px;
