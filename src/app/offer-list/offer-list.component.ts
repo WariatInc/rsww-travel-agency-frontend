@@ -86,10 +86,34 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     }
 
     this.sortowanie.valueChanges.subscribe((selectedValue) => {
-      console.log(selectedValue);
       if (selectedValue['sortowanko'] === undefined) {
         this.sortowanie.controls.sortowanko.setValue('Data');
       }
+
+      let sortowanko = '';
+
+      if (selectedValue['sortowanko'] === 'Data') {
+        sortowanko = 'arrival_date';
+      } else {
+        sortowanko = 'price';
+      }
+
+      this.loaded = false;
+      this.data = { result: [], max_page: 0 };
+      this.searchService
+        .getSortedSearchOffers(
+          {
+            page: this.page,
+            country: this.country,
+            date_start: this.dateStart,
+            date_end: this.dateEnd,
+          },
+          sortowanko
+        )
+        .subscribe((result) => {
+          this.data = result;
+          this.loaded = true;
+        });
     });
   }
 

@@ -48,6 +48,36 @@ export class SearchService {
     );
   }
 
+  getSortedSearchOffers(
+    searchParams: SearchParams,
+    sortBy: string | null
+  ): Observable<SearchResult> {
+    let params: any = {};
+    params.page = searchParams.page;
+    if (searchParams.country !== '') {
+      params.country = searchParams.country;
+    }
+    if (searchParams.date_start !== '') {
+      params.date_start = this.datePipe.transform(
+        searchParams.date_start,
+        'yyyy-MM-dd'
+      );
+    }
+    if (searchParams.date_end !== '') {
+      params.date_end = this.datePipe.transform(
+        searchParams.date_end,
+        'yyyy-MM-dd'
+      );
+    }
+    params.sort_by = sortBy;
+
+    return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
+  }
+
   getTourSearchOptions(): Observable<SearchOptions> {
     return this.http.get<SearchResult>(tourSearchOptionsUrl).pipe(
       catchError((error) => {
