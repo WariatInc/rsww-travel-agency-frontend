@@ -94,10 +94,6 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     );
     this.dateEnd = <string>this.route.snapshot.queryParamMap.get('date_end');
 
-    console.log(this.dateStart, this.dateEnd);
-
-    console.log(new Date(this.dateStart));
-
     this.adults = <string>this.route.snapshot.queryParamMap.get('adults');
     this.kids = <string>this.route.snapshot.queryParamMap.get('kids');
 
@@ -113,6 +109,9 @@ export class OfferListComponent implements AfterViewInit, OnInit {
     if (this.dateStart && this.dateEnd) {
       this.submitForm.controls.startDate.setValue(new Date(this.dateStart));
       this.submitForm.controls.endDate.setValue(new Date(this.dateEnd));
+    } else {
+      this.submitForm.controls.startDate.setValue(null);
+      this.submitForm.controls.endDate.setValue(null);
     }
 
     if (this.submitForm.valid) {
