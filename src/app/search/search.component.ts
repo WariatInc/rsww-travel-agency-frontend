@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.pageUrl = this.router.url;
-    this.authService.postSessionInfo(this.pageUrl).subscribe();
+    this.authService.postSessionInfo(this.pageUrl);
 
     this.searchService.getTourSearchOptions().subscribe((options) => {
       this.searchOptions = options;

@@ -25,7 +25,7 @@ export class ReservationListComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.pageUrl = this.router.url;
-    this.authService.postSessionInfo(this.pageUrl).subscribe();
+    this.authService.postSessionInfo(this.pageUrl);
 
     this.initReservations();
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ErrorService } from './error.service';
 
@@ -16,12 +16,14 @@ const sessionUrl = apiUrl + 'api/users/sessions';
 export class AuthService {
   public userIsAuthenticated: boolean = false;
   public redirectUrl: string | undefined;
+  private ipAddress!: string;
 
   constructor(
     private router: Router,
     private _snackbar: MatSnackBar,
     private http: HttpClient
   ) {}
+
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
     localStorage.removeItem('token');
@@ -41,6 +43,7 @@ export class AuthService {
       }
     }
   }
+
   userIsAuth(): void {
     this.userIsAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
   }
@@ -73,8 +76,20 @@ export class AuthService {
       });
   }
 
-  postSessionInfo(page: string): Observable<void> {
+  postSessionInfo(page: string): void {
     this.redirectUrl = page;
-    return this.http.post<void>(sessionUrl, { webapp_page: page });
+
+    this.http
+      .get('https://api.ipify.org/?format=json')
+      .subscribe((res: any) => {
+        this.ipAddress = res.ip;
+
+        let headers = new HttpHeaders();
+        headers = headers.append('HTTP_X_FORWARDED_FOR', this.ipAddress);
+
+        this.http
+          .post<void>(sessionUrl, { webapp_page: page }, { headers: headers })
+          .subscribe();
+      });
   }
 }

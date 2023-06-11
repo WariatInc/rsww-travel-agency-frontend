@@ -31,7 +31,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pageUrl = this.router.url;
-    this.authService.postSessionInfo(this.pageUrl).subscribe();
+    this.authService.postSessionInfo(this.pageUrl);
     this.subscription = timer(0, 2000).subscribe(() => {
       this.refreshEvents();
     });

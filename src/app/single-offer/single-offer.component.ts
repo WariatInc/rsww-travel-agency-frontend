@@ -89,7 +89,7 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.pageUrl = this.router.url;
-    this.authService.postSessionInfo(this.pageUrl).subscribe();
+    this.authService.postSessionInfo(this.pageUrl);
 
     if (this.router.url.includes('offer')) {
       this.isOffer = true;
@@ -123,7 +123,7 @@ export class SingleOfferComponent implements OnInit, OnDestroy {
         this.loadingOfferInfo = false;
         this.getOfferList();
       });
-      this.subscription = timer(0, 10000).subscribe(() => {
+      this.subscription = timer(0, 3000).subscribe(() => {
         this.refreshVisibility();
       });
     }

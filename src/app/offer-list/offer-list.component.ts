@@ -76,7 +76,7 @@ export class OfferListComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.pageUrl = this.router.url;
-    this.authService.postSessionInfo(this.pageUrl).subscribe();
+    this.authService.postSessionInfo(this.pageUrl);
 
     this.data = { result: [], max_page: 0 };
     this.page = <string>this.route.snapshot.queryParamMap.get('page');
