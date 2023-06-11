@@ -16,7 +16,7 @@ const sessionUrl = apiUrl + 'api/users/sessions';
 export class AuthService {
   public userIsAuthenticated: boolean = false;
   public redirectUrl: string | undefined;
-  private ipAddress: string | undefined;
+  private sessionId: string | undefined;
 
   constructor(
     private router: Router,
@@ -79,25 +79,24 @@ export class AuthService {
   postSessionInfo(page: string): void {
     this.redirectUrl = page;
 
-    if (!this.ipAddress) {
+    const session_id = localStorage.getItem('session_id');
+
+    if (session_id) {
       this.http
-        .get('https://api.ipify.org/?format=json')
-        .subscribe((res: any) => {
-          this.ipAddress = res.ip;
-
-          let headers = new HttpHeaders();
-          headers = headers.append('HTTP_X_FORWARDED_FOR', res.ip);
-
-          this.http
-            .post<void>(sessionUrl, { webapp_page: page }, { headers: headers })
-            .subscribe();
+        .post<void>(sessionUrl, {
+          webapp_page: page,
+          session_id: session_id,
+        })
+        .subscribe((response: any) => {
+          console.log(response, 'response');
+          localStorage.setItem('session_id', response.session_id);
         });
     } else {
-      let headers = new HttpHeaders();
-      headers = headers.append('HTTP_X_FORWARDED_FOR', this.ipAddress);
       this.http
-        .post<void>(sessionUrl, { webapp_page: page }, { headers: headers })
-        .subscribe();
+        .post<void>(sessionUrl, { webapp_page: page })
+        .subscribe((response: any) => {
+          localStorage.setItem('session_id', response.session_id);
+        });
     }
   }
 }
