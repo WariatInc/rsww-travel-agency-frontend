@@ -17,6 +17,7 @@
             <p>Koszt rezerwacji:</p>
             <p>Stan rezerwacji:</p>
             <p *ngIf="reservation.state === 'rejected'">Powód odrzucenia:</p>
+            <p *ngIf="reservation.state === 'cancelled'">Powód anulowania:</p>
           </div>
           <div class="data">
             <p>
@@ -28,9 +29,55 @@
             <p>{{ reservation.offer_details.arrival_date }}</p>
             <p>{{ reservation.offer_details.departure_date }}</p>
             <p>{{ reservation.price }} PLN</p>
-            <p>{{ reservation.state }}</p>
-            <p *ngIf="reservation.state === 'rejected'">
-              {{ reservation.rejection_reason }}
+
+            <p *ngIf="reservation.state === 'pending'">W trakcie rezerwacji</p>
+            <p *ngIf="reservation.state === 'rejected'">Odrzucona</p>
+            <p *ngIf="reservation.state === 'accepted'">Zaakceptowana</p>
+            <p *ngIf="reservation.state === 'cancelled'">Anulowana</p>
+            <p *ngIf="reservation.state === 'paid'">Opłacona</p>
+
+            <p
+              *ngIf="
+                reservation.state === 'rejected' &&
+                reservation.rejection_reason === 'not_available'
+              "
+            >
+              Oferta niedostępna
+            </p>
+            <p
+              *ngIf="
+                reservation.state === 'rejected' &&
+                reservation.rejection_reason === 'invalid_offer_configuration'
+              "
+            >
+              Niewłaściwa konfiguracja oferty
+            </p>
+
+            <p
+              *ngIf="
+                reservation.state === 'rejected' &&
+                reservation.rejection_reason === 'offer_not_found'
+              "
+            >
+              Nie znaleziono oferty
+            </p>
+
+            <p
+              *ngIf="
+                reservation.state === 'cancelled' &&
+                reservation.cancel_reason === 'payment_timeout'
+              "
+            >
+              Nie opłacono w czasie
+            </p>
+
+            <p
+              *ngIf="
+                reservation.state === 'cancelled' &&
+                reservation.cancel_reason === 'cancelled_by_user'
+              "
+            >
+              Anulowana przez użytkownika
             </p>
           </div>
 

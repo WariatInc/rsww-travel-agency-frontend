@@ -88,7 +88,7 @@ export class ReservationService {
       .post<MakeReservationResponse>(reservationUrl, { offer_id: id }, options)
       .pipe(
         catchError((error) => {
-          return this.errorService.errorCatcher(error);
+          return this.errorService.tripNotAvailableErrorCatcher(error);
         })
       );
   }

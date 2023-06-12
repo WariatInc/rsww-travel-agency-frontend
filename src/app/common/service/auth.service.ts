@@ -88,7 +88,6 @@ export class AuthService {
           session_id: session_id,
         })
         .subscribe((response: any) => {
-          console.log(response, 'response');
           localStorage.setItem('session_id', response.session_id);
         });
     } else {
