@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,14 +9,16 @@ import { Router } from '@angular/router';
 import { SearchOptions } from '../common/model/search-options';
 import { SearchService } from './service/search.service';
 import { AuthService } from '../common/service/auth.service';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   private pageUrl!: string;
+  private subscription!: Subscription;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -27,6 +29,10 @@ export class SearchComponent implements OnInit {
   searchOptions!: SearchOptions;
   loaded: boolean = false;
   countryOptions: string[] = [];
+
+  popularHotels: string[] = [];
+  popularCountries: string[] = [];
+  popularRooms: string[] = [];
 
   childrenNumberOptions: string[] = ['0', '1', '2', '3', '4'];
   adultNumberOptions: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
@@ -53,6 +59,14 @@ export class SearchComponent implements OnInit {
       this.countryOptions = options.country;
       this.loaded = true;
     });
+
+    this.subscription = timer(0, 5000).subscribe(() => {
+      this.getPopularInfo();
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   public submitSearch(): void {
@@ -65,6 +79,14 @@ export class SearchComponent implements OnInit {
         adults: this.submitForm.value.adultNumber,
         kids: this.submitForm.value.childrenNumber,
       },
+    });
+  }
+
+  public getPopularInfo(): void {
+    this.searchService.getPopularInfo().subscribe((response) => {
+      this.popularHotels = response.hotels;
+      this.popularCountries = response.countries;
+      this.popularRooms = response.room_types;
     });
   }
 }
