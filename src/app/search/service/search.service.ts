@@ -7,9 +7,11 @@ import { ErrorService } from '../../common/service/error.service';
 import { DatePipe } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { SearchOptions } from '../../common/model/search-options';
+import { PopularInfo } from '../model/popular-info';
 
 let apiUrl = environment.API_URL;
 const tourSearchUrl = apiUrl + 'api/tours/search';
+const popularInfoUrl = apiUrl + 'api/reservations/preferences';
 const tourSearchOptionsUrl = apiUrl + 'api/tours/search/options';
 
 @Injectable({
@@ -53,6 +55,14 @@ export class SearchService {
     params.sort_by = sortBy;
 
     return this.http.get<SearchResult>(tourSearchUrl, { params }).pipe(
+      catchError((error) => {
+        return this.errorService.errorCatcher(error);
+      })
+    );
+  }
+
+  getPopularInfo(): Observable<PopularInfo> {
+    return this.http.get<PopularInfo>(popularInfoUrl).pipe(
       catchError((error) => {
         return this.errorService.errorCatcher(error);
       })

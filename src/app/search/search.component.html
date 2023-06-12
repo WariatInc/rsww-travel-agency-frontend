@@ -90,33 +90,21 @@
   <div class="mini-additional">
     <p class="upper-text">Najpopularniejsze kierunki</p>
     <div class="top5">
-      <p>Polska</p>
-      <p>Niemcy</p>
-      <p>Bali</p>
-      <p>Szwecja</p>
-      <p>Egipt</p>
+      <p *ngFor="let element of popularCountries">{{ element }}</p>
     </div>
     <p>Podróż w najbardziej urokliwe miejsca</p>
   </div>
   <div class="mini-additional">
     <p class="upper-text">Najczęściej wybierane hotele</p>
     <div class="top5">
-      <p>Grand Marcel Hotel</p>
-      <p>Villa Meyer</p>
-      <p>Mazur Lazur Plaza</p>
-      <p>LukiBed</p>
-      <p>Ibiza Giżycko</p>
+      <p *ngFor="let element of popularHotels">{{ element }}</p>
     </div>
     <p>Najciekawsze oferty</p>
   </div>
   <div class="mini-additional">
     <p class="upper-text">Najpopularniejsze pokoje</p>
     <div class="top5">
-      <p>Grand Marcel Hotel</p>
-      <p>Villa Meyer</p>
-      <p>Mazur Lazur Plaza</p>
-      <p>LukiBed</p>
-      <p>Ibiza Giżycko</p>
+      <p *ngFor="let element of popularRooms">{{ element }}</p>
     </div>
     <p>Ciesz się szerokim wyborem pokoju</p>
   </div>
